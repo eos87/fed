@@ -13,10 +13,10 @@ class MunicipioAdmin(admin.ModelAdmin):
     search_fields = ['nombre']
     prepopulated_fields = {"slug": ("nombre",)}
 
-class ComunidadAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'municipio']
-    list_filter = ['municipio']
-    search_fields = ['nombre']
+#class ComunidadAdmin(admin.ModelAdmin):
+    #list_display = ['nombre', 'municipio']
+    #list_filter = ['municipio']
+    #search_fields = ['nombre']
 
 #class MicrocuencaAdmin(admin.ModelAdmin):
 #    list_display = ['nombre']
