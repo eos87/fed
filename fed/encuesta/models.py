@@ -127,4 +127,56 @@ class AccionObservatorio(models.Model):
         verbose_name = 'Acción para observatorio'
         verbose_name_plural = 'Acciones para observatorios'
 
-        
+ver_sexual = 'En contra de la discriminación a personas de la diversidad sexual'
+ver_discapacidad = 'En contra de la discriminación a personas con discapacidad'
+ver_vih_sida = 'En contra de la discriminación a personas que viven con VIH y SIDA'
+ver_racial = 'En contra de la discriminación a personas de población étnica e indigena'
+ver_joven = 'En contra de la discriminación a personas de juventud'
+
+class DenunciaSocialRealizada(models.Model):
+    accion = models.CharField(max_length=100, choices=CHOICE_MEDIO)
+    persona_div_sexual = models.IntegerField(ver_sexual)
+    persona_discapacidad = models.IntegerField(ver_discapacidad)
+    persona_vih = models.IntegerField(ver_vih_sida)
+    persona_racial = models.IntegerField(ver_racial)
+    persona_joven = models.IntegerField(ver_joven)
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Denuncia social realizada'
+        verbose_name_plural = 'Denuncias sociales realizadas'
+
+class DenunciaSocialEfectiva(models.Model):
+    accion = models.CharField(max_length=100, choices=CHOICE_MEDIO)
+    persona_div_sexual = models.IntegerField(ver_sexual)
+    persona_discapacidad = models.IntegerField(ver_discapacidad)
+    persona_vih = models.IntegerField(ver_vih_sida)
+    persona_racial = models.IntegerField(ver_racial)
+    persona_joven = models.IntegerField(ver_joven)
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Denuncia social efectivas'
+        verbose_name_plural = 'Denuncias sociales efectivas'
+
+CHOICE_JURIDICA = (('denuncia_juridica_realizada', 'Número de acciones de denuncias jurídicas realizadas'),
+                   ('denuncia_juridica_atendida', 'Número de denuncias jurídicas atendidas'), )
+
+class DenunciaJuridica(models.Model):
+    accion = models.CharField(max_length=100, choices=CHOICE_JURIDICA)
+    persona_div_sexual = models.IntegerField(ver_sexual)
+    persona_discapacidad = models.IntegerField(ver_discapacidad)
+    persona_vih = models.IntegerField(ver_vih_sida)
+    persona_racial = models.IntegerField(ver_racial)
+    persona_joven = models.IntegerField(ver_joven)
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Denuncia jurídica'
+        verbose_name_plural = 'Denuncias jurídicas'
