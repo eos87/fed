@@ -274,4 +274,66 @@ class AccionImpulsadaGrupo(models.Model):
         verbose_name = 'Acción impulsada por grupos'
         verbose_name_plural = 'Acciones impulsadas por grupos'
 
-    
+CHOICE_VICTIMAS = (('casos_atendidos', 'Número de casos de victimas de violencia de género atendidos por as organizaciones contrapartes del FED'),
+                   ('casos_resueltos', 'Número de casos resueltos con resultados y diagnósticos favorables'),)
+
+class AtencionVictimas(models.Model):
+    accion = models.CharField(max_length=100, choices=CHOICE_VICTIMAS)
+    servicio_salud = models.IntegerField('A través de los servicios de atención en salud')
+    servicio_psicologia = models.IntegerField('A través de los servicios de atención en psicología')
+    sevicio_legal = models.IntegerField('A través de los servicios de atención legal')
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Atención de victimas x/violencia'
+        verbose_name_plural = 'Atenciones de victimas x/violencia'
+
+CHOICE_DENUNCIAS = (('denuncias_interpuestas', 'Número de denuncias interpuestas por victimas de violencia en las instancias que administran justicia como producto de acciones de organizaciones contrapartes del FED'),
+                    ('denuncias_recibidas', 'Número de denuncias interpuestas que han sido recibidas y atendidas por las instancias correspondientes'),
+                    ('denuncias_sancion', 'Número de casos que concluyen con sanción penal como producto de las acciones de las organizaciones de la sociedad civil apoyadas por el FED'),)
+
+class DenunciasViolencia(models.Model):
+    accion = models.CharField(max_length=100, choices=CHOICE_DENUNCIAS)
+    comisariato = models.IntegerField('Comisariato Policía')
+    fiscalia = models.IntegerField('Fiscalía')
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Denuncia por violencia de género'
+        verbose_name_plural = 'Denuncias por violencia de género'
+
+CHOICE_ALBERGUES = (('vitimas_atendidas', 'Número de victimas de violencia de género atendidas en los albergues por las organizaciones contrapartes de FED'),
+                    ('casos_logrados', 'Número de casos de víctimas atendidas en albergue quienes logran una construcción de nuevos proyectos de vida'), )
+
+class AtencionVictimasAlbergues(models.Model):
+    accion = models.CharField(max_length=100, choices=CHOICE_ALBERGUES)
+    mujeres = models.IntegerField()
+    jovenes = models.IntegerField('Jóvenes')
+    ninos_ninas = models.IntegerField('Niños y Niñas')
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Atención de casos en Albergues'
+        verbose_name_plural = 'Atenciones de casos en Albergues'
+
+CHOICE_REF = (('referencia_realiza', 'Número de referencias y contra-referencias que realizan las organizaciones contrapartes del FED con instituciones públicas'),
+              ('contra_ref_atendidas', 'Número de contra-referencias atendidas por el profesional pertinente'), )
+
+class ReferenciaContraRef(models.Model):
+    accion = models.CharField(max_length=100, choices=CHOICE_REF)
+    mujeres = models.IntegerField()
+    jovenes = models.IntegerField('Jóvenes')
+    ninos_ninas = models.IntegerField('Niños y Niñas')
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Referencia y contra-referencia'
+        verbose_name_plural = 'Referencias y contra-referencias'
