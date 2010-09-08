@@ -10,20 +10,20 @@ CHOICE_MEDIO = (('estudios', 'Estudios'),
                 ('campania_radio', 'Campañas en radio'),
                 ('talleres', 'Talleres de formación'),
                 ('manifestaciones', 'Manifestaciones'),
-                ('reuniones', 'Reuniones'), )
+                ('reuniones', 'Reuniones'),)
 
 CHOICE_REGION = (('comunitario', 'A nivel comunitario'),
                  ('municipal', 'A nivel municipal'),
                  ('departamental', 'A nivel departamental'),
                  ('regional', 'A nivel regional'),
-                 ('nacional', 'A nivel nacional'),)
+                 ('nacional', 'A nivel nacional'), )
                  
 CHOICE_DOCS = (('leyes', 'Leyes'),
                ('codigos', 'Códigos'),
                ('reglamentos', 'Reglamentos'),
                ('normativas', 'Normativas'),
                ('ordenanzas', 'Ordenanzas'),
-               ('acuerdos', 'Acuerdos'), )
+               ('acuerdos', 'Acuerdos'),)
 
 VERBOSE_CANTIDAD = 'Número de acciones efectuadas para fomentar la existencia y aplicación efectiva de políticas públicas para posicionar el tema de la equidad e igualdad'
 VERBOSE_PARTICIPAN = 'Participantes en las acciones'
@@ -49,10 +49,38 @@ class Proyecto(models.Model):
     class Meta:
         verbose_name_plural = 'Proyectos'
 
+class Encuesta(models.Model):
+    organizacion = models.ForeignKey(Organizacion)
+    proyecto = models.ForeignKey(Proyecto)
+    fecha_inicio = models.DateTimeField(verbose_name='Fecha de inicio del período de informe')
+    fecha_fin = models.DateTimeField(verbose_name='Fecha final del período de informe')
+    #accion_efectuada_medio = models.ForeignKey(AccionEfectuadaMedio)
+    '''accion_efectuada_region = models.ForeignKey(AccionEfectuadaRegion)
+    accion_efectuada_documento = models.ForeignKey(AccionEfectuadaDocumento)
+    participacion_comision_desicion = models.ForeignKey(ParticipacionComisionDecision)
+    participacion_comision_agenda = models.ForeignKey(ParticipacionComisionAgenda)
+    accion_observatorio = models.ForeignKey(AccionObservatorio)
+    denuncia_social_realizada = models.ForeignKey(DenunciaSocialRealizada)
+    denuncia_social_efectiva = models.ForeignKey(DenunciaSocialEfectiva)
+    denuncia_juridica = models.ForeignKey(DenunciaJuridica)
+    accion_realizada_reflexion = models.ForeignKey(AccionRealizadaReflexion)
+    accion_realizada_reflexion_persona = models.ForeignKey(AccionRelizadaReflexionPersona)
+    accion_impulsada_org = models.ForeignKey(AccionImpulsadaOrg)
+    accion_impulsada_grupo = models.ForeignKey(AccionImpulsadaGrupo)
+    atencion_victima = models.ForeignKey(AtencionVictima)
+    denuncia_violencia = models.ForeignKey(DenunciaViolencia)
+    atencion_victima_albergue = models.ForeignKey(AtencionVictimaAlbergue)
+    referencia_contra_ref = models.ForeignKey(ReferenciaContraRef)
+    accion_promueven_intercambio = models.ForeignKey(AccionPromuevenIntercambio)
+    accion_fortalece_capacidad = models.ForeignKey(AccionFortaleceCapacidad)
+    estado_capacidad_admitica = models.ForeignKey(EstadoCapacidadAdmitiva)
+    accion_fortalece_cap_admitiva = models.ForeignKey(AccionFortaleceCapAdmitiva)'''
+
 class AccionEfectuadaMedio(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_MEDIO)
     cantidad = models.IntegerField(VERBOSE_CANTIDAD)
     participantes = models.IntegerField(VERBOSE_PARTICIPAN)
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -65,6 +93,7 @@ class AccionEfectuadaRegion(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_REGION)
     cantidad = models.IntegerField(VERBOSE_CANTIDAD)
     participantes = models.IntegerField(VERBOSE_PARTICIPAN)
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -77,6 +106,7 @@ class AccionEfectuadaDocumento(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_DOCS)
     cantidad = models.IntegerField('Número de iniciativas promovidas para posicionar el tema de la equidad e igualdad')
     participantes = models.IntegerField('Numero de iniciativas aprobadas e implementadas para posicionar el tema de la equidad e igualdad')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -90,6 +120,7 @@ class ParticipacionComisionDecision(models.Model):
     cantidad_instancias = models.IntegerField('Número de instancias donde participan para mejorar la toma de decisiones sobre DDSSRR y equidad')
     cantidad_acciones_promovidas = models.IntegerField('Número de acciones promovidas para mejorar la toma de decisiones sobre DDSSRR y equidad')
     cantidad_acciones_efectivas = models.IntegerField('Número de acciones efectivas para mejorar la toma de decisiones sobre DDSSRR y equidad generando cambios')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -106,6 +137,7 @@ class ParticipacionComisionAgenda(models.Model):
                                                  'para mantener en la agenda pública la defensa DDSSRR', db_column='cant_acc_prom')
     cantidad_acciones_efec = models.IntegerField('Número de acciones efectivas para mantener ' \
                                                  'en la agenda pública la defensa DDSSRR y generar cambios', db_column='cant_acc_efec')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -119,6 +151,7 @@ class AccionObservatorio(models.Model):
     cantidad_observatorios = models.IntegerField('Número de observatorios funcionando para la vigilancia de la restitución, creación y aplicación de leyes, políticas, acciones y servicios en torno a los DDSSRR')
     cantidad_acciones_realiz = models.IntegerField('Número de acciones realizadas en marco de los observatorios')
     cantidad_acciones_web = models.IntegerField('Número de acciones visibilizadas, divulgadas y colocadas en la página web de FED')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -140,6 +173,7 @@ class DenunciaSocialRealizada(models.Model):
     persona_vih = models.IntegerField(ver_vih_sida)
     persona_racial = models.IntegerField(ver_racial)
     persona_joven = models.IntegerField(ver_joven)
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -155,6 +189,7 @@ class DenunciaSocialEfectiva(models.Model):
     persona_vih = models.IntegerField(ver_vih_sida)
     persona_racial = models.IntegerField(ver_racial)
     persona_joven = models.IntegerField(ver_joven)
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -164,7 +199,7 @@ class DenunciaSocialEfectiva(models.Model):
         verbose_name_plural = 'Denuncias sociales efectivas'
 
 CHOICE_JURIDICA = (('denuncia_juridica_realizada', 'Número de acciones de denuncias jurídicas realizadas'),
-                   ('denuncia_juridica_atendida', 'Número de denuncias jurídicas atendidas'),)
+                   ('denuncia_juridica_atendida', 'Número de denuncias jurídicas atendidas'), )
 
 class DenunciaJuridica(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_JURIDICA)
@@ -173,6 +208,7 @@ class DenunciaJuridica(models.Model):
     persona_vih = models.IntegerField(ver_vih_sida)
     persona_racial = models.IntegerField(ver_racial)
     persona_joven = models.IntegerField(ver_joven)
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -189,7 +225,7 @@ MEDIOS_REFLEXION = (('taller_formacion', 'Talleres de formación'),
                     ('teatros', 'Teatros'),
                     ('circulo_estudio', 'Círculos de estudio'),
                     ('actos_cultura', 'Actos culturales'),
-                    ('reunion_comunitaria', 'Reuniones comunitarias'),)
+                    ('reunion_comunitaria', 'Reuniones comunitarias'), )
 
 class AccionRealizadaReflexion(models.Model):
     accion = models.CharField(max_length=100, choices=MEDIOS_REFLEXION)
@@ -200,6 +236,7 @@ class AccionRealizadaReflexion(models.Model):
     vih = models.IntegerField('Con las personas con VIH y SIDA')
     etnica = models.IntegerField('Con las personas de población étnica e indigena')
     discapacidad = models.IntegerField('Con las personas con discapacidad')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -208,8 +245,8 @@ class AccionRealizadaReflexion(models.Model):
         verbose_name = 'Acción realizada para reflexión de pob'
         verbose_name_plural = 'Acciones realizadas para reflexión de pob'
         
-PERSONAS_REFLEXION = (('personas_participaron', 'Número de personas que participaron en las acciones realizadas para reflexionar sobre derechos sexuales y reproductivos'),
-                      ('personas_participaron_toman_decision', 'Número de personas que participaron y que actualmente pueden tomar decisiones sexuales y reproductivas de manera autonoma y bien informada'),)
+PERSONAS_REFLEXION = (('personas_participaron', 'No. de participantes acciones derechos sexuales'),
+                      ('personas_participaron_toman_decision', 'No. participantes toman decisiones sex.'), )
 
 class AccionRelizadaReflexionPersona(models.Model):
     accion = models.CharField(max_length=100, choices=PERSONAS_REFLEXION)
@@ -220,6 +257,7 @@ class AccionRelizadaReflexionPersona(models.Model):
     vih = models.IntegerField('Las personas con VIH y SIDA')
     etnica = models.IntegerField('Las personas de población étnica e indigena')
     discapacidad = models.IntegerField('Las personas con discapacidad')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -240,7 +278,7 @@ MEDIOS2 = (('tv', 'Campañas por Televisión'),
            ('reunion_comu', 'Reuniones comunitarias'),
            ('material_educativo', 'Materiales educativos'),
            ('reunion_autorid', 'Reuniones con autoridades'),
-           ('consejeria', 'Consejería y promotoría social'),)
+           ('consejeria', 'Consejería y promotoría social'), )
 
 class AccionImpulsadaOrg(models.Model):
     accion = models.CharField(max_length=100, choices=MEDIOS2)
@@ -248,6 +286,7 @@ class AccionImpulsadaOrg(models.Model):
     acciones_cambios_actitud = models.IntegerField('Número de acciones que lograron cambios de actitud de los grupos metas para la prevención de violencia basada en género')
     acciones_impulsadas_masculinidad = models.IntegerField('Numero y tipo de acciones impulsadas por las Org. para promover masculinidad libre de prejuicios y violencia')
     acciones_cambios_masculinidad = models.IntegerField('Numero de acciones que lograron cambio de actitud de los grupos metas hacia la masculinidad libre de prejuicios y violencia')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -266,6 +305,7 @@ class AccionImpulsadaGrupo(models.Model):
     acciones_cambio_etnia = models.IntegerField('Número de acciones que lograron cambio de actitud en grupos étnicos y pueblos indígenas')
     acciones_emprendidas_jovenes = models.IntegerField('Número de acciones emprendidas por los y las jóvenes para la prevención de la violencia basada en género')
     acciones_cambio_jovenes = models.IntegerField('Número de acciones que lograron cambio de actitud en los y las jóvenes ')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -274,14 +314,15 @@ class AccionImpulsadaGrupo(models.Model):
         verbose_name = 'Acción impulsada por grupos'
         verbose_name_plural = 'Acciones impulsadas por grupos'
 
-CHOICE_VICTIMAS = (('casos_atendidos', 'Número de casos de victimas de violencia de género atendidos por as organizaciones contrapartes del FED'),
-                   ('casos_resueltos', 'Número de casos resueltos con resultados y diagnósticos favorables'), )
+CHOICE_VICTIMAS = (('casos_atendidos', 'No. casos de victimas de violencia de género atendidos'),
+                   ('casos_resueltos', 'No. casos resueltos con resultados y diagnósticos favorables'),)
 
-class AtencionVictimas(models.Model):
+class AtencionVictima(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_VICTIMAS)
     servicio_salud = models.IntegerField('A través de los servicios de atención en salud')
     servicio_psicologia = models.IntegerField('A través de los servicios de atención en psicología')
     sevicio_legal = models.IntegerField('A través de los servicios de atención legal')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -290,14 +331,15 @@ class AtencionVictimas(models.Model):
         verbose_name = 'Atención de victimas x/violencia'
         verbose_name_plural = 'Atenciones de victimas x/violencia'
 
-CHOICE_DENUNCIAS = (('denuncias_interpuestas', 'Número de denuncias interpuestas por victimas de violencia en las instancias que administran justicia como producto de acciones de organizaciones contrapartes del FED'),
-                    ('denuncias_recibidas', 'Número de denuncias interpuestas que han sido recibidas y atendidas por las instancias correspondientes'),
-                    ('denuncias_sancion', 'Número de casos que concluyen con sanción penal como producto de las acciones de las organizaciones de la sociedad civil apoyadas por el FED'), )
+CHOICE_DENUNCIAS = (('denuncias_interpuestas', 'No. denuncias interpuestas a instancias de justicia '),
+                    ('denuncias_recibidas', 'No. denuncias que han sido recibidas y atendidas'),
+                    ('denuncias_sancion', 'No. casos que concluyen con sanción penal'),)
 
-class DenunciasViolencia(models.Model):
+class DenunciaViolencia(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_DENUNCIAS)
     comisariato = models.IntegerField('Comisariato Policía')
     fiscalia = models.IntegerField('Fiscalía')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -306,14 +348,15 @@ class DenunciasViolencia(models.Model):
         verbose_name = 'Denuncia por violencia de género'
         verbose_name_plural = 'Denuncias por violencia de género'
 
-CHOICE_ALBERGUES = (('vitimas_atendidas', 'Número de victimas de violencia de género atendidas en los albergues por las organizaciones contrapartes de FED'),
-                    ('casos_logrados', 'Número de casos de víctimas atendidas en albergue quienes logran una construcción de nuevos proyectos de vida'),)
+CHOICE_ALBERGUES = (('vitimas_atendidas', 'No. victimas de violencia de género atendidas'),
+                    ('casos_logrados', 'No. de casos quienes logran nuevos proyectos de vida'), )
 
-class AtencionVictimasAlbergues(models.Model):
+class AtencionVictimaAlbergue(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_ALBERGUES)
     mujeres = models.IntegerField()
     jovenes = models.IntegerField('Jóvenes')
     ninos_ninas = models.IntegerField('Niños y Niñas')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -322,14 +365,15 @@ class AtencionVictimasAlbergues(models.Model):
         verbose_name = 'Atención de casos en Albergues'
         verbose_name_plural = 'Atenciones de casos en Albergues'
 
-CHOICE_REF = (('referencia_realiza', 'Número de referencias y contra-referencias que realizan las organizaciones contrapartes del FED con instituciones públicas'),
-              ('contra_ref_atendidas', 'Número de contra-referencias atendidas por el profesional pertinente'),)
+CHOICE_REF = (('referencia_realiza', 'Número de referencias y contra-referencias'),
+              ('contra_ref_atendidas', 'Número de contra-referencias atendidas'), )
 
 class ReferenciaContraRef(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_REF)
     mujeres = models.IntegerField()
     jovenes = models.IntegerField('Jóvenes')
     ninos_ninas = models.IntegerField('Niños y Niñas')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -343,13 +387,14 @@ MEDIOS3 = (('talleres', 'Talleres'),
            ('intercambio_xp', 'Intercambio de experiencias'),
            ('asesoria', 'Asesoría especializada'),
            ('estudios', 'Estudios colectivos'),
-           ('visitas', 'Visitas de seguimiento'),)
+           ('visitas', 'Visitas de seguimiento'), )
 
 class AccionPromuevenIntercambio(models.Model):
     accion = models.CharField(max_length=100, choices=MEDIOS3)
     acciones_org_part = models.IntegerField('Número de acciones donde la organización participó para promover el intercambio y gestión de conocimientos entre OSC')
     participantes = models.IntegerField('Número de participantes por parte de la organización en las acciones del intercambio y gestión d conocimiento entre las OSC')
     acciones_efectivas = models.IntegerField('Número de acciones que fueron efectivas para promover el intercambio y la gestión de conocimiento entre las OSC')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -363,6 +408,7 @@ class AccionFortaleceCapacidad(models.Model):
     acciones = models.IntegerField('Número de acciones para fortalecer las capacidades de las organizaciones para medir y reportar los indicadores propuestos')
     participantes = models.IntegerField('Número de participantes de la organización en las acciones para fortalecer las capacidades para medir y reportar los indicadores propuestos')
     acciones_efectivas = models.IntegerField('Número de acciones que fueron efectivas para fortalecer las capacidades de las organizaciones para medir y repotar los indicadores propuestos')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -371,14 +417,15 @@ class AccionFortaleceCapacidad(models.Model):
         verbose_name = 'Acción p/fortalecer capacidad'
         verbose_name_plural = 'Acciones p/fortalecer capacidades'
 
-CHOICE1 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un sistema pero no es eficiente'), ('no_hay', 'No hay'), )
-CHOICE2 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un plan estratégico, pero no se utiliza'), ('no_hay', 'No hay'),)
-CHOICE3 = (('ninguna', 'Ninguna'), ('proceso', 'En proceso'), ('logrado', 'Logrado'), )
+CHOICE1 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un sistema pero no es eficiente'), ('no_hay', 'No hay'),)
+CHOICE2 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un plan estratégico, pero no se utiliza'), ('no_hay', 'No hay'), )
+CHOICE3 = (('ninguna', 'Ninguna'), ('proceso', 'En proceso'), ('logrado', 'Logrado'),)
 
 class EstadoCapacidadAdmitiva(models.Model):
     sistema = models.CharField(max_length=100, choices=CHOICE1, verbose_name='Cuenta con un sistema admitivo contable')
     plan = models.CharField(max_length=100, choices=CHOICE2, verbose_name='Utilizan su plan estratégico para mejorar sus capacidades de gestión en desarrollo de proyectos, consecusión y ejecución de recursos, comunicación')
     organizaciones = models.CharField(max_length=100, choices=CHOICE3, verbose_name='Organizaciones de la diversidad sexual han obtenido la personería jurídica por el apoyo de la organización')
+    encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
         verbose_name = 'Estado capacidad admitiva'
@@ -388,13 +435,14 @@ CHOICE4 = (('talleres', 'Talleres'),
            ('intercambio_xp', 'Intercambio de experiencias'),
            ('asesoria', 'Asesoría especializada'),
            ('pasantia', 'Pasantía'),
-           ('visitas', 'Visitas de seguimiento'), )
+           ('visitas', 'Visitas de seguimiento'),)
 
-class AccionFortaleceCapacidad(models.Model):
+class AccionFortaleceCapAdmitiva(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE4)
     mejorar_sistema = models.IntegerField('Para mejorar el sistema administratico contable')
     mejorar_plan = models.IntegerField('Para mejorar el plan estratégico y gestión de proyectos a partir del plan estratégico')
-    mejorar_apoyo =models.IntegerField('Para apoyar la obtención de personería jurídica de las organizaciones de la diversidad sexual')
+    mejorar_apoyo = models.IntegerField('Para apoyar la obtención de personería jurídica de las organizaciones de la diversidad sexual')
+    encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
         return self.accion
@@ -402,3 +450,8 @@ class AccionFortaleceCapacidad(models.Model):
     class Meta:
         verbose_name = 'Acción para fortalecer capacidad'
         verbose_name_plural = 'Acciones p/fortalecer capacidad'
+
+
+
+    
+
