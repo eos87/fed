@@ -10,20 +10,20 @@ CHOICE_MEDIO = (('estudios', 'Estudios'),
                 ('campania_radio', 'Campañas en radio'),
                 ('talleres', 'Talleres de formación'),
                 ('manifestaciones', 'Manifestaciones'),
-                ('reuniones', 'Reuniones'),)
+                ('reuniones', 'Reuniones'), )
 
 CHOICE_REGION = (('comunitario', 'A nivel comunitario'),
                  ('municipal', 'A nivel municipal'),
                  ('departamental', 'A nivel departamental'),
                  ('regional', 'A nivel regional'),
-                 ('nacional', 'A nivel nacional'), )
+                 ('nacional', 'A nivel nacional'),)
                  
 CHOICE_DOCS = (('leyes', 'Leyes'),
                ('codigos', 'Códigos'),
                ('reglamentos', 'Reglamentos'),
                ('normativas', 'Normativas'),
                ('ordenanzas', 'Ordenanzas'),
-               ('acuerdos', 'Acuerdos'),)
+               ('acuerdos', 'Acuerdos'), )
 
 VERBOSE_CANTIDAD = 'Número de acciones efectuadas para fomentar la existencia y aplicación efectiva de políticas públicas para posicionar el tema de la equidad e igualdad'
 VERBOSE_PARTICIPAN = 'Participantes en las acciones'
@@ -164,7 +164,7 @@ class DenunciaSocialEfectiva(models.Model):
         verbose_name_plural = 'Denuncias sociales efectivas'
 
 CHOICE_JURIDICA = (('denuncia_juridica_realizada', 'Número de acciones de denuncias jurídicas realizadas'),
-                   ('denuncia_juridica_atendida', 'Número de denuncias jurídicas atendidas'), )
+                   ('denuncia_juridica_atendida', 'Número de denuncias jurídicas atendidas'),)
 
 class DenunciaJuridica(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_JURIDICA)
@@ -189,7 +189,7 @@ MEDIOS_REFLEXION = (('taller_formacion', 'Talleres de formación'),
                     ('teatros', 'Teatros'),
                     ('circulo_estudio', 'Círculos de estudio'),
                     ('actos_cultura', 'Actos culturales'),
-                    ('reunion_comunitaria', 'Reuniones comunitarias'), )
+                    ('reunion_comunitaria', 'Reuniones comunitarias'),)
 
 class AccionRealizadaReflexion(models.Model):
     accion = models.CharField(max_length=100, choices=MEDIOS_REFLEXION)
@@ -209,7 +209,7 @@ class AccionRealizadaReflexion(models.Model):
         verbose_name_plural = 'Acciones realizadas para reflexión de pob'
         
 PERSONAS_REFLEXION = (('personas_participaron', 'Número de personas que participaron en las acciones realizadas para reflexionar sobre derechos sexuales y reproductivos'),
-                      ('personas_participaron_toman_decision', 'Número de personas que participaron y que actualmente pueden tomar decisiones sexuales y reproductivas de manera autonoma y bien informada'), )
+                      ('personas_participaron_toman_decision', 'Número de personas que participaron y que actualmente pueden tomar decisiones sexuales y reproductivas de manera autonoma y bien informada'),)
 
 class AccionRelizadaReflexionPersona(models.Model):
     accion = models.CharField(max_length=100, choices=PERSONAS_REFLEXION)
@@ -240,7 +240,7 @@ MEDIOS2 = (('tv', 'Campañas por Televisión'),
            ('reunion_comu', 'Reuniones comunitarias'),
            ('material_educativo', 'Materiales educativos'),
            ('reunion_autorid', 'Reuniones con autoridades'),
-           ('consejeria', 'Consejería y promotoría social'), )
+           ('consejeria', 'Consejería y promotoría social'),)
 
 class AccionImpulsadaOrg(models.Model):
     accion = models.CharField(max_length=100, choices=MEDIOS2)
@@ -275,7 +275,7 @@ class AccionImpulsadaGrupo(models.Model):
         verbose_name_plural = 'Acciones impulsadas por grupos'
 
 CHOICE_VICTIMAS = (('casos_atendidos', 'Número de casos de victimas de violencia de género atendidos por as organizaciones contrapartes del FED'),
-                   ('casos_resueltos', 'Número de casos resueltos con resultados y diagnósticos favorables'),)
+                   ('casos_resueltos', 'Número de casos resueltos con resultados y diagnósticos favorables'), )
 
 class AtencionVictimas(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_VICTIMAS)
@@ -292,7 +292,7 @@ class AtencionVictimas(models.Model):
 
 CHOICE_DENUNCIAS = (('denuncias_interpuestas', 'Número de denuncias interpuestas por victimas de violencia en las instancias que administran justicia como producto de acciones de organizaciones contrapartes del FED'),
                     ('denuncias_recibidas', 'Número de denuncias interpuestas que han sido recibidas y atendidas por las instancias correspondientes'),
-                    ('denuncias_sancion', 'Número de casos que concluyen con sanción penal como producto de las acciones de las organizaciones de la sociedad civil apoyadas por el FED'),)
+                    ('denuncias_sancion', 'Número de casos que concluyen con sanción penal como producto de las acciones de las organizaciones de la sociedad civil apoyadas por el FED'), )
 
 class DenunciasViolencia(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_DENUNCIAS)
@@ -307,7 +307,7 @@ class DenunciasViolencia(models.Model):
         verbose_name_plural = 'Denuncias por violencia de género'
 
 CHOICE_ALBERGUES = (('vitimas_atendidas', 'Número de victimas de violencia de género atendidas en los albergues por las organizaciones contrapartes de FED'),
-                    ('casos_logrados', 'Número de casos de víctimas atendidas en albergue quienes logran una construcción de nuevos proyectos de vida'), )
+                    ('casos_logrados', 'Número de casos de víctimas atendidas en albergue quienes logran una construcción de nuevos proyectos de vida'),)
 
 class AtencionVictimasAlbergues(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_ALBERGUES)
@@ -323,7 +323,7 @@ class AtencionVictimasAlbergues(models.Model):
         verbose_name_plural = 'Atenciones de casos en Albergues'
 
 CHOICE_REF = (('referencia_realiza', 'Número de referencias y contra-referencias que realizan las organizaciones contrapartes del FED con instituciones públicas'),
-              ('contra_ref_atendidas', 'Número de contra-referencias atendidas por el profesional pertinente'), )
+              ('contra_ref_atendidas', 'Número de contra-referencias atendidas por el profesional pertinente'),)
 
 class ReferenciaContraRef(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_REF)
@@ -337,3 +337,68 @@ class ReferenciaContraRef(models.Model):
     class Meta:
         verbose_name = 'Referencia y contra-referencia'
         verbose_name_plural = 'Referencias y contra-referencias'
+
+MEDIOS3 = (('talleres', 'Talleres'),
+           ('foros', 'Foros'),
+           ('intercambio_xp', 'Intercambio de experiencias'),
+           ('asesoria', 'Asesoría especializada'),
+           ('estudios', 'Estudios colectivos'),
+           ('visitas', 'Visitas de seguimiento'),)
+
+class AccionPromuevenIntercambio(models.Model):
+    accion = models.CharField(max_length=100, choices=MEDIOS3)
+    acciones_org_part = models.IntegerField('Número de acciones donde la organización participó para promover el intercambio y gestión de conocimientos entre OSC')
+    participantes = models.IntegerField('Número de participantes por parte de la organización en las acciones del intercambio y gestión d conocimiento entre las OSC')
+    acciones_efectivas = models.IntegerField('Número de acciones que fueron efectivas para promover el intercambio y la gestión de conocimiento entre las OSC')
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Acción que promueve el intercambio'
+        verbose_name_plural = 'Acciones que promueven el intercambio'
+
+class AccionFortaleceCapacidad(models.Model):
+    accion = models.CharField(max_length=100, choices=MEDIOS3)
+    acciones = models.IntegerField('Número de acciones para fortalecer las capacidades de las organizaciones para medir y reportar los indicadores propuestos')
+    participantes = models.IntegerField('Número de participantes de la organización en las acciones para fortalecer las capacidades para medir y reportar los indicadores propuestos')
+    acciones_efectivas = models.IntegerField('Número de acciones que fueron efectivas para fortalecer las capacidades de las organizaciones para medir y repotar los indicadores propuestos')
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Acción p/fortalecer capacidad'
+        verbose_name_plural = 'Acciones p/fortalecer capacidades'
+
+CHOICE1 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un sistema pero no es eficiente'), ('no_hay', 'No hay'), )
+CHOICE2 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un plan estratégico, pero no se utiliza'), ('no_hay', 'No hay'),)
+CHOICE3 = (('ninguna', 'Ninguna'), ('proceso', 'En proceso'), ('logrado', 'Logrado'), )
+
+class EstadoCapacidadAdmitiva(models.Model):
+    sistema = models.CharField(max_length=100, choices=CHOICE1, verbose_name='Cuenta con un sistema admitivo contable')
+    plan = models.CharField(max_length=100, choices=CHOICE2, verbose_name='Utilizan su plan estratégico para mejorar sus capacidades de gestión en desarrollo de proyectos, consecusión y ejecución de recursos, comunicación')
+    organizaciones = models.CharField(max_length=100, choices=CHOICE3, verbose_name='Organizaciones de la diversidad sexual han obtenido la personería jurídica por el apoyo de la organización')
+
+    class Meta:
+        verbose_name = 'Estado capacidad admitiva'
+        verbose_name_plural = 'Estado capacidad admitiva'
+
+CHOICE4 = (('talleres', 'Talleres'),
+           ('intercambio_xp', 'Intercambio de experiencias'),
+           ('asesoria', 'Asesoría especializada'),
+           ('pasantia', 'Pasantía'),
+           ('visitas', 'Visitas de seguimiento'), )
+
+class AccionFortaleceCapacidad(models.Model):
+    accion = models.CharField(max_length=100, choices=CHOICE4)
+    mejorar_sistema = models.IntegerField('Para mejorar el sistema administratico contable')
+    mejorar_plan = models.IntegerField('Para mejorar el plan estratégico y gestión de proyectos a partir del plan estratégico')
+    mejorar_apoyo =models.IntegerField('Para apoyar la obtención de personería jurídica de las organizaciones de la diversidad sexual')
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Acción para fortalecer capacidad'
+        verbose_name_plural = 'Acciones p/fortalecer capacidad'
