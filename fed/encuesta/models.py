@@ -66,8 +66,7 @@ class Resultado(models.Model):
         verbose_name_plural = 'Resultados'
 
 class ResultadoTrabajado(models.Model):
-    resultado = models.ForeignKey(Resultado)
-    departamento = models.ManyToManyField(Departamento)
+    resultado = models.ForeignKey(Resultado)    
     municipio = models.ManyToManyField(Municipio)
     encuesta = models.ForeignKey(Encuesta)
 

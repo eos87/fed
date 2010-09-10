@@ -115,9 +115,17 @@ class AccionFortaleceCapAdmitivaInline(admin.TabularInline):
 
 class ResultadoTrabajadoInline(admin.TabularInline):
     model = ResultadoTrabajado
+    filter_horizontal = ('municipio',)
     extra = 1
 
 class EncuestaAdmin(admin.ModelAdmin):
+    #class Media:
+        #css = {
+        #    "all": ("/files/css/.css",)
+        #}
+        #js = ('/files/js/jquery.min.js',
+        #      '/files/js/filter.js')
+
     save_on_top = True
     actions_on_top = True
     inlines = [
