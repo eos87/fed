@@ -65,5 +65,5 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'fed.lugar',
     'fed.encuesta',
-
+    'south',
 )

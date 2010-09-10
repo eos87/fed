@@ -52,29 +52,31 @@ class Proyecto(models.Model):
 class Encuesta(models.Model):
     organizacion = models.ForeignKey(Organizacion)
     proyecto = models.ForeignKey(Proyecto)
-    fecha_inicio = models.DateTimeField(verbose_name='Fecha de inicio del período de informe')
-    fecha_fin = models.DateTimeField(verbose_name='Fecha final del período de informe')
-    #accion_efectuada_medio = models.ForeignKey(AccionEfectuadaMedio)
-    '''accion_efectuada_region = models.ForeignKey(AccionEfectuadaRegion)
-    accion_efectuada_documento = models.ForeignKey(AccionEfectuadaDocumento)
-    participacion_comision_desicion = models.ForeignKey(ParticipacionComisionDecision)
-    participacion_comision_agenda = models.ForeignKey(ParticipacionComisionAgenda)
-    accion_observatorio = models.ForeignKey(AccionObservatorio)
-    denuncia_social_realizada = models.ForeignKey(DenunciaSocialRealizada)
-    denuncia_social_efectiva = models.ForeignKey(DenunciaSocialEfectiva)
-    denuncia_juridica = models.ForeignKey(DenunciaJuridica)
-    accion_realizada_reflexion = models.ForeignKey(AccionRealizadaReflexion)
-    accion_realizada_reflexion_persona = models.ForeignKey(AccionRelizadaReflexionPersona)
-    accion_impulsada_org = models.ForeignKey(AccionImpulsadaOrg)
-    accion_impulsada_grupo = models.ForeignKey(AccionImpulsadaGrupo)
-    atencion_victima = models.ForeignKey(AtencionVictima)
-    denuncia_violencia = models.ForeignKey(DenunciaViolencia)
-    atencion_victima_albergue = models.ForeignKey(AtencionVictimaAlbergue)
-    referencia_contra_ref = models.ForeignKey(ReferenciaContraRef)
-    accion_promueven_intercambio = models.ForeignKey(AccionPromuevenIntercambio)
-    accion_fortalece_capacidad = models.ForeignKey(AccionFortaleceCapacidad)
-    estado_capacidad_admitica = models.ForeignKey(EstadoCapacidadAdmitiva)
-    accion_fortalece_cap_admitiva = models.ForeignKey(AccionFortaleceCapAdmitiva)'''
+    fecha_inicio = models.DateField(verbose_name='Fecha de inicio del período de informe')
+    fecha_fin = models.DateField(verbose_name='Fecha final del período de informe')
+
+class Resultado(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = 'Resultados'
+
+class ResultadoTrabajado(models.Model):
+    resultado = models.ForeignKey(Resultado)
+    departamento = models.ManyToManyField(Departamento)
+    municipio = models.ManyToManyField(Municipio)
+    encuesta = models.ForeignKey(Encuesta)
+
+    def __unicode__(self):
+        return self.resultado.nombre
+
+    class Meta:
+        verbose_name = 'Resultado trabajado'
+        verbose_name_plural = 'Resultados trabajados'
 
 class AccionEfectuadaMedio(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_MEDIO)
