@@ -11,6 +11,21 @@ admin.site.register(ParticipacionComisionDecision)
 admin.site.register(ParticipacionComisionAgenda)
 admin.site.register(DenunciaSocialRealizada)
 admin.site.register(DenunciaSocialEfectiva)
+admin.site.register(DenunciaJuridica)
+admin.site.register(AccionRealizadaReflexion)
+admin.site.register(AccionRelizadaReflexionPersona)
+admin.site.register(AccionImpulsadaOrg)
+admin.site.register(AccionImpulsadaGrupo)
+admin.site.register(AtencionVictima)
+admin.site.register(DenunciaViolencia)
+admin.site.register(AtencionVictimaAlbergue)
+admin.site.register(ReferenciaContraRef)
+admin.site.register(AccionPromuevenIntercambio)
+admin.site.register(AccionFortaleceCapacidad)
+admin.site.register(EstadoCapacidadAdmitiva)
+admin.site.register(AccionFortaleceCapAdmitiva)
+admin.site.register(Resultado)
+admin.site.register(ResultadoTrabajado)
 
 
 
@@ -38,7 +53,6 @@ class AccionObservatorioInline(admin.TabularInline):
     model = AccionObservatorio
     extra = 1
 
-#a partir de aqui los que no estan registrados en el admin
 class DenunciaSocialRealizadaInline(admin.TabularInline):
     model = DenunciaSocialRealizada
     extra = 1
@@ -51,84 +65,64 @@ class DenunciaJuridicaInline(admin.TabularInline):
     model = DenunciaJuridica
     extra = 1
 
-admin.site.register(DenunciaJuridica)
-
 class AccionRealizadaReflexionInline(admin.TabularInline):
     model = AccionRealizadaReflexion
     extra = 1
-
-admin.site.register(AccionRealizadaReflexion)
 
 class AccionRelizadaReflexionPersonaInline(admin.TabularInline):
     model = AccionRelizadaReflexionPersona
     extra = 1
 
-admin.site.register(AccionRelizadaReflexionPersona)
-
 class AccionImpulsadaOrgInline(admin.TabularInline):
     model = AccionImpulsadaOrg
     extra = 1
-
-admin.site.register(AccionImpulsadaOrg)
 
 class AccionImpulsadaGrupoInline(admin.TabularInline):
     model = AccionImpulsadaGrupo
     extra = 1
 
-admin.site.register(AccionImpulsadaGrupo)
-
 class AtencionVictimaInline(admin.TabularInline):
     model = AtencionVictima
     extra = 1
-
-admin.site.register(AtencionVictima)
 
 class DenunciaViolenciaInline(admin.TabularInline):
     model = DenunciaViolencia
     extra = 1
 
-admin.site.register(DenunciaViolencia)
-
 class AtencionVictimaAlbergueInline(admin.TabularInline):
     model = AtencionVictimaAlbergue
     extra = 1
-
-admin.site.register(AtencionVictimaAlbergue)
 
 class ReferenciaContraRefInline(admin.TabularInline):
     model = ReferenciaContraRef
     extra = 1
 
-admin.site.register(ReferenciaContraRef)
-
 class AccionPromuevenIntercambioInline(admin.TabularInline):
     model = AccionPromuevenIntercambio
     extra = 1
-
-admin.site.register(AccionPromuevenIntercambio)
 
 class AccionFortaleceCapacidadInline(admin.TabularInline):
     model = AccionFortaleceCapacidad
     extra = 1
 
-admin.site.register(AccionFortaleceCapacidad)
-
 class EstadoCapacidadAdmitivaInline(admin.TabularInline):
     model = EstadoCapacidadAdmitiva
     max_num = 1
-
-admin.site.register(EstadoCapacidadAdmitiva)
 
 class AccionFortaleceCapAdmitivaInline(admin.TabularInline):
     model = AccionFortaleceCapAdmitiva
     extra = 1
 
-admin.site.register(AccionFortaleceCapAdmitiva)
+class ResultadoTrabajadoInline(admin.TabularInline):
+    model = ResultadoTrabajado
+    extra = 1
 
 class EncuestaAdmin(admin.ModelAdmin):
     save_on_top = True
     actions_on_top = True
-    inlines = [AccionEfectuadaMedioInline,
+    inlines = [
+        ResultadoTrabajadoInline,
+        AccionEfectuadaMedioInline,
         AccionEfectuadaRegionInline,
         AccionEfectuadaDocumentoInline,
         ParticipacionComisionDecisionInline,
