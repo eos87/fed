@@ -22,7 +22,7 @@ class Municipio(models.Model):
     longitud = models.DecimalField('Longitud', max_digits=8, decimal_places=5, blank=True, null = True)
 
     def __unicode__(self):
-        return self.nombre
+        return self.departamento.nombre + ' - ' + self.nombre
 
     class Meta:
         verbose_name_plural = "Municipios"
@@ -37,3 +37,4 @@ class Municipio(models.Model):
 
     #def __unicode__(self):
         #return self.nombre
+
