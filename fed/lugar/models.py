@@ -24,10 +24,11 @@ class Municipio(models.Model):
     longitud = models.DecimalField('Longitud', max_digits=8, decimal_places=5, blank=True, null = True)
 
     def __unicode__(self):
-        return '%s - %s' % (self.departamento, self.nombre)
+        return '%s - %s' % (self.departamento.nombre, self.nombre)
 
     class Meta:
         verbose_name_plural = "Municipios"
+        ordering = ['departamento__nombre',]
 
 #class Comunidad(models.Model):
     #municipio = models.ForeignKey(Municipio)

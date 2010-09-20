@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<script type="text/javascript">
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(13,-85);
+        var myOptions = {
+            zoom: 7,
+            disableDefaultUI: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);        
+        {% for m in munis %}
+        var marker{{m.pk}} = new google.maps.Marker({
+            position: new google.maps.LatLng({{m.latitud}},{{m.longitud}}),
+            map: map,
+            title:"{{m.nombre}}"
+        });
+        {% endfor %}
+    }
+</script>
+{% endblock %}
+{% block contenido %}
+<div>
+    <form action="." method="POST">{% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type="submit" value="Enviar">
+    </form>
+</div>
+{% if bandera == 1 %}
+{% for a in munis %}
+{{a}}
+{% for r in a.resultadotrabajado_set.all %}
+{{r}}
+{% endfor %}
+{% endfor %}
+<div class="mapa">
+    <div id="map_canvas">
+
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from django.db import models
-from fed.lugar.models import *
+from fed.lugar.models import Municipio, Departamento
 
 CHOICE_MEDIO = (('estudios', 'Estudios'),
                 ('foros', 'Foros'),
