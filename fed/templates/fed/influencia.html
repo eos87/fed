@@ -12,7 +12,7 @@
         var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);        
         {% for m in munis %}
         var marker{{m.pk}} = new google.maps.Marker({
-            position: new google.maps.LatLng({{m.latitud}},{{m.longitud}}),
+            position: new google.maps.LatLng({{m.latitud|safe}},{{m.longitud|safe}}),
             map: map,
             title:"{{m.nombre}}"
         });
