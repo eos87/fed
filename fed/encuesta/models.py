@@ -41,7 +41,7 @@ class Proyecto(models.Model):
     organizacion = models.ForeignKey(Organizacion)
     nombre = models.CharField(max_length=150, unique=True)
     codigo = models.CharField(max_length=150)
-    municipio = models.ManyToManyField(Municipio)
+    descripcion = models.TextField()
 
     def __unicode__(self):
         return self.nombre
