@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block extratitle %}Area de influencia{% endblock %}
 {% block extrahead %}
 <script type="text/javascript">
     function initialize() {
@@ -9,7 +10,7 @@
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);        
+        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
         {% for m in munis %}
         var marker{{m.pk}} = new google.maps.Marker({
             position: new google.maps.LatLng({{m.latitud|safe}},{{m.longitud|safe}}),
@@ -43,3 +44,4 @@
 </div>
 {% endif %}
 {% endblock %}
+
