@@ -2,6 +2,11 @@
 {% block extrahead %}
 <script type="text/javascript">
     function initialize() {
+        var infowindow = new google.maps.InfoWindow(
+        { 
+            size: new google.maps.Size(50,50)
+        });
+
         var myLatlng = new google.maps.LatLng(13,-85);
         var myOptions = {
             zoom: 7,
@@ -15,6 +20,10 @@
             position: new google.maps.LatLng({{m.latitud|safe}},{{m.longitud|safe}}),
             map: map,
             title:"{{m.nombre}}"
+        });
+        google.maps.event.addListener(marker{{m.pk}}, 'click', function() {
+            infowindow.open(map,marker{{m.pk}});
+            infowindow.setContent('{{m.nombre}}');
         });
         {% endfor %}
     }
