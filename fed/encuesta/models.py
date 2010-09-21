@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 from django.db import models
+from django.template.defaultfilters import slugify
 from fed.lugar.models import Municipio, Departamento
+
 
 CHOICE_MEDIO = (('estudios', 'Estudios'),
                 ('foros', 'Foros'),
@@ -41,6 +43,7 @@ class Proyecto(models.Model):
     organizacion = models.ForeignKey(Organizacion)
     nombre = models.CharField(max_length=150, unique=True)
     codigo = models.CharField(max_length=150)
+    descripcion = models.TextField()
     municipio = models.ManyToManyField(Municipio)
 
     def __unicode__(self):
@@ -64,6 +67,22 @@ class Resultado(models.Model):
 
     class Meta:
         verbose_name_plural = 'Resultados'
+
+class Indicador(models.Model):
+    resultado = models.ForeignKey(Resultado)
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    slug = models.SlugField(unique=True, null=True, editable=False)
+    
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = 'Indicadores'
+
+    def save(self, force_insert=False, force_update=False):
+        self.slug = slugify(self.nombre)
+        super(Indicador, self).save(force_insert, force_update)
 
 class ResultadoTrabajado(models.Model):
     resultado = models.ForeignKey(Resultado)    

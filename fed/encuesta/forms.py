@@ -10,4 +10,10 @@ class InfluenciaForm(forms.Form):
     desde = forms.DateField(label='Desde')
     hasta = forms.DateField(label='Hasta')
 
+class IndicadoresForm(forms.Form):
+    organizacion = forms.ModelMultipleChoiceField(queryset=Organizacion.objects.all(), label='Organizaciones')#, widget=forms.CheckboxSelectMultiple)
+    municipio = forms.ModelMultipleChoiceField(queryset=Municipio.objects.all(), label='Municipios')
+    desde = forms.DateField(label='Desde')
+    hasta = forms.DateField(label='Hasta')
+
 

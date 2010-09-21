@@ -3,10 +3,8 @@
 {% block extrahead %}
 <script type="text/javascript">
     function initialize() {
-        var infowindow = new google.maps.InfoWindow(
-        { 
-            size: new google.maps.Size(50,50)
-        });
+        //definimos el popup
+        var infowindow = new google.maps.InfoWindow();
 
         var myLatlng = new google.maps.LatLng(13,-85);
         var myOptions = {
@@ -16,15 +14,15 @@
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        {% for m in munis %}
+        {% for m, values in municipios.iteritems %}
         var marker{{m.pk}} = new google.maps.Marker({
             position: new google.maps.LatLng({{m.latitud|safe}},{{m.longitud|safe}}),
             map: map,
             title:"{{m.nombre}}"
         });
         google.maps.event.addListener(marker{{m.pk}}, 'click', function() {
-            infowindow.open(map,marker{{m.pk}});
-            infowindow.setContent('{{m.nombre}}');
+            infowindow.open(map, marker{{m.pk}});
+            infowindow.setContent('<div class="infowindow">{{m.nombre}}<br><ul>{% for p in values %}<li>{{p}}</li>{% endfor %}</ul></div>');
         });
         {% endfor %}
     }
@@ -40,12 +38,6 @@
     </form>
 </div>
 {% if bandera == 1 %}
-{% for a in munis %}
-{{a}}
-{% for r in a.resultadotrabajado_set.all %}
-{{r}}
-{% endfor %}
-{% endfor %}
 <div class="mapa">
     <div id="map_canvas">
 

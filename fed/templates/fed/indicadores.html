@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block extratitle %}Avance de indicadores{% endblock %}
+{% block extrahead %}
+<link type="text/css" rel="stylesheet"  href="/files/css/django-admin-widgets.css" >
+<script type="text/javascript" src="/files/js/django-admin.multiselect.js"></script>
+<script type="text/javascript" src="/files/js/jsi18n.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        jQuery.each($("#id_municipio"), function () {
+            // "Locations" can be any label you want
+            SelectFilter.init(this.id, "", 0, "/media/");
+        });
+    });
+</script>
+{% endblock %}
+{% block contenido %}
+<div>
+    <form action="." method="POST">{% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type="submit" value="Enviar">
+    </form>
+</div>
+{% if bandera == 1 %}
+<div id="indicadores">
+    {% for r in resultados %}
+    <a href="{{r.pk}}/">{{r.nombre}}</a><br>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

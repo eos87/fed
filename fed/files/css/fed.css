@@ -2,4 +2,12 @@
     width: 500px;
     height: 500px;
 }
-
+.infowindow{
+    color: #069;
+    font-size: 11px;
+}
+.infowindow ul{
+    color: #4e4e4e;
+    padding: 0;
+    padding-left: 14px;
+}

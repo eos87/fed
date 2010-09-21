@@ -3,7 +3,7 @@ from settings_local import *
 
 TIME_ZONE = 'America/Chicago'
 
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = 'es-ES'
 
 SITE_ID = 1
 
