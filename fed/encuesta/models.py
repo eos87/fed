@@ -46,6 +46,7 @@ class Proyecto(models.Model):
     descripcion = models.TextField()
     municipio = models.ManyToManyField(Municipio)
 
+
     def __unicode__(self):
         return self.nombre
 
