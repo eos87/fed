@@ -89,7 +89,7 @@ def _get_view(request, vista):
     if vista in VALID_VIEWS:
         return VALID_VIEWS[vista](request)
     else:
-        raise ViewDoesNotExist("Tried %s in module %s Error: View not defined in VALID_VIEWS." % (vista, 'encuesta.views'))
+        raise ViewDoesNotExist("Tried %s in module %s Error: View not define in VALID_VIEWS." % (vista, 'encuesta.views'))
 
 VALID_VIEWS = {
     '1': resultado1,
