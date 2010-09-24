@@ -11,3 +11,29 @@
     padding: 0;
     padding-left: 14px;
 }
+
+/* Estilo para las tablas */
+.mostrar caption{
+    font-size: 14px;
+}
+
+.mostrar th{
+    font: bold 12px/24px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    border-right: 1px solid #ded3ba;
+    border-bottom: 1px solid #ded3ba;
+    vertical-align:middle;
+    background: url(/files/images/bg_header.png) repeat-x;
+    padding: 0px 5px 0px 5px;
+}
+
+.mostrar td {
+    font: normal 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    border-right: 1px solid #E0DDD2;
+    border-bottom: 1px solid #E0DDD2;
+    padding: 6px 20px 6px 12px;
+    color: #696969;
+    background: #FFFFFF;
+}
+.mostrar td a:visited{
+    color: #069;
+}

@@ -1,5 +1,60 @@
 {% extends "base.html" %}
 {% block extratitle %}{{indicador.nombre}}{% endblock %}
 {% block contenido %}
-
+Resultado 1.1 | Indicador 1.1.1 <br><br>
+<table class="mostrar">
+ <caption>Acciones efectuadas</caption>
+ <thead>
+    <tr>
+        <th>Acciones</th>
+        <th>Numero de acciones</th>
+        <th>Participantes</th>
+    </tr>
+  </thead>
+    {%for key, value in tabla.items%}
+    <tr>
+        <td>{{key}}</td>
+        <td>{{value.cantidad|floatformat}}</td>
+        <td>{{value.participantes|floatformat}}</td>
+    </tr>
+    {%endfor%}
+</table>
+<br>
+<table class="mostrar">
+ <caption>Acciones efectivas</caption>
+ <thead>
+    <tr>
+        <th>Acciones</th>
+        <th>Numero de acciones</th>
+        <th>Participantes</th>
+    </tr>
+  </thead>
+    {%for key, value in tabla2.items%}
+    <tr>
+        <td>{{key}}</td>
+        <td>{{value.cantidad|floatformat}}</td>
+        <td>{{value.participantes|floatformat}}</td>
+    </tr>
+    {%endfor%}
+</table>
+<br>
+<table class="mostrar">
+ <caption>Acciones efectivas</caption>
+ <thead>
+    <tr>
+        <th>Acciones</th>
+        <th>Iniciativas promovidas</th>
+        <th>Iniciativas aprobadas</th>
+        <th> % </th>
+    </tr>
+  </thead>
+    {%for key, value in tabla3.items%}
+    <tr>
+        <td>{{key}}</td>
+        <td>{{value.cantidad|floatformat}}</td>
+        <td>{{value.participantes|floatformat}}</td>
+        <td>{{value.prom|floatformat}}</td>
+    </tr>
+    {%endfor%}
+</table>
 {% endblock %}

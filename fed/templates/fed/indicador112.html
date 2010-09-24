@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block extratitle %}{{indicador.nombre}}{% endblock %}
+{% block contenido %}
+Resultado 1.1 | Indicador 1.1.2 <br><br>
+<table class="mostrar">
+    <caption>Participaci&oacute;n para incidir en toma de decisiones</caption>
+    <thead>
+        <tr>
+            <th>Acciones</th>
+            <th># de Instancias</th>
+            <th>Acciones promovidas</th>
+            <th>Acciones efectivas</th>
+            <th> % </th>
+        </tr>
+    </thead>
+    {%for key, value in tabla.items%}
+    <tr>
+        <td>{{key}}</td>
+        <td>{{value.instancias|floatformat}}</td>
+        <td>{{value.acciones_promovidas|floatformat}}</td>
+        <td>{{value.acciones_efectivas|floatformat}}</td>
+        <td>{{value.prom|floatformat}}</td>
+    </tr>
+    {%endfor%}
+</table>
+{% endblock %}

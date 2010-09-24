@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block extratitle %}{{resultado.nombre}}{% endblock %}
 {% block contenido %}
+{{resultado.nombre}}<br><br>
 {% if bandera == 11 %}
 {% for i in resultado.indicador_set.all %}
 <a href="../{{i.slug}}/">{{i.nombre}}</a><br>
