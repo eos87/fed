@@ -1,6 +1,7 @@
 from decorators import session_required
 from django.core.exceptions import ViewDoesNotExist
 from django.db.models import Sum
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -18,6 +19,7 @@ def _queryset_filtrado(request, resultado):
         if request.session['desde'] <= r.encuesta.fecha_inicio <= request.session['hasta']:
             list.append(r.encuesta.id)
     return Encuesta.objects.filter(pk__in=list)
+    
 
 def index(request):
     return direct_to_template(request, 'index.html')
@@ -132,7 +134,7 @@ def indicador113(request):
     resultado = Resultado.objects.get(pk=1)
     tabla = {}
     a = _queryset_filtrado(request, resultado)
-
+    
     for opcion in CHOICE_REGION:
         query = ParticipacionComisionAgenda.objects.filter(encuesta__in=a, accion=opcion[0])
         instancias_sum = query.aggregate(instancias_sum=Sum('cantidad_instancias'))['instancias_sum']
@@ -149,6 +151,94 @@ def indicador113(request):
 
     return render_to_response('fed/indicador113.html', RequestContext(request, locals()))
 
+@session_required
+def indicador114(request):
+    resultado = Resultado.objects.get(pk=1)
+    tabla = {}
+    a = _queryset_filtrado(request, resultado)
+
+    '''if len(a)==0:
+        return HttpResponse('No hay datos', mimetype='text/plain')'''
+
+    for opcion in CHOICE_REGION:
+        query = AccionObservatorio.objects.filter(encuesta__in=a, accion=opcion[0])
+        observatorio_sum = query.aggregate(observatorio_sum=Sum('cantidad_observatorios'))['observatorio_sum']
+        acciones_realizadas_sum = query.aggregate(acciones_realizadas_sum=Sum('cantidad_acciones_realiz'))['acciones_realizadas_sum']
+        acciones_web_sum = query.aggregate(acciones_web_sum=Sum('cantidad_acciones_web'))['acciones_web_sum']
+        prom = get_prom(acciones_realizadas_sum, acciones_web_sum)
+
+        tabla[opcion[1]] = {
+            'observatorio':observatorio_sum,
+            'acciones_realizadas': acciones_realizadas_sum,
+            'acciones_web': acciones_web_sum,
+            'prom':prom
+            }
+
+    return render_to_response('fed/indicador114.html', RequestContext(request, locals()))
+
+def resultado2(request):
+    bandera = 11;
+    resultado = Resultado.objects.get(pk=2)
+    return render_to_response('fed/res/resultado1.html', RequestContext(request, locals()))
+
+@session_required
+def indicador121(request):
+    resultado = Resultado.objects.get(pk=2)
+    tabla = {}
+    tabla2 = {}
+    tabla3 = {}
+    a = _queryset_filtrado(request, resultado)
+
+    for opcion in CHOICE_MEDIO:
+        #calculando denuncias realizadas
+        query = DenunciaSocialRealizada.objects.filter(encuesta__in=a, accion=opcion[0])
+        div_sexual_sum = query.aggregate(div_sexual_sum=Sum('persona_div_sexual'))['div_sexual_sum']
+        discapacidad_sum = query.aggregate(discapacidad_sum=Sum('persona_discapacidad'))['discapacidad_sum']
+        vih_sum = query.aggregate(vih_sum=Sum('persona_vih'))['vih_sum']
+        racial_sum = query.aggregate(racial_sum=Sum('persona_racial'))['racial_sum']
+        joven_sum = query.aggregate(joven_sum=Sum('persona_joven'))['joven_sum']
+
+        tabla[opcion[1]] = {
+            'sexual':div_sexual_sum,
+            'discapacidad': discapacidad_sum,
+            'vih': vih_sum,
+            'racial': racial_sum,
+            'joven':joven_sum
+            }
+
+        #calculando denuncias efectivas
+        query2 = DenunciaSocialEfectiva.objects.filter(encuesta__in=a, accion=opcion[0])
+        div_sexual_sum2 = query2.aggregate(div_sexual_sum2=Sum('persona_div_sexual'))['div_sexual_sum2']
+        discapacidad_sum2 = query2.aggregate(discapacidad_sum2=Sum('persona_discapacidad'))['discapacidad_sum2']
+        vih_sum2 = query2.aggregate(vih_sum2=Sum('persona_vih'))['vih_sum2']
+        racial_sum2 = query2.aggregate(racial_sum2=Sum('persona_racial'))['racial_sum2']
+        joven_sum2 = query2.aggregate(joven_sum2=Sum('persona_joven'))['joven_sum2']
+
+        tabla2[opcion[1]] = {
+            'sexual':div_sexual_sum2,
+            'discapacidad': discapacidad_sum2,
+            'vih': vih_sum2,
+            'racial': racial_sum2,
+            'joven':joven_sum2
+            }
+
+        #calculando promedios
+        div_sexual_prom = get_prom(div_sexual_sum, div_sexual_sum2)
+        discapacidad_prom = get_prom(discapacidad_sum, discapacidad_sum2)
+        vih_prom = get_prom(vih_sum, vih_sum2)
+        racial_prom = get_prom(racial_sum, racial_sum2)
+        joven_prom = get_prom(joven_sum, joven_sum2)
+
+        tabla3[opcion[1]] = {
+            'sexual':div_sexual_prom,
+            'discapacidad': discapacidad_prom,
+            'vih': vih_prom,
+            'racial': racial_prom,
+            'joven':joven_prom
+            }
+
+    return render_to_response('fed/indicador121.html', RequestContext(request, locals()))
+
 #obtener la vista adecuada para los indicadores
 def _get_view(request, vista):
     if vista in VALID_VIEWS:
@@ -158,13 +248,17 @@ def _get_view(request, vista):
 
 VALID_VIEWS = {
     '1': resultado1,
+    '2': resultado2,
 
     #inicia vistas de indicadores
     'indicador-111': indicador111,
     'indicador-112': indicador112,
     'indicador-113': indicador113,
+    'indicador-114': indicador114,
+    #indicadores para resultado 1.2
+    'indicador-121': indicador121,
     }
 
 def get_prom(total, cantidad):
-    x = (cantidad * 100) / total
+    x = (cantidad * 100) / float(total)
     return x
