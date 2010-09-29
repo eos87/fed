@@ -1,13 +1,15 @@
 from decorators import session_required
 from django.core.exceptions import ViewDoesNotExist
 from django.db.models import Sum
+from django.core import serializers
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render_to_response
+from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.views.generic.simple import direct_to_template
 from forms import *
 from models import *
+
+import json
 
 def _queryset_filtrado(request, resultado):
     '''metodo para obtener el queryset de encuesta
@@ -25,29 +27,40 @@ def index(request):
     return direct_to_template(request, 'index.html')
 
 def influencia(request):
-    if request.method == 'POST':
+    if request.is_ajax():
         form = InfluenciaForm(request.POST)
         if form.is_valid():
             lista = []
-            municipios = {}
+            dicc = {}
+            resultados = []
             bandera = 1            
-            encuestas = Encuesta.objects.filter(organizacion__in=form.cleaned_data['organizacion'], fecha_inicio__range=(form.cleaned_data['desde'], form.cleaned_data['hasta']))            
+            encuestas = Encuesta.objects.filter(organizacion__in=form.cleaned_data['organizacion'], periodo__in=form.cleaned_data['periodo'], anio=form.cleaned_data['anio'])
             for encuesta in encuestas:
                 for resultado in encuesta.resultadotrabajado_set.filter(resultado__in=form.cleaned_data['resultado']):
                     for muni in resultado.municipio.all():
                         lista.append(muni)
             munis = set(lista)
             for municipio in munis:
-                municipios[municipio] = []
                 #consultar los proyectos de estos municipios
                 rts = municipio.resultadotrabajado_set.filter(resultado__in=form.cleaned_data['resultado'])
                 #rts = ResultadoTrabajado.objects.filter(resultado__in=form.cleaned_data['resultado'], municipio=municipio)
+                proys = []
                 for r in rts:
                     if r.encuesta.organizacion in form.cleaned_data['organizacion']:
-                        municipios[municipio].append(r.encuesta.proyecto.descripcion)
-            
+                        proys.append(r.encuesta.proyecto.pk)
+                proyectos = Proyecto.objects.filter(id__in=proys).values('id', 'nombre')
+
+                dicc = {
+                    'punto': (float(municipio.latitud), float(municipio.longitud)),
+                    'municipio': municipio.nombre,
+                    'proyectos': list(proyectos)
+                }
+
+            resultados.append(dicc)           
             if not encuestas:
                 bandera = 0
+
+            return HttpResponse(json.dumps(resultados).replace('"', '\\"'), mimetype='application/json')
     else:
         form = InfluenciaForm()
         bandera = 0

@@ -2,19 +2,35 @@
 {% block extratitle %}Area de influencia{% endblock %}
 {% block extrahead %}
 <script type="text/javascript">
-    function initialize() {
+    var map;
+    $(document).ready(function(){
+        $('#enviar').click(function(){
+            //var csrf = $('[name=csrfmiddlewaretoken]').val();
+            var datos = $('#influencia').serialize();
+            if(checkear()){
+                $.post('/influencia/', datos,
+                function(data){
+                    alert('ok');
+                }, 'json');
+            }else{
+                
+            }
+            return false;
+        });
+
+
         //definimos el popup
         var infowindow = new google.maps.InfoWindow();
 
         var myLatlng = new google.maps.LatLng(13,-85);
         var myOptions = {
             zoom: 7,
-            disableDefaultUI: true,
+            mapTypeControl: false,
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        {% for m, values in municipios.iteritems %}
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        /*{% for m, values in municipios.iteritems %}
         var marker{{m.pk}} = new google.maps.Marker({
             position: new google.maps.LatLng({{m.latitud|safe}},{{m.longitud|safe}}),
             map: map,
@@ -24,19 +40,50 @@
             infowindow.open(map, marker{{m.pk}});
             infowindow.setContent('<div class="infowindow">{{m.nombre}}<br><ul>{% for p in values %}<li>{{p}}</li>{% endfor %}</ul></div>');
         });
-        {% endfor %}
+        {% endfor %}*/
+    
+        
+    });
+    function checkear(){
+        var org, resul, per;
+        if($('#id_organizacion').val() == null){
+            alert('Seleccione una organización');
+            org = false;
+        }else{
+            org = true;
+        }
+        if($('#id_resultado').val() == null){
+            alert('Seleccione un resultado');
+            resul = false;
+        }else{
+            resul = true;
+        }
+        if($('#id_periodo').val() == null){
+            alert('Seleccione un periodo');
+            per = false;
+        }else{
+            per = true;
+        }
+        
+        if(org && resul && per){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 </script>
 {% endblock %}
 {% block contenido %}
 <div>
-    <form action="." method="POST">{% csrf_token %}
+    <form action="." method="POST" id="influencia">{% csrf_token %}
         <table>
             {{form.as_table}}
-        </table>
-        <input type="submit" value="Enviar">
+        </table>        
     </form>
+    <button id='enviar'>Enviar</button>
 </div>
+{{municipios}}
 {% if bandera == 1 %}
 <div class="mapa">
     <div id="map_canvas">
