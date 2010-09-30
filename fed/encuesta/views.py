@@ -1,15 +1,15 @@
+from django.utils import simplejson
 from decorators import session_required
+from django.core import serializers
 from django.core.exceptions import ViewDoesNotExist
 from django.db.models import Sum
-from django.core import serializers
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic.simple import direct_to_template
 from forms import *
 from models import *
-
-import json
 
 def _queryset_filtrado(request, resultado):
     '''metodo para obtener el queryset de encuesta
@@ -55,17 +55,14 @@ def influencia(request):
                     'municipio': municipio.nombre,
                     'proyectos': list(proyectos)
                 }
-
-            resultados.append(dicc)           
-            if not encuestas:
-                bandera = 0
-
-            return HttpResponse(json.dumps(resultados).replace('"', '\\"'), mimetype='application/json')
+                resultados.append(dicc)
+            return HttpResponse(simplejson.dumps(resultados), mimetype='application/json')
     else:
         form = InfluenciaForm()
         bandera = 0
+        return render_to_response('fed/influencia.html', RequestContext(request, locals()))
 
-    return render_to_response('fed/influencia.html', RequestContext(request, locals()))
+    return HttpResponse('Hubo un error', mimetype='text/plain')
 
 def indicadores(request):
     if request.method == 'POST':

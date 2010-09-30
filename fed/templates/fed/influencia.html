@@ -3,23 +3,9 @@
 {% block extrahead %}
 <script type="text/javascript">
     var map;
+    var markers = new Array();
     $(document).ready(function(){
-        $('#enviar').click(function(){
-            //var csrf = $('[name=csrfmiddlewaretoken]').val();
-            var datos = $('#influencia').serialize();
-            if(checkear()){
-                $.post('/influencia/', datos,
-                function(data){
-                    alert(data);
-                }, 'json');
-            }else{
-                
-            }
-            return false;
-        });
 
-
-        //definimos el popup
         var infowindow = new google.maps.InfoWindow();
 
         var myLatlng = new google.maps.LatLng(13,-85);
@@ -30,18 +16,45 @@
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        /*{% for m, values in municipios.iteritems %}
-        var marker{{m.pk}} = new google.maps.Marker({
-            position: new google.maps.LatLng({{m.latitud|safe}},{{m.longitud|safe}}),
-            map: map,
-            title:"{{m.nombre}}"
+
+        $('#influencia').submit(function(){
+            //var csrf = $('[name=csrfmiddlewaretoken]').val();
+            if(checkear()){
+                var datos = $('#influencia').serialize();
+                $.post('/influencia/', datos,
+                function(data){
+                    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                    $.each(data, function(i, item){
+                        markers.push(new Array(item.punto[0], item.punto[1]));
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(item.punto[0], item.punto[1]),
+                            map: map,
+                            title:item.municipio
+                        });
+                        google.maps.event.addListener(marker, 'click', function() {
+                            infowindow.open(map, marker);
+                            var text = '<div class="infowindow">'+item.municipio+'<br><ul>';
+                            $.each(item.proyectos, function(i, item){
+                                text += '<li><a style="color:#7F7F7F;"href="/proyecto/' + item.id +'/">' + item.nombre + '</a></li>';
+                            });
+                            text += '</ul></div>';
+                            infowindow.setContent(text);
+                        });
+                    });
+                }, "json");
+                return false;
+            }
         });
-        google.maps.event.addListener(marker{{m.pk}}, 'click', function() {
-            infowindow.open(map, marker{{m.pk}});
-            infowindow.setContent('<div class="infowindow">{{m.nombre}}<br><ul>{% for p in values %}<li>{{p}}</li>{% endfor %}</ul></div>');
+        $('#guardar').click(function(){            
+            var centro = map.getCenter();
+            var zoom = map.getZoom();
+            var url = 'http://maps.google.com/maps/api/staticmap?center='+centro['b']+','+centro['c']+'&size=600x500&maptype=roadmap';
+            for (i=0; i < markers.length; i++){
+                url += '&markers=color:red|'+markers[i][0]+','+markers[i][1]+'';
+            }
+            url += '&sensor=false&zoom='+map.getZoom();
+            window.open(url, '_blank');
         });
-        {% endfor %}*/
-    
         
     });
     function checkear(){
@@ -79,17 +92,18 @@
     <form action="." method="POST" id="influencia">{% csrf_token %}
         <table>
             {{form.as_table}}
-        </table>        
+        </table>
+        <input type="submit" value="Enviar">
     </form>
-    <button id='enviar'>Enviar</button>
+    <button name="png" id="guardar">Guardar Mapa</button>
 </div>
 {{municipios}}
-{% if bandera == 1 %}
+
 <div class="mapa">
     <div id="map_canvas">
 
     </div>
 </div>
-{% endif %}
+
 {% endblock %}
 
