@@ -17,10 +17,11 @@ def _queryset_filtrado(request, resultado):
     por la variable de sesion'''
     rt = ResultadoTrabajado.objects.filter(resultado=resultado, municipio__in=request.session['municipio'])    
     list = []
+    #[int(i) for i in request.session['periodo']]
     for r in rt:
-        if request.session['desde'] <= r.encuesta.fecha_inicio <= request.session['hasta']:
+        if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
             list.append(r.encuesta.id)
-    return Encuesta.objects.filter(pk__in=list)
+    return Encuesta.objects.filter(pk__in=set(list))
     
 
 def index(request):
@@ -71,8 +72,8 @@ def indicadores(request):
             bandera = 1
             request.session['organizacion'] = form.cleaned_data['organizacion']
             request.session['municipio'] = form.cleaned_data['municipio']
-            request.session['desde'] = form.cleaned_data['desde']
-            request.session['hasta'] = form.cleaned_data['hasta']
+            request.session['periodo'] = form.cleaned_data['periodo']
+            request.session['anio'] = form.cleaned_data['anio']
             request.session['activo'] = True
             resultados = Resultado.objects.all()
     else:
