@@ -127,8 +127,23 @@ class EncuestaAdmin(admin.ModelAdmin):
         #js = ('/files/js/jquery.min.js',
         #      '/files/js/filter.js')
 
+    def queryset(self, request):
+        if request.user.is_superuser:
+            return Encuesta.objects.all()
+        return Encuesta.objects.filter(user=request.user)
+
+    def get_form(self, request, obj=None, ** kwargs):
+        if request.user.is_superuser:
+            form = super(EncuestaAdmin, self).get_form(self, request, ** kwargs)
+        else:
+            form = super(EncuestaAdmin, self).get_form(self, request, ** kwargs)
+            form.base_fields['user'].queryset = User.objects.filter(pk=request.user.pk)
+        return form
+
     save_on_top = True
     actions_on_top = True
+    list_filter = ['organizacion', 'proyecto']
+    list_display = ['organizacion', 'proyecto', 'periodo', 'anio', 'user']
     inlines = [
         ResultadoTrabajadoInline,
         AccionEfectuadaMedioInline,
