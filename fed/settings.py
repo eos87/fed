@@ -68,3 +68,6 @@ INSTALLED_APPS = (
     'fed.encuesta',
     'south',
 )
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'

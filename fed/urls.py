@@ -12,5 +12,7 @@ urlpatterns = patterns('',
     (r'^$','fed.encuesta.views.index'),
     (r'^', include('encuesta.urls')),
     
+    (r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+    (r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
     (r'^admin/', include(admin.site.urls)),
 )

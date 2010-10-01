@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block extratitle %}
+Iniciar Sesi&oacute;n
+{% endblock %}
+{% block extrahead %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#id_password').val('password');
+        $('#id_username').val('usuario');
+        $('#id_password').click(function(){
+            if($(this).val()=='password'){$(this).val('')}
+        });
+        $('#id_password').focus(function(){
+            if($(this).val()=='password'){$(this).val('')}
+        });
+        $('#id_password').blur(function(){
+            if($(this).val()==''){$(this).val('password')}
+        });
+        $('#id_username').click(function(){
+            if($(this).val()=='usuario'){$(this).val('')}
+        });
+        $('#id_username').focus(function(){
+            if($(this).val()=='usuario'){$(this).val('')}
+        });
+        $('#id_username').blur(function(){
+            if($(this).val()==''){$(this).val('usuario')}
+        });
+    });
+</script>
+{% endblock%}
+{% block tools %}
+<div class="text">Entrar al sistema</div>
+{% endblock %}
+{% block contenido %}
+<div class="login">
+    <div>
+        <form action="{% url django.contrib.auth.views.login %}" method="POST">{% csrf_token %}
+            <label>Usuario</label><br>
+            <input type="text" name="username" id="id_username" /><br><br>
+            <label>Contrase&ntilde;a</label><br>
+            <input type="password" name="password" id="id_password" /><br><br>
+            <button type="submit" class="entrar">Entrar</button>
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+    </div>
+</div>
+{% endblock %}

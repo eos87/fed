@@ -13,8 +13,41 @@
         {% block extrahead %}{% endblock %}
     </head>
     <body>
-        {% block contenido %}
-        {% endblock %}
+        <div id="wrapper">
+            <div class="banner">
+                <div class="logo" id="logo">
+                    <a href="/"><img src="/files/images/logo.png" alt="Fed Hivos"></a>
+                    
+                    <img src="/files/images/vline.png" alt="" class="vline">
+                </div>
+                <div class="title">
+                    Sistema de Informaci&oacute;n
+                </div>
+                <div class="nav">
+                    {% if user.is_authenticated %}
+                    <button type="button" onclick="window.location.href='/'">Inicio</button>
+                    <button type="button" onclick="window.location.href='/ayuda/'">Ayuda</button>
+                    {% endif %}
+                </div>
+                <div class="clean"></div>
+            </div>
+            <div class="tools">
+                {% block tools %}
+                {% endblock %}
+            </div>
+            <div class="content">
+                <div class="top"></div>
+                <div class="contenedor">
+                    {% block contenido %}
+                    {% endblock %}
+                </div>
+                <div class="bottom"></div>
+            </div>
+            <div class="footer">
+                Desarrollado por <a href="http://www.simas.org.ni">SIMAS</a> bajo plataforma
+                <a href="http://www.djangoproject.com">Django</a>
+            </div>
+        </div>
     </body>
 </html>
 
