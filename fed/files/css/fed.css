@@ -12,6 +12,9 @@ body{
     padding-left: 8px;
     padding-right: 15px;
 }
+.banner{
+    height: 105px;
+}
 .banner .logo{
     float: left;
 }
@@ -40,12 +43,12 @@ button:hover{
     text-decoration: underline;
 }
 .clean{
-    clear: both;
-    margin-bottom: 30px;
+    clear: both;    
 }
 .tools{
     background: url(/files/images/tools.png) repeat-x;
     height: 49px;
+    margin-top: 15px;
 }
 .tools .text{
     font-size: 24px;
