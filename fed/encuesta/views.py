@@ -1,15 +1,14 @@
-from django.utils import simplejson
+from decorators import session_required
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ViewDoesNotExist
 from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils import simplejson
 from django.views.generic.simple import direct_to_template
-from django.contrib.auth.decorators import login_required
-
 from forms import *
 from models import *
-from decorators import session_required
 
 def _queryset_filtrado(request, resultado):
     '''metodo para obtener el queryset de encuesta
@@ -25,7 +24,8 @@ def _queryset_filtrado(request, resultado):
     
 @login_required
 def index(request):
-    return direct_to_template(request, 'index.html')
+    informes = Encuesta.objects.all().order_by('-id')[:5]
+    return render_to_response('index.html', RequestContext(request, locals()))
 
 @login_required(redirect_field_name='next')
 def influencia(request):

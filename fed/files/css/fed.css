@@ -57,6 +57,40 @@ button:hover{
     line-height: 49px;
     text-align: center;
 }
+.tools .salidas{
+    float: left;
+    margin-top: 8px;
+    margin-left: 10px;
+}
+
+.tools .loginfo{
+    color: #5d5d5d;
+    font-size: 13px;
+    float: right;
+    margin-right: 10px;
+}
+
+.tools .loginfo .avatar{
+    float: left;
+    padding: 4px 6px 2px 2px;
+}
+.tools .loginfo .username{
+    float: left;
+    margin-top: 8px;
+    display: inline;
+    margin-right: 5px;
+}
+.username a{
+    color: #3a9696;
+    font-size: 13px;
+}
+.username a img{
+    float: left;
+    padding-right: 4px;
+    padding-top: 2px;
+    padding-left: 5px;
+}
+
 .content{
     margin-top: 20px;
 }
@@ -129,6 +163,10 @@ img{
 }
 a{
     outline: none;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
 }
 
 .mapa {
@@ -143,6 +181,63 @@ a{
     color: #4e4e4e;
     padding: 0;
     padding-left: 14px;
+}
+
+.ultimas{
+    float: left;
+    width: 400px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+ }
+.ultimas .title{
+    font-size: 22px;
+    color: #646464;
+}
+.vline3{
+    float: left;
+    margin-top: 30px;
+}
+.acerca{
+    float: left;
+    width: 470px;
+    margin-left: 20px;
+    margin-top: 30px;
+}
+.acerca .title{
+    font-size: 40px;
+    color: #154476;
+}
+.acerca .desc{
+    font-size: 12px;
+    color: #000;
+    margin-top: 15px;
+    padding-bottom: 20px;
+    
+}
+.registro{
+    margin-top: 15px;
+}
+.registro .hline{
+    margin-top: 10px;
+}
+.mas{
+    height: 20px;
+    margin-top: 4px;
+    float: left;
+    margin-bottom: -8px;
+    padding-right: 10px;
+}
+.mastext{
+    float: left;    
+}
+.mastext .entry{
+    color: #000;
+    font-size: 13px;
+}
+.mastext .data{
+    color: #888a85;
+    font-size: 13px;
 }
 
 /* Estilo para las tablas */

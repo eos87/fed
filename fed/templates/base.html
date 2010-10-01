@@ -17,7 +17,7 @@
             <div class="banner">
                 <div class="logo" id="logo">
                     <a href="/"><img src="/files/images/logo.png" alt="Fed Hivos"></a>
-                    
+
                     <img src="/files/images/vline.png" alt="" class="vline">
                 </div>
                 <div class="title">
@@ -32,8 +32,23 @@
                 <div class="clean"></div>
             </div>
             <div class="tools">
-                {% block tools %}
-                {% endblock %}
+                {% if user.is_authenticated %}
+                <div class="salidas">
+                    <a href="/influencia/"><img src="/files/images/influencia.png" alt="Area de influencia"></a>
+                    <a href="/indicadores/"><img src="/files/images/indicadores.png" alt="Avance de indicadores"></a>
+                </div>
+                <div class="loginfo">
+                    <img src="/files/images/avatar.png" alt="" class="avatar">
+                    <div class="username">  {{user.username}}</div>
+                    <img src="/files/images/vline2.png" alt="-" class="avatar">
+                    <div class="username">
+                        <a href="/admin/"<img src="/files/images/admin.png" alt="Admin">Administraci&oacute;n</a><br>
+                        <a href="/logout/"<img src="/files/images/salir.png" alt="Cerrar Sesion">Salir</a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="text">Entrar al sistema</div>
+                {% endif %}
             </div>
             <div class="content">
                 <div class="top"></div>

@@ -70,7 +70,10 @@ class Encuesta(models.Model):
 
     def __unicode__(self):
         return '%s | %s | %s | %s' % (self.organizacion, self.proyecto, CHOICE_PERIODO[int(self.periodo)][1], self.anio)
-        
+
+    def get_periodo(self):
+        return CHOICE_PERIODO[self.periodo][1]
+
     class Meta:
         verbose_name = 'Informe'
         verbose_name_plural = 'Informes'
