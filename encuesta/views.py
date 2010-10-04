@@ -272,5 +272,8 @@ VALID_VIEWS = {
     }
 
 def get_prom(total, cantidad):
-    x = (cantidad * 100) / float(total)
+    if total == None or cantidad == None:
+        x = 0
+    else:
+        x = (cantidad * 100) / float(total)
     return x
