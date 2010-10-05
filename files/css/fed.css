@@ -99,7 +99,8 @@ button:hover{
     height: 7px;
 }
 .content .contenedor{
-    background: url(/files/images/border-body.png) repeat-y;
+    /*background: url(/files/images/border-body.png) repeat-y;*/
+    border: 1px #e1e1e1 solid;
 }
 .content .bottom{
     background: url(/files/images/border-bottom.png) no-repeat;
@@ -264,4 +265,46 @@ a:hover{
 }
 .mostrar td a:visited{
     color: #069;
+}
+.bar{
+    float: left;
+    width: 249px;
+    background: #555753 url(/files/images/bar_back.png) repeat-x;
+    text-align: center;
+}
+.bar .title{
+    font-size: 21px;
+    color: #d5d5d5;
+    text-shadow: 0 2px 3px #483916;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.bar label.aux{
+    display: block;
+    width: 158px;
+    background-color: #4e504c;
+    height: 25px;
+    color: #fff;
+    margin: 0 auto;
+    margin-bottom: -20px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 25px;
+}
+.bar ul{
+    list-style: none;
+    padding-left: 0px;
+}
+.bar select{
+    text-align: center;
+    background-color: #fff;
+    border: 1px #939393 solid;
+    margin: 0 auto;
+    width: 200px;
+    font-size: 13px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+.mapa{
+    float: left;
+    width: 709px;
 }

@@ -5,7 +5,9 @@
     var map;
     var markers = new Array();
     $(document).ready(function(){
-
+        var altura = $('.bar').height();
+        $('.mapa').height(altura);
+        $('#map_canvas').height(altura);
         var infowindow = new google.maps.InfoWindow();
 
         var myLatlng = new google.maps.LatLng(13,-85);
@@ -88,22 +90,31 @@
 </script>
 {% endblock %}
 {% block contenido %}
-<div>
+<div class="bar">
+    <div class="title">
+        Formulario
+    </div>
     <form action="." method="POST" id="influencia">{% csrf_token %}
-        <table>
-            {{form.as_table}}
-        </table>
-        <input type="submit" value="Enviar">
+        <label class="aux">{{form.organizacion.label}}</label><br>
+        {{form.organizacion}}<br><br>
+        <label class="aux">{{form.resultado.label}}</label><br>
+        {{form.resultado}}<br><br>
+        <label class="aux">{{form.periodo.label}}</label><br>
+        {{form.periodo}}<br><br>
+        <label class="aux">{{form.anio.label}}</label><br>
+        {{form.anio}}<br><br>
+        <div class="clean">
+            <button type="submit">Consultar</button><button name="png" id="guardar" type="button">Guardar Mapa</button>
+        </div>
     </form>
-    <button name="png" id="guardar">Guardar Mapa</button>
-</div>
-{{municipios}}
 
+</div>
 <div class="mapa">
     <div id="map_canvas">
 
     </div>
 </div>
+<div class="clean"></div>
 
 {% endblock %}
 
