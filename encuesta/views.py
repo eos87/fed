@@ -21,7 +21,18 @@ def _queryset_filtrado(request, resultado):
         if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
             list.append(r.encuesta.id)
     return Encuesta.objects.filter(pk__in=set(list))
-    
+
+def _tiene_datos(request):
+    rt = ResultadoTrabajado.objects.filter(municipio__in=request.session['municipio'])
+    list = []
+    for r in rt:
+        if r.encuesta:
+            if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
+                list.append(r.resultado.pk)
+
+    return set(list)
+
+
 @login_required
 def index(request):
     informes = Encuesta.objects.all().order_by('-id')[:5]
@@ -77,6 +88,7 @@ def indicadores(request):
             request.session['anio'] = form.cleaned_data['anio']
             request.session['activo'] = True
             resultados = Resultado.objects.all()
+            datos = _tiene_datos(request)
     else:
         form = IndicadoresForm()
         bandera = 0

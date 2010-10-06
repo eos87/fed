@@ -308,3 +308,65 @@ a:hover{
     float: left;
     width: 709px;
 }
+.estilo2{
+    width: 420px;
+    padding-left: 10px;
+}
+.resultados{
+    float: left;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+.tiene{    
+    font-size: 18px;    
+    width: 480px;
+    height: 46px;
+    margin-bottom: 5px;
+}
+.tiene a{
+    display: block;
+    background: url(/files/images/tiene.png) no-repeat;
+    width: 455px;
+    height: 46px;
+    line-height: 46px;
+    padding-left: 25px;
+    color: #555753;
+    text-decoration: none;
+}
+.indicador{
+    font-size: 18px;
+    width: 480px;
+    height: 46px;
+    margin-bottom: 5px;
+}
+.indicador a{
+    display: block;
+    background: url(/files/images/indicador.png) no-repeat;
+    color: #849eaa;
+    width: 455px;
+    height: 46px;
+    line-height: 46px;
+    padding-left: 25px;
+    text-decoration: none;
+}
+.tiene a:hover{
+    background-position: 0 -46px;
+    color: #464236;
+}
+.indicador a:hover{
+    color: #36474f;
+}
+
+.notiene{
+    font-size: 18px;
+    width: 480px;
+    height: 46px;
+    background: url(/files/images/notiene.png) no-repeat;
+    color: #aaa;
+    line-height: 46px;
+    padding-left: 25px;
+    margin-bottom: 5px;
+}
+.indicators{
+    display: none;
+}

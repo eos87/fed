@@ -10,6 +10,24 @@
         <link type="text/css" rel="stylesheet"  href="/files/css/fed.css" >
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        {% if user.is_authenticated %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#influencia').hover(function(){
+                    $('#influencia img').attr('src', '/files/images/influencia_hover.png');
+                });
+                $('#influencia').mouseout(function(){
+                    $('#influencia img').attr('src', '/files/images/influencia.png');
+                });
+                $('#indicadores').hover(function(){
+                    $('#indicadores img').attr('src', '/files/images/indicadores_hover.png');
+                });
+                $('#indicadores').mouseout(function(){
+                    $('#indicadores img').attr('src', '/files/images/indicadores.png');
+                });
+            });
+        </script>
+        {% endif %}
         {% block extrahead %}{% endblock %}
     </head>
     <body>
@@ -34,8 +52,8 @@
             <div class="tools">
                 {% if user.is_authenticated %}
                 <div class="salidas">
-                    <a href="/influencia/"><img src="/files/images/influencia.png" alt="Area de influencia"></a>
-                    <a href="/indicadores/"><img src="/files/images/indicadores.png" alt="Avance de indicadores"></a>
+                    <a href="/influencia/" id="influencia"><img src="/files/images/influencia.png" alt="Area de influencia"></a>
+                    <a href="/indicadores/" id="indicadores"><img src="/files/images/indicadores.png" alt="Avance de indicadores"></a>
                 </div>
                 <div class="loginfo">
                     <img src="/files/images/avatar.png" alt="" class="avatar">
