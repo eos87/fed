@@ -1,26 +1,35 @@
 {% extends "base.html" %}
 {% block extratitle %}{{indicador.nombre}}{% endblock %}
 {% block contenido %}
-Resultado 1.1 | Indicador 1.1.3 <br><br>
-<table class="mostrar">
-    <caption>Participaci&oacute;n para mantener agenda p&uacute;blica</caption>
-    <thead>
-        <tr>
-            <th>Acciones</th>
-            <th># de Instancias</th>
-            <th>Acciones promovidas</th>
-            <th>Acciones efectivas</th>
-            <th> % </th>
-        </tr>
-    </thead>
-    {%for key, value in tabla.items%}
-    <tr>
-        <td>{{key}}</td>
-        <td>{{value.instancias|floatformat}}</td>
-        <td>{{value.acciones_promovidas|floatformat}}</td>
-        <td>{{value.acciones_efectivas|floatformat}}</td>
-        <td>{{value.prom|floatformat}}</td>
-    </tr>
-    {%endfor%}
-</table>
+
+{% include "bar3.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        Indicador 1.1.3
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Participaci&oacute;n para mantener agenda p&uacute;blica</caption>
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th># de Instancias</th>
+                    <th>Acciones promovidas</th>
+                    <th>Acciones efectivas</th>
+                    <th> % </th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items%}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value.instancias|floatformat}}</td>
+                <td>{{value.acciones_promovidas|floatformat}}</td>
+                <td>{{value.acciones_efectivas|floatformat}}</td>
+                <td>{{value.prom|floatformat}}</td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+<div class="clean"></div>
 {% endblock %}

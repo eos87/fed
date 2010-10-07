@@ -1,26 +1,35 @@
 {% extends "base.html" %}
 {% block extratitle %}{{indicador.nombre}}{% endblock %}
 {% block contenido %}
-Resultado 1.1 | Indicador 1.1.4 <br><br>
-<table class="mostrar">
-    <caption>Acciones para observatorios para vigilancia</caption>
-    <thead>
-        <tr>
-            <th>Acciones</th>
-            <th># de Observatorios</th>
-            <th>Acciones realizadas</th>
-            <th>Acciones divulgadas</th>
-            <th> % </th>
-        </tr>
-    </thead>
-    {%for key, value in tabla.items%}
-    <tr>
-        <td>{{key}}</td>
-        <td>{{value.observatorio|floatformat}}</td>
-        <td>{{value.acciones_realizadas|floatformat}}</td>
-        <td>{{value.acciones_web|floatformat}}</td>
-        <td>{{value.prom|floatformat}}</td>
-    </tr>
-    {%endfor%}
-</table>
+
+{% include "bar3.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        Indicador 1.1.4
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Acciones para observatorios para vigilancia</caption>
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th># de Observatorios</th>
+                    <th>Acciones realizadas</th>
+                    <th>Acciones divulgadas</th>
+                    <th> % </th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items%}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value.observatorio|floatformat}}</td>
+                <td>{{value.acciones_realizadas|floatformat}}</td>
+                <td>{{value.acciones_web|floatformat}}</td>
+                <td>{{value.prom|floatformat}}</td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+<div class="clean"></div>
 {% endblock %}

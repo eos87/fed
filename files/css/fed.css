@@ -242,16 +242,26 @@ a:hover{
 }
 
 /* Estilo para las tablas */
+.mostrar{
+    width: 100%;
+}
 .mostrar caption{
     font-size: 14px;
+    background-color: #e1e1e1;
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+    color: #069;
+    height: 20px;
+    line-height: 20px;
 }
 
 .mostrar th{
-    font: bold 12px/24px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font: bold 12px/32px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    background: url(/files/images/table_container_back_th.png) repeat-x top;
     border-right: 1px solid #ded3ba;
     border-bottom: 1px solid #ded3ba;
-    vertical-align:middle;
-    background: url(/files/images/bg_header.png) repeat-x;
+    vertical-align:middle;    
     padding: 0px 5px 0px 5px;
 }
 
@@ -373,20 +383,20 @@ a:hover{
 }
 .bar3{
     width: 226px;
-    background: #555753 url(/files/images/bar3_back.png) repeat-x;
-    height: 350px;
+    background: #555753 url(/files/images/bar3_back.png) repeat-x;    
     float: left;
 }
 .result_tables{
     float: left;
-    width: 730px;
+    width: 732px;
 }
 .nav2{
     font-size: 17px;    
     text-shadow: 0 2px 1px #483916;
     line-height: 38px;
-    margin-top: 40px;
+    margin-top: 8px;
     text-align: right;
+    color: #d5d5d5;
 }
 .nav2 a{
     color: #d5d5d5;
@@ -398,7 +408,7 @@ a:hover{
     margin-right: 5px;
 }
 .otros_indicadores{
-
+    margin-top: 10px;
 }
 .otros_indicadores a{
     display: block;
@@ -410,4 +420,14 @@ a:hover{
     font-size: 15px;
     color: #dfc268;
     margin-top: 2px;
+}
+.titulo_indicadores{
+    font-size: 27px;
+    color: #888a85;
+    height: 40px;
+    margin-left: 15px;
+    line-height: 40px;
+}
+.table_container{
+    
 }

@@ -69,7 +69,7 @@ def influencia(request):
                 resultados.append(dicc)
             return HttpResponse(simplejson.dumps(resultados), mimetype='application/json')
     else:
-        form = InfluenciaForm()
+        form = InfluenciaForm()        
         bandera = 0
         return render_to_response('fed/influencia.html', RequestContext(request, locals()))
 
@@ -85,11 +85,21 @@ def indicadores(request):
             request.session['periodo'] = form.cleaned_data['periodo']
             request.session['anio'] = form.cleaned_data['anio']
             request.session['activo'] = True
+            
+            #dato de session para llenar los datos seleccionados en el form
+            request.session['todo'] = request.POST
             resultados = Resultado.objects.all()
             datos = _tiene_datos(request)
-    else:
-        form = IndicadoresForm()
-        bandera = 0
+    else:        
+        q = request.GET.get('q', '')
+        if q:
+            bandera = 1
+            resultados = Resultado.objects.all()
+            datos = _tiene_datos(request)
+            form = IndicadoresForm(request.session['todo'])
+        else:
+            form = IndicadoresForm()
+            bandera = 0
     return render_to_response('fed/indicadores.html', RequestContext(request, locals()))
 
 def resultado1(request):

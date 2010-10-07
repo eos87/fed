@@ -1,74 +1,73 @@
 {% extends "base.html" %}
 {% block extratitle %}{{indicador.nombre}}{% endblock %}
 {% block contenido %}
-<div class="bar3">
-    <div class="nav2">
-        <a href="/indicadores/">Nueva Consulta</a> <img src="/files/images/mas2.png" alt=""><br>
-        <a href="javascript:history.back();">Volver a Resultados</a><img src="/files/images/atras.png" alt="">
-    </div>
-    <div class="otros_indicadores">
-        {% for i in resultado.indicador_set.all %}
-            <a href="/indicadores/{{i.slug}}">{{i.nombre}}</a>
-        {% endfor %}
-    </div>
-</div>
+
+{% include "bar3.html" %}
 <div class="result_tables">
-    Resultado 1.1 | Indicador 1.1.1 <br><br>
-    <table class="mostrar">
-        <caption>Acciones efectuadas</caption>
-        <thead>
+    <div class="titulo_indicadores">
+        Indicador 1.1.1
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Acciones efectuadas</caption>
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Numero de acciones</th>
+                    <th>Participantes</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items%}
             <tr>
-                <th>Acciones</th>
-                <th>Numero de acciones</th>
-                <th>Participantes</th>
+                <td>{{key}}</td>
+                <td>{{value.cantidad|floatformat}}</td>
+                <td>{{value.participantes|floatformat}}</td>
             </tr>
-        </thead>
-        {%for key, value in tabla.items%}
-        <tr>
-            <td>{{key}}</td>
-            <td>{{value.cantidad|floatformat}}</td>
-            <td>{{value.participantes|floatformat}}</td>
-        </tr>
-        {%endfor%}
-    </table>
+            {%endfor%}
+        </table>
+    </div>
     <br>
-    <table class="mostrar">
-        <caption>Acciones efectivas</caption>
-        <thead>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Acciones efectivas</caption>
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Numero de acciones</th>
+                    <th>Participantes</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla2.items%}
             <tr>
-                <th>Acciones</th>
-                <th>Numero de acciones</th>
-                <th>Participantes</th>
+                <td>{{key}}</td>
+                <td>{{value.cantidad|floatformat}}</td>
+                <td>{{value.participantes|floatformat}}</td>
             </tr>
-        </thead>
-        {%for key, value in tabla2.items%}
-        <tr>
-            <td>{{key}}</td>
-            <td>{{value.cantidad|floatformat}}</td>
-            <td>{{value.participantes|floatformat}}</td>
-        </tr>
-        {%endfor%}
-    </table>
+            {%endfor%}
+        </table>
+    </div>
     <br>
-    <table class="mostrar">
-        <caption>Acciones efectivas</caption>
-        <thead>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Acciones efectivas</caption>
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Iniciativas promovidas</th>
+                    <th>Iniciativas aprobadas</th>
+                    <th> % </th>
+                </tr>
+            </thead>
+            {%for key, value in tabla3.items%}
             <tr>
-                <th>Acciones</th>
-                <th>Iniciativas promovidas</th>
-                <th>Iniciativas aprobadas</th>
-                <th> % </th>
+                <td>{{key}}</td>
+                <td>{{value.cantidad|floatformat}}</td>
+                <td>{{value.participantes|floatformat}}</td>
+                <td>{{value.prom|floatformat}}</td>
             </tr>
-        </thead>
-        {%for key, value in tabla3.items%}
-        <tr>
-            <td>{{key}}</td>
-            <td>{{value.cantidad|floatformat}}</td>
-            <td>{{value.participantes|floatformat}}</td>
-            <td>{{value.prom|floatformat}}</td>
-        </tr>
-        {%endfor%}
-    </table>
+            {%endfor%}
+        </table>
+    </div>
 </div>
 <div class="clean"></div>
 {% endblock %}
