@@ -29,9 +29,7 @@ def _tiene_datos(request):
         if r.encuesta:
             if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
                 list.append(r.resultado.pk)
-
     return set(list)
-
 
 @login_required
 def index(request):
@@ -75,7 +73,7 @@ def influencia(request):
         bandera = 0
         return render_to_response('fed/influencia.html', RequestContext(request, locals()))
 
-    return HttpResponse('Hubo un error', mimetype='text/plain')
+    return render_to_response('fed/influencia.html', RequestContext(request, locals()))
 
 def indicadores(request):
     if request.method == 'POST':

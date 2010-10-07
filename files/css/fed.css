@@ -342,7 +342,7 @@ a:hover{
 .indicador a{
     display: block;
     background: url(/files/images/indicador.png) no-repeat;
-    color: #849eaa;
+    color: #36474f;
     width: 455px;
     height: 46px;
     line-height: 46px;
@@ -355,6 +355,7 @@ a:hover{
 }
 .indicador a:hover{
     color: #36474f;
+    background-position: 0 -46px;
 }
 
 .notiene{
@@ -369,4 +370,44 @@ a:hover{
 }
 .indicators{
     display: none;
+}
+.bar3{
+    width: 226px;
+    background: #555753 url(/files/images/bar3_back.png) repeat-x;
+    height: 350px;
+    float: left;
+}
+.result_tables{
+    float: left;
+    width: 730px;
+}
+.nav2{
+    font-size: 17px;    
+    text-shadow: 0 2px 1px #483916;
+    line-height: 38px;
+    margin-top: 40px;
+    text-align: right;
+}
+.nav2 a{
+    color: #d5d5d5;
+}
+.nav2 img{
+    float: right;
+    margin-top: 8px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.otros_indicadores{
+
+}
+.otros_indicadores a{
+    display: block;
+    background: url(/files/images/indicador_back.png) repeat-x;
+    height: 34px;
+    width: 201px;
+    line-height: 34px;
+    padding-left: 25px;
+    font-size: 15px;
+    color: #dfc268;
+    margin-top: 2px;
 }

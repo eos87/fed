@@ -19,10 +19,10 @@
         }
         map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-        $('#influencia').submit(function(){
+        $('#influencia_form').submit(function(){
             //var csrf = $('[name=csrfmiddlewaretoken]').val();
             if(checkear()){
-                var datos = $('#influencia').serialize();
+                var datos = $('#influencia_form').serialize();
                 $.post('/influencia/', datos,
                 function(data){
                     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
@@ -94,7 +94,7 @@
     <div class="title">
         Formulario
     </div>
-    <form action="." method="POST" id="influencia">{% csrf_token %}
+    <form action="." method="POST" id="influencia_form">{% csrf_token %}
         <label class="aux">{{form.organizacion.label}}</label><br>
         {{form.organizacion}}<br><br>
         <label class="aux">{{form.resultado.label}}</label><br>
