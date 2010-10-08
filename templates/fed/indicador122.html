@@ -5,14 +5,14 @@
 {% include "bar3.html" %}
 <div class="result_tables">
     <div class="titulo_indicadores">
-        Indicador 1.2.1
+        Indicador 1.2.2
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Denuncias publicas para demandar la justicia</caption>
+            <caption>Denuncias Jur&iacute;dicas para demandar la justicia y promover igualdad</caption>
             <thead>
                 <tr>
-                    <th>Acciones p&uacute;blicas realizadas</th>
+                    <th>Acciones jur&iacute;dicas realizadas</th>
                     <th>Contra diversidad sexual</th>
                     <th>Contra discapacitados</th>
                     <th>Contra personas con VIH</th>
@@ -20,7 +20,7 @@
                     <th>Contra Jovenes</th>
                 </tr>
             </thead>
-            {%for key, value in tabla.items%}
+            {%for key, value in tabla.items reversed %}
             <tr>
                 <td>{{key}}</td>
                 <td>{{value.sexual|floatformat}}</td>
@@ -30,37 +30,7 @@
                 <td>{{value.joven|floatformat}}</td>
             </tr>
             {%endfor%}
-            <thead>
-                <tr>
-                    <th>Acciones p&uacute;blicas efectivas</th>
-                    <th>Contra diversidad sexual</th>
-                    <th>Contra discapacitados</th>
-                    <th>Contra personas con VIH</th>
-                    <th>Contra Etnia</th>
-                    <th>Contra Jovenes</th>
-                </tr>
-            </thead>
-            {%for key, value in tabla2.items%}
-            <tr>
-                <td>{{key}}</td>
-                <td>{{value.sexual|floatformat}}</td>
-                <td>{{value.discapacidad|floatformat}}</td>
-                <td>{{value.vih|floatformat}}</td>
-                <td>{{value.racial|floatformat}}</td>
-                <td>{{value.joven|floatformat}}</td>
-            </tr>
-            {%endfor%}
-            <thead>
-                <tr>
-                    <th>Promedios</th>
-                    <th>%</th>
-                    <th>%</th>
-                    <th>%</th>
-                    <th>%</th>
-                    <th>%</th>
-                </tr>
-            </thead>
-            {%for key, value in tabla3.items%}
+            {%for key, value in tabla2.items %}
             <tr>
                 <td>{{key}}</td>
                 <td>{{value.sexual|floatformat}}</td>
