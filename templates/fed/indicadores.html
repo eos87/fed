@@ -7,6 +7,12 @@
 <link type="text/css" rel="stylesheet"  href="/files/css/aux.css">
 <script type="text/javascript">
     $(document).ready(function(){
+        $('#select_organizacion').click(function(){
+            $('#id_organizacion option').each(function(){
+                $(this).attr('selected', 'selected');        
+            });
+            return false;
+        });
         $('.tiene a').click(function(){
             var este = this;
             $('.results').animate({width: 'toggle'},
@@ -36,7 +42,9 @@
     </div>
     <form action="." method="POST">{% csrf_token %}
         <label class="aux">{{form.organizacion.label}}</label><br>
-        {{form.organizacion}}<br><br>
+        {{form.organizacion}}<br>
+        <a href="#" class="selector-chooseall" id="select_organizacion">Selecciona todos</a>
+        <br>
         <div class="clean">
             <label class="aux">{{form.municipio.label}}</label><br>
             {{form.municipio}}

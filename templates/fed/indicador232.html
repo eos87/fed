@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block extratitle %}Indicador 2.3.2{% endblock %}
+{% block contenido %}
+
+{% include "bar3.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        Indicador 2.3.2
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Denuncias interpuestas por victimas de violencia</caption>
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Comisariato</th>
+                    <th>Fiscal&iacute;a</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>
+                    {% if value.comisariato %}
+                    {{value.comisariato|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+                <td>
+                    {% if value.fiscalia %}
+                    {{value.fiscalia|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>                
+            </tr>
+            {%endfor%}
+            {%for key, value in tabla2.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>
+                    {% if value.comisariato %}
+                    {{value.comisariato|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+                <td>
+                    {% if value.fiscalia %}
+                    {{value.fiscalia|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+<div class="clean"></div>
+{% endblock %}

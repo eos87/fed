@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block extratitle %}Indicador 2.3.4{% endblock %}
+{% block contenido %}
+
+{% include "bar3.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        Indicador 2.3.4
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Atenci&oacute;n de casos de victimas de violencia de g&eacute;nero en los albergues</caption>
+            <thead>
+                <tr>
+                    <th>Accion</th>
+                    <th>Mujeres</th>
+                    <th>J&oacute;venes</th>
+                    <th>Ni&ntilde;os y Ni&ntilde;as</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>
+                    {% if value.mujeres %}
+                    {{value.mujeres|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+                <td>
+                    {% if value.jovenes %}
+                    {{value.jovenes|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+                <td>
+                    {% if value.ninos_ninas %}
+                    {{value.ninos_ninas|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+            </tr>
+            {%endfor%}
+            {%for key, value in tabla2.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>
+                    {% if value.mujeres %}
+                    {{value.mujeres|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+                <td>
+                    {% if value.jovenes %}
+                    {{value.jovenes|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+                <td>
+                    {% if value.ninos_ninas %}
+                    {{value.ninos_ninas|floatformat}}
+                    {% else %}
+                    0{% endif %}
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+<div class="clean"></div>
+{% endblock %}

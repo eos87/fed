@@ -361,7 +361,7 @@ class AtencionVictima(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_VICTIMAS)
     servicio_salud = models.IntegerField('A través de los servicios de atención en salud')
     servicio_psicologia = models.IntegerField('A través de los servicios de atención en psicología')
-    sevicio_legal = models.IntegerField('A través de los servicios de atención legal')
+    servicio_legal = models.IntegerField('A través de los servicios de atención legal')
     encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
@@ -373,7 +373,7 @@ class AtencionVictima(models.Model):
 
 CHOICE_DENUNCIAS = (('denuncias_interpuestas', 'No. denuncias interpuestas a instancias de justicia '),
                     ('denuncias_recibidas', 'No. denuncias que han sido recibidas y atendidas'),
-                    ('denuncias_sancion', 'No. casos que concluyen con sanción penal'), )
+                    ('denuncias_sancion', 'No. de casos que concluyen con sanción penal'), )
 
 class DenunciaViolencia(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_DENUNCIAS)
