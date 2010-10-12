@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block extratitle %}Mejorar la gesti&oacute;n{% endblock %}
+{% block contenido %}
+
+{% include "bar3.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        {{resultado.nombre}}: Mejorar la gesti&oacute;n
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Organizaciones con sistema administrativo</caption>
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Para mejorar sistema contable</th>
+                    <th>Para mejorar plan estrat&eacute;gico</th>
+                    <th>Para obtener personer&iacute;a</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value.mejorar_sistema|floatformat}}</td>
+                <td>{{value.mejorar_plan|floatformat}}</td>
+                <td>{{value.mejorar_apoyo|floatformat}}</td>
+                <td>{{value.prom|floatformat}}</td>
+            </tr>
+            {%endfor%}            
+        </table>
+    </div>
+</div>
+<div class="clean"></div>
+{% endblock %}

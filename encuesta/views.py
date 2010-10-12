@@ -701,6 +701,71 @@ def indicador234(request):
 
     return render_to_response('fed/indicador234.html', RequestContext(request, locals()))
 
+@session_required
+def indicador311(request):
+    resultado = Resultado.objects.get(pk=6)
+    tabla = {}
+    a = _queryset_filtrado(request, resultado)
+
+    for opcion in MEDIOS3:
+        query = AccionPromuevenIntercambio.objects.filter(encuesta__in=a, accion=opcion[0])
+        acciones_org_part_sum = query.aggregate(acciones_org_part_sum=Sum('acciones_org_part'))['acciones_org_part_sum']
+        participantes_sum = query.aggregate(participantes_sum=Sum('participantes'))['participantes_sum']
+        acciones_efectivas_sum = query.aggregate(acciones_efectivas_sum=Sum('acciones_efectivas'))['acciones_efectivas_sum']
+        prom = get_prom(acciones_org_part_sum, acciones_efectivas_sum)
+
+        tabla[opcion[1]] = {
+            'acciones_org_part':acciones_org_part_sum,
+            'participantes': participantes_sum,
+            'acciones_efectivas':acciones_efectivas_sum,
+            'prom':prom
+            }
+
+    return render_to_response('fed/indicador311.html', RequestContext(request, locals()))
+
+@session_required
+def indicador312(request):
+    resultado = Resultado.objects.get(pk=6)
+    tabla = {}
+    a = _queryset_filtrado(request, resultado)
+
+    for opcion in MEDIOS3:
+        query = AccionFortaleceCapacidad.objects.filter(encuesta__in=a, accion=opcion[0])
+        acciones_sum = query.aggregate(acciones_sum=Sum('acciones'))['acciones_sum']
+        participantes_sum = query.aggregate(participantes_sum=Sum('participantes'))['participantes_sum']
+        acciones_efectivas_sum = query.aggregate(acciones_efectivas_sum=Sum('acciones_efectivas'))['acciones_efectivas_sum']
+        prom = get_prom(acciones_sum, acciones_efectivas_sum)
+
+        tabla[opcion[1]] = {
+            'acciones_org_part':acciones_sum,
+            'participantes': participantes_sum,
+            'acciones_efectivas':acciones_efectivas_sum,
+            'prom':prom
+            }
+
+    return render_to_response('fed/indicador312.html', RequestContext(request, locals()))
+
+@session_required
+def indicador313(request):
+    resultado = Resultado.objects.get(pk=6)
+    tabla = {}
+    a = _queryset_filtrado(request, resultado)
+
+    for opcion in CHOICE4:
+        query = AccionFortaleceCapAdmitiva.objects.filter(encuesta__in=a, accion=opcion[0])
+        mejorar_sistema_sum = query.aggregate(mejorar_sistema_sum=Sum('mejorar_sistema'))['mejorar_sistema_sum']
+        mejorar_plan_sum = query.aggregate(mejorar_plan_sum=Sum('mejorar_plan'))['mejorar_plan_sum']
+        mejorar_apoyo_sum = query.aggregate(mejorar_apoyo_sum=Sum('mejorar_apoyo'))['mejorar_apoyo_sum']
+
+
+        tabla[opcion[1]] = {
+            'mejorar_sistema':mejorar_sistema_sum,
+            'mejorar_plan': mejorar_plan_sum,
+            'mejorar_apoyo':mejorar_apoyo_sum,
+            }
+
+    return render_to_response('fed/indicador313.html', RequestContext(request, locals()))
+
 #obtener la vista adecuada para los indicadores
 def _get_view(request, vista):
     if vista in VALID_VIEWS:
@@ -732,6 +797,10 @@ VALID_VIEWS = {
     'indicador-232': indicador232,
     'indicador-233': indicador233,
     'indicador-234': indicador234,
+    #indicadores para resultado 3.1
+    'intercambio-teorico-y-metod':indicador311,
+    'medir-y-reportar-indicadores': indicador312,
+    'mejorar-la-gestion': indicador313,
     }
 
 def get_prom(total, cantidad):

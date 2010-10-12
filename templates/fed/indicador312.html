@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block extratitle %}Medir y reportar los indicadores{% endblock %}
+{% block contenido %}
+
+{% include "bar3.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        {{resultado.nombre}}: Medir y reportar los indicadores
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Acciones efectuadas y efectivas</caption>
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Acciones org. particip&oacute;</th>
+                    <th>Participates por parte de la org.</th>
+                    <th>Acciones efectivas</th>
+                    <th>Efectividad</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items reversed %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value.acciones_org_part|floatformat}}</td>
+                <td>{{value.participantes|floatformat}}</td>
+                <td>{{value.acciones_efectivas|floatformat}}</td>
+                <td>{{value.prom|floatformat}}</td>
+            </tr>
+            {%endfor%}            
+        </table>
+    </div>
+</div>
+<div class="clean"></div>
+{% endblock %}
