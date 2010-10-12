@@ -393,8 +393,8 @@ a:hover{
 .nav2{
     font-size: 17px;    
     text-shadow: 0 2px 1px #483916;
-    line-height: 38px;
-    margin-top: 8px;
+    line-height: 40px;
+    margin-top: 0px;
     text-align: right;
     color: #d5d5d5;
 }
@@ -408,7 +408,7 @@ a:hover{
     margin-right: 5px;
 }
 .otros_indicadores{
-    margin-top: 10px;
+    margin-top: 5px;
 }
 .otros_indicadores a{
     display: block;
@@ -422,7 +422,7 @@ a:hover{
     margin-top: 2px;
 }
 .titulo_indicadores{
-    font-size: 27px;
+    font-size: 24px;
     color: #888a85;
     height: 40px;
     margin-left: 15px;
@@ -434,4 +434,7 @@ a:hover{
 .result_title{
     font-size: 13px;
     margin-right: 5px;
+}
+option{
+    font-size: 12px;
 }

@@ -400,6 +400,66 @@ def indicador211(request):
     return render_to_response('fed/indicador211.html', RequestContext(request, locals()))
 
 @session_required
+def indicador212(request):
+    resultado = Resultado.objects.get(pk=3)
+    tabla = {}
+    tabla2 = {}
+    tabla3 = {}
+    a = _queryset_filtrado(request, resultado)    
+
+    #obteniendo los promedios
+    opcion = PERSONAS_REFLEXION[0][0]
+    query = AccionRelizadaReflexionPersona.objects.filter(encuesta__in=a, accion=opcion)
+    hombres_sum = query.aggregate(hombres_sum=Sum('hombres'))['hombres_sum']
+    mujeres_sum = query.aggregate(mujeres_sum=Sum('mujeres'))['mujeres_sum']
+    jovenes_sum = query.aggregate(jovenes_sum=Sum('jovenes'))['jovenes_sum']
+    div_sexual_sum = query.aggregate(div_sexual_sum=Sum('div_sexual'))['div_sexual_sum']
+    vih_sum = query.aggregate(vih_sum=Sum('vih'))['vih_sum']
+    etnica_sum = query.aggregate(etnica_sum=Sum('etnica'))['etnica_sum']
+    discapacidad_sum = query.aggregate(discapacidad_sum=Sum('discapacidad'))['discapacidad_sum']
+
+    tabla2[PERSONAS_REFLEXION[0][1]] = {
+        'hombres':hombres_sum,
+        'mujeres': mujeres_sum,
+        'jovenes': jovenes_sum,
+        'div_sexual': div_sexual_sum,
+        'vih': vih_sum,
+        'etnica': etnica_sum,
+        'discapacidad': discapacidad_sum
+    }
+    opcion2 = PERSONAS_REFLEXION[1][0]
+    query2 = AccionRelizadaReflexionPersona.objects.filter(encuesta__in=a, accion=opcion2)
+    hombres_sum2 = query2.aggregate(hombres_sum2=Sum('hombres'))['hombres_sum2']
+    mujeres_sum2 = query2.aggregate(mujeres_sum2=Sum('mujeres'))['mujeres_sum2']
+    jovenes_sum2 = query2.aggregate(jovenes_sum2=Sum('jovenes'))['jovenes_sum2']
+    div_sexual_sum2 = query2.aggregate(div_sexual_sum2=Sum('div_sexual'))['div_sexual_sum2']
+    vih_sum2 = query2.aggregate(vih_sum2=Sum('vih'))['vih_sum2']
+    etnica_sum2 = query2.aggregate(etnica_sum2=Sum('etnica'))['etnica_sum2']
+    discapacidad_sum2 = query2.aggregate(discapacidad_sum2=Sum('discapacidad'))['discapacidad_sum2']
+
+    tabla2[PERSONAS_REFLEXION[1][1]] = {
+        'hombres':hombres_sum2,
+        'mujeres': mujeres_sum2,
+        'jovenes': jovenes_sum2,
+        'div_sexual': div_sexual_sum2,
+        'vih': vih_sum2,
+        'etnica': etnica_sum2,
+        'discapacidad': discapacidad_sum2
+    }
+
+    tabla3['Efectividad %'] = {
+        'hombres':get_prom(hombres_sum, hombres_sum2),
+        'mujeres': get_prom(mujeres_sum, mujeres_sum2),
+        'jovenes': get_prom(jovenes_sum, jovenes_sum2),
+        'div_sexual': get_prom(div_sexual_sum, div_sexual_sum2),
+        'vih':get_prom(vih_sum, vih_sum2),
+        'etnica':get_prom(etnica_sum, etnica_sum2),
+        'discapacidad':get_prom(discapacidad_sum, discapacidad_sum2),
+    }
+
+    return render_to_response('fed/indicador212.html', RequestContext(request, locals()))
+
+@session_required
 def indicador221(request):
     resultado = Resultado.objects.get(pk=4)
     tabla = {}
@@ -658,14 +718,11 @@ VALID_VIEWS = {
     'defensa-de-los-derechos': indicador113,
     'observatorios-para-vigilancia': indicador114,
     #indicadores para resultado 1.2
-    'disc-de-la-diversidad-sexual': indicador121,
-    'disc-por-discapacidad-y-etnica': indicador122,
-    'disc-por-vih-y-sida': indicador122,
+    'acciones-publicas': indicador121,
+    'acciones-de-denuncias-juridicas': indicador122,
     #indicadores para resultado 2.1
-    'mujeres': indicador211,
-    'personas-de-la-div-sexual': indicador211,
-    'discapacidad-etnia-e-indigenas': indicador211,
-    'personas-con-vih': indicador211,
+    'acciones-efectuadas': indicador211,
+    'cambios-en-las-poblaciones': indicador212,
     #indicadores para resultado 2.2.1
     'indicador-221': indicador221,
     'indicador-222': indicador222,

@@ -5,19 +5,19 @@
 {% include "bar3.html" %}
 <div class="result_tables">
     <div class="titulo_indicadores">
-        Discriminación de la diversidad sexual
+        {{resultado.nombre}}: Acciones P&uacute;blicas
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Denuncias publicas para demandar la justicia</caption>
+            <caption>Acciones efectuadas y efectivas contra:</caption>
             <thead>
                 <tr>
-                    <th>Acciones p&uacute;blicas realizadas</th>
-                    <th>Contra diversidad sexual</th>
-                    <th>Contra discapacitados</th>
-                    <th>Contra personas con VIH</th>
-                    <th>Contra Etnia</th>
-                    <th>Contra Jovenes</th>
+                    <th>&nbsp;</th>
+                    <th>Discriminaci&oacute;n diversidad sexual</th>
+                    <th>Discriminaci&oacute;n a discapacitados</th>
+                    <th>Discriminaci&oacute;n a personas con VIH</th>
+                    <th>Discriminaci&oacute;n por Etnia</th>
+                    <th>Discriminaci&oacute;n a J&oacute;venes</th>
                 </tr>
             </thead>
             {%for key, value in tabla.items%}
@@ -29,15 +29,15 @@
                 <td>{{value.racial|floatformat}}</td>
                 <td>{{value.joven|floatformat}}</td>
             </tr>
-            {%endfor%}
-            <thead>
+            {%endfor%}            
+            <thead>                
                 <tr>
-                    <th>Acciones p&uacute;blicas efectivas</th>
-                    <th>Contra diversidad sexual</th>
-                    <th>Contra discapacitados</th>
-                    <th>Contra personas con VIH</th>
-                    <th>Contra Etnia</th>
-                    <th>Contra Jovenes</th>
+                    <th>&nbsp;</th>
+                    <th>Discriminaci&oacute;n diversidad sexual</th>
+                    <th>Discriminaci&oacute;n a discapacitados</th>
+                    <th>Discriminaci&oacute;n a personas con VIH</th>
+                    <th>Discriminaci&oacute;n por Etnia</th>
+                    <th>Discriminaci&oacute;n a J&oacute;venes</th>
                 </tr>
             </thead>
             {%for key, value in tabla2.items%}
@@ -52,7 +52,7 @@
             {%endfor%}
             <thead>
                 <tr>
-                    <th>Promedios</th>
+                    <th>Efectividad</th>
                     <th>%</th>
                     <th>%</th>
                     <th>%</th>

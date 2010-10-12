@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block extratitle %}Camios en las poblaciones metas{% endblock %}
+{% block contenido %}
+
+{% include "bar3.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        {{resultado.nombre}}: Cambios en las pob.
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Acciones efectuadas y efectivas</caption>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Los hombres</th>
+                    <th>Las Mujeres</th>
+                    <th>L@s j&oacute;venes</th>
+                    <th>div. sexual</th>
+                    <th>Personas VIH</th>
+                    <th>Personas etnia</th>
+                    <th>Personas discap.</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla2.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value.hombres|floatformat}}</td>
+                <td>{{value.mujeres|floatformat}}</td>
+                <td>{{value.jovenes|floatformat}}</td>
+                <td>{{value.div_sexual|floatformat}}</td>
+                <td>{{value.vih|floatformat}}</td>
+                <td>{{value.etnica|floatformat}}</td>
+                <td>{{value.discapacidad|floatformat}}</td>
+            </tr>
+            {%endfor%}
+            {%for key, value in tabla3.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value.hombres|floatformat}}</td>
+                <td>{{value.mujeres|floatformat}}</td>
+                <td>{{value.jovenes|floatformat}}</td>
+                <td>{{value.div_sexual|floatformat}}</td>
+                <td>{{value.vih|floatformat}}</td>
+                <td>{{value.etnica|floatformat}}</td>
+                <td>{{value.discapacidad|floatformat}}</td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+<div class="clean"></div>
+{% endblock %}
