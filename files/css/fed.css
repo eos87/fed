@@ -414,10 +414,10 @@ a:hover{
     display: block;
     background: url(/files/images/indicador_back.png) repeat-x;
     height: 34px;
-    width: 206px;
+    width: 211px;
     line-height: 34px;
-    padding-left: 20px;
-    font-size: 14px;
+    padding-left: 15px;
+    font-size: 13px;
     color: #dfc268;
     margin-top: 2px;
 }
@@ -437,4 +437,13 @@ a:hover{
 }
 option{
     font-size: 12px;
+}
+.graph_title{
+    font-size: 14px;
+    background-color: #e1e1e1;    
+    text-align: left;
+    padding-left: 15px;
+    color: #069;
+    height: 20px;
+    line-height: 20px;
 }

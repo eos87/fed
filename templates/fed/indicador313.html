@@ -1,5 +1,163 @@
 {% extends "base.html" %}
 {% block extratitle %}Mejorar la gesti&oacute;n{% endblock %}
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+<script type="text/javascript">
+    var chart;
+    var chart2;
+    var chart3;
+    var pie = {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+            enabled: true,
+            formatter: function() {
+                return this.y + '%'
+            },
+            color: 'white',
+            style: {
+                font: '12px Trebuchet MS, Verdana, sans-serif'
+
+            }
+        }
+    }
+    var plotArea = {
+        shadow: null,
+        borderWidth: null,
+        backgroundColor: null
+    }
+    var legend = {
+        layout: 'vertical',
+        style: {
+            left: 'auto',
+            bottom: 'auto',
+            right: '50px',
+            top: '100px'
+        }
+    }
+    
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                margin: [50, 200, 60, 170]
+            },
+            colors: [
+                '#4572A7',
+                '#AA4643',
+                '#89A54E'
+            ],
+            title: {
+                text: 'Cuenta con un sistema admitivo contable'
+            },            
+            plotArea: plotArea,
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+            },
+            plotOptions: {
+                pie: pie
+            },
+            legend: legend,
+            series: [{
+                    type: 'pie',
+                    name: 'Sistema administravico contable',
+                    data: [                        
+                        ['Si hay', {{val1|floatformat}}],
+                        ['No es eficiente', {{val2|floatformat}}],
+                        /*{
+                            name: 'Chrome',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },*/
+                        ['No hay', {{val3|floatformat}}]
+                    ]
+                }]
+        });
+        chart2 = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container2',
+                margin: [50, 200, 60, 170]
+            },
+            colors: [
+                '#80699B',
+                '#3D96AE',
+                '#DB843D'
+            ],
+            title: {
+                text: 'Utilizan plan estrategico para mejorar su capacidad de gestion'
+            },
+            plotArea: plotArea,
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+            },
+            plotOptions: {
+                pie: pie
+            },
+            legend: legend,
+            series: [{
+                    type: 'pie',
+                    name: 'Utilizan plan estrategico',
+                    data: [
+                        ['Si hay', {{val4|floatformat}}],
+                        ['No se utiliza', {{val5|floatformat}}],
+                        /*{
+                            name: 'Chrome',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },*/
+                        ['No hay', {{val6|floatformat}}]
+                    ]
+                }]
+        });
+        chart3 = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container3',
+                margin: [50, 200, 60, 170]
+            },
+            colors: [
+                '#92A8CD',
+                '#A47D7C',
+                '#B5CA92'
+            ],
+            title: {
+                text: 'Organizaciones de la div. sexual que han obtenido personeria juridica'
+            },
+            plotArea: plotArea,
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+            },
+            plotOptions: {
+                pie: pie
+            },
+            legend: legend,
+            series: [{
+                    type: 'pie',
+                    name: 'Organizaciones que han obtenido personeria juridica',
+                    data: [
+                        ['Ninguna', {{val7|floatformat}}],
+                        ['En proceso', {{val8|floatformat}}],
+                        /*{
+                            name: 'Chrome',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },*/
+                        ['Logrado', {{val9|floatformat}}]
+                    ]
+                }]
+        });
+    });
+</script>
+{% endblock %}
 {% block contenido %}
 
 {% include "bar3.html" %}
@@ -8,6 +166,10 @@
         {{resultado.nombre}}: Mejorar la gesti&oacute;n
     </div>
     <div class="table_container">
+        <div class="graph_title">Organizaciones con sistema administrativo</div>
+        <div id="container" style="width: 700px; height: 400px;"></div>
+        <div id="container2" style="width:700px; height: 400px;"></div>
+        <div id="container3" style="width:700px; height: 400px;"></div>
         <table class="mostrar">
             <caption>Organizaciones con sistema administrativo</caption>
             <thead>

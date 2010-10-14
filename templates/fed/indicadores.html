@@ -60,8 +60,9 @@
     </form>    
 </div>
 {% if bandera == 1 %}
-<div class="resultados">
+<div class="resultados">    
     <div class="results">
+        Resultados<br><br>
         {% for r in resultados %}
         {% if r.pk in datos %}
         <div class="tiene"><a id="ind{{r.pk}}" href="{{r.pk}}/">{{r.nombre}}</a></div>
@@ -73,7 +74,8 @@
     {% for r in resultados %}
     {% if r.pk in datos %}
     <div class="ind{{r.pk}} indicators">
-        <button class="volver">Ver Resultados</button><br><br>
+        <button class="volver">Volver a Resultados</button><br><br>Resultado: {{r.nombre}}<br><br>
+        Indicadores<br><br>
         {% for ind in r.indicador_set.all %}
         <div class="indicador"><a href="{{ind.slug}}/">{{ind.nombre}}</a></div>
         {% endfor %}

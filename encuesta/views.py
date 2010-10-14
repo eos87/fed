@@ -1,12 +1,11 @@
 from decorators import session_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ViewDoesNotExist
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
-from django.views.generic.simple import direct_to_template
 from forms import *
 from models import *
 
@@ -308,7 +307,7 @@ def indicador122(request):
         'joven':joven_sum2
     }
 
-    tabla2['Promedio %'] = {
+    tabla2['Efectividad %'] = {
         'sexual':get_prom(div_sexual_sum, div_sexual_sum2),
         'discapacidad': get_prom(discapacidad_sum, discapacidad_sum2),
         'vih': get_prom(vih_sum, vih_sum2),
@@ -387,7 +386,7 @@ def indicador211(request):
         'discapacidad': discapacidad_sum2
     }
 
-    tabla3['Promedio %'] = {
+    tabla3['Efectividad %'] = {
         'hombres':get_prom(hombres_sum, hombres_sum2),
         'mujeres': get_prom(mujeres_sum, mujeres_sum2),
         'jovenes': get_prom(jovenes_sum, jovenes_sum2),
@@ -568,7 +567,7 @@ def indicador231(request):
         'servicio_legal': servicio_legal_sum2,
         }
 
-    tabla2['Promedio %'] = {
+    tabla2['Efectividad %'] = {
         'servicio_salud':get_prom(servicio_salud_sum, servicio_salud_sum2),
         'servicio_psicologia': get_prom(servicio_psicologia_sum, servicio_psicologia_sum2),
         'servicio_legal': get_prom(servicio_legal_sum, servicio_legal_sum2),
@@ -581,6 +580,7 @@ def indicador232(request):
     resultado = Resultado.objects.get(pk=5)
     tabla = {}
     tabla2 = {}
+    tabla3 = {}
     a = _queryset_filtrado(request, resultado)
 
     opcion = CHOICE_DENUNCIAS[0][0]
@@ -603,7 +603,7 @@ def indicador232(request):
         'fiscalia': fiscalia_sum2,
         }
 
-    tabla['Promedio %'] = {
+    tabla['Efectividad %'] = {
         'comisariato':get_prom(comisariato_sum, comisariato_sum2),
         'fiscalia':get_prom(fiscalia_sum, fiscalia_sum2),
     }
@@ -616,7 +616,7 @@ def indicador232(request):
         'comisariato':comisariato_sum3,
         'fiscalia': fiscalia_sum3,
         }
-    tabla2['Promedio %'] = {
+    tabla3['Efectividad %'] = {
         'comisariato':get_prom(comisariato_sum, comisariato_sum3),
         'fiscalia':get_prom(fiscalia_sum, fiscalia_sum3),
     }
@@ -654,7 +654,7 @@ def indicador233(request):
         'ninos_ninas': ninos_ninas_sum2,
         }
 
-    tabla2['Promedio %'] = {
+    tabla2['Efectividad %'] = {
         'mujeres':get_prom(mujeres_sum, mujeres_sum2),
         'jovenes': get_prom(jovenes_sum, jovenes_sum2),
         'ninos_ninas': get_prom(ninos_ninas_sum, ninos_ninas_sum2),
@@ -693,7 +693,7 @@ def indicador234(request):
         'ninos_ninas': ninos_ninas_sum2,
         }
 
-    tabla2['Promedio %'] = {
+    tabla2['Efectividad %'] = {
         'mujeres':get_prom(mujeres_sum, mujeres_sum2),
         'jovenes': get_prom(jovenes_sum, jovenes_sum2),
         'ninos_ninas': get_prom(ninos_ninas_sum, ninos_ninas_sum2),
@@ -764,6 +764,35 @@ def indicador313(request):
             'mejorar_apoyo':mejorar_apoyo_sum,
             }
 
+    #para graficos    
+    si_hay = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, sistema=CHOICE1[0][0]).count()
+    hay_pero_no = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, sistema=CHOICE1[1][0]).count()
+    no_hay = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, sistema=CHOICE1[2][0]).count()
+    
+    total = si_hay + hay_pero_no + no_hay    
+    val1 = get_prom(total, si_hay)
+    val2 = get_prom(total, hay_pero_no)
+    val3 = get_prom(total, no_hay)
+
+    si_hay_plan = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, plan=CHOICE2[0][0]).count()
+    no_utiliza = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, plan=CHOICE2[1][0]).count()
+    no_hay_plan = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, plan=CHOICE2[2][0]).count()
+
+    total2 = si_hay_plan + no_utiliza + no_hay_plan
+    val4 = get_prom(total2, si_hay_plan)
+    val5 = get_prom(total2, no_utiliza)
+    val6 = get_prom(total2, no_hay_plan)
+
+    ninguna = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, organizaciones=CHOICE3[0][0]).count()
+    en_proceso = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, organizaciones=CHOICE3[1][0]).count()
+    logrado = EstadoCapacidadAdmitiva.objects.filter(encuesta__in=a, organizaciones=CHOICE3[2][0]).count()
+
+    total3 = ninguna + en_proceso + logrado
+    val7 = get_prom(total3, ninguna)
+    val8 = get_prom(total3, en_proceso)
+    val9 = get_prom(total3, logrado)
+
+
     return render_to_response('fed/indicador313.html', RequestContext(request, locals()))
 
 #obtener la vista adecuada para los indicadores
@@ -789,14 +818,14 @@ VALID_VIEWS = {
     'acciones-efectuadas': indicador211,
     'cambios-en-las-poblaciones': indicador212,
     #indicadores para resultado 2.2.1
-    'indicador-221': indicador221,
-    'indicador-222': indicador222,
-    'indicador-223': indicador223,
+    'acciones-por-organizaciones': indicador221,
+    'grupos-div-sexual-y-discapacidad': indicador222,
+    'grupos-etnico-indigenas-y-jovenes': indicador223,
     #indicadores para resultado 2.3
-    'indicador-231': indicador231,
-    'indicador-232': indicador232,
-    'indicador-233': indicador233,
-    'indicador-234': indicador234,
+    'servicios-de-atencion': indicador231,
+    'denuncias-interpuestas': indicador232,
+    'victimas-atendidas': indicador233,
+    'referencias-y-contrareferencias': indicador234,
     #indicadores para resultado 3.1
     'intercambio-teorico-y-metod':indicador311,
     'medir-y-reportar-indicadores': indicador312,

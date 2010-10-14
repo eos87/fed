@@ -1,11 +1,25 @@
 {% extends "base.html" %}
 {% block extratitle %}Area de influencia{% endblock %}
 {% block extrahead %}
+<link type="text/css" rel="stylesheet"  href="/files/css/django-admin-widgets.css">
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
     var map;
     var markers = new Array();
     $(document).ready(function(){
+        $('#select_organizacion').click(function(){
+            $('#id_organizacion option').each(function(){
+                $(this).attr('selected', 'selected');
+            });
+            return false;
+        });
+        $('#select_resultados').click(function(){
+            $('#id_resultado option').each(function(){
+                $(this).attr('selected', 'selected');
+            });
+            return false;
+        });
+        
         var altura = $('.bar').height();
         $('.mapa').height(altura);
         $('#map_canvas').height(altura);
@@ -97,9 +111,13 @@
     </div>
     <form action="." method="POST" id="influencia_form">{% csrf_token %}
         <label class="aux">{{form.organizacion.label}}</label><br>
-        {{form.organizacion}}<br><br>
+        {{form.organizacion}}
+        <a href="#" class="selector-chooseall" id="select_organizacion">Selecciona todos</a>
+        <br><br>
         <label class="aux">{{form.resultado.label}}</label><br>
-        {{form.resultado}}<br><br>
+        {{form.resultado}}
+        <a href="#" class="selector-chooseall" id="select_resultados">Selecciona todos</a>
+        <br><br>
         <label class="aux">{{form.periodo.label}}</label><br>
         {{form.periodo}}<br><br>
         <label class="aux">{{form.anio.label}}</label><br>

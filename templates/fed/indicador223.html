@@ -1,24 +1,24 @@
 {% extends "base.html" %}
-{% block extratitle %}Indicador 2.2.3{% endblock %}
+{% block extratitle %}Grupos &eacute;tnico, indigena y j&oacute;venes{% endblock %}
 {% block contenido %}
 
 {% include "bar3.html" %}
 <div class="result_tables">
     <div class="titulo_indicadores">
-        Indicador 2.2.3
+        {{resultado.nombre}}: Grupos &eacute;tnico, indigena y j&oacute;venes
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Acciones impulsadas por grupos para prevenci&oacute;n de violencia basada g&eacute;nero</caption>
+            <caption>Acciones efectuadas y efectivas</caption>
             <thead>
                 <tr>
-                    <th></th>
-                    <th># Acciones sobre etnia e ind&iacute;genas</th>
-                    <th># Efectivas</th>
-                    <th>%</th>
-                    <th># Acciones sobre l@s j&oacute;venes</th>
-                    <th># Acciones efectivas</th>
-                    <th>%</th>
+                    <th>&nbsp;</th>
+                    <th>Acciones de grupo etnia e ind&iacute;genas</th>
+                    <th>Lograron cambios</th>
+                    <th>Efectividad</th>
+                    <th>Acciones de l@s j&oacute;venes</th>
+                    <th>Lograron cambios</th>
+                    <th>Efectividad</th>
                 </tr>
             </thead>
             {%for key, value in tabla.items %}
