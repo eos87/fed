@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block extratitle %}Home{% endblock %}
+{% block contenido %}
+<div class="ultimas">
+    <div class="title_project">
+        <div class="proyecto_nombre">Proyecto</div>
+        {{proyecto.nombre}}
+    </div>
+    <div class="proyecto_info">
+        <span class="naranja bold">Area de cobertura</span><br>        
+        {{proyecto.cobertura}}
+        <img src="/files/images/pointed_line.png" alt="line" class="pointed_line">
+        <div class="duracion">
+            <span class="naranja bold">Duraci&oacute;n</span><br>
+            {{proyecto.duracion}}
+        </div>
+        <div class="monto">
+            <span class="naranja bold">Monto solicitado de FED</span><br>
+            {{proyecto.monto}}
+        </div>
+        <div class="monto">
+            <span class="naranja bold">Monto de contrapartida</span><br>
+            {{proyecto.monto2}}
+        </div>
+        <img src="/files/images/pointed_line.png" alt="line" class="pointed_line">
+        <div class="clean"></div>
+        <br><br>
+    </div>
+</div>
+<div class="acerca">
+    <div class="title_project org">
+        <div class="proyecto_nombre">Organizaci&oacute;n</div>
+        {{proyecto.organizacion.nombre}}
+    </div>
+    <div class="proyecto_info">
+        <div class="direccion">
+            <span class="blue bold">Direcci&oacute;n</span><br>
+            {{proyecto.organizacion.direccion}}
+        </div>
+        <div class="monto">
+            <span class="blue bold">Correo</span><br>
+            {{proyecto.organizacion.correo}}
+        </div>
+        <img src="/files/images/pointed_line.png" alt="line" class="pointed_line">
+        <div class="monto2">
+            <span class="blue bold">Persona de contacto</span><br>
+            {{proyecto.organizacion.contacto}}
+        </div>
+        <div class="monto">
+            <span class="blue bold">Tel&eacute;fono</span><br>
+            {{proyecto.organizacion.telefono}}
+        </div>
+        <img src="/files/images/pointed_line.png" alt="line" class="pointed_line">
+        <div class="monto2">
+            <span class="blue bold">Antecedentes de la organización</span><br>
+            {{proyecto.organizacion.antecedentes}}
+        </div>        
+        <div class="clean"></div>
+        <br><br>
+    </div>
+</div>
+<div class="clean"></div>
+{% endblock %}

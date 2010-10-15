@@ -447,3 +447,52 @@ option{
     height: 20px;
     line-height: 20px;
 }
+.title_project {
+    background: #fff url(/files/images/proyecto_back.png) repeat-x;
+    width: 380px;
+    height: 80px;
+    border: 1px #eaeaea solid;
+    font-size: 12px;
+    padding: 8px 5px 5px 12px;
+    margin-bottom: 15px;
+}
+.org{
+    width: 460px;
+}
+.proyecto_nombre{
+    font-size: 21px;
+    font-weight: bold;
+    color: #3d3d3d;
+    margin-bottom: 5px;
+}
+.naranja{
+    color: #e84a01;    
+}
+.bold{
+    font-weight: bold;
+}
+.blue{
+    color: #4381b4;
+}
+.proyecto_info{
+    font-size: 12px;
+    color: #2b2b2b;
+}
+.pointed_line{
+    margin: 7px 0px 7px 7px;
+}
+.duracion{
+    float: left;    
+}
+.monto{
+    float: left;
+    margin-left: 10px;
+}
+.monto2{
+    float: left;
+}
+.direccion{
+    float: left;
+    width: 210px;
+    margin-right: 10px;
+}

@@ -3,7 +3,7 @@ from models import *
 
 
 admin.site.register(Organizacion)
-admin.site.register(Proyecto, filter_horizontal = ('municipio',))
+admin.site.register(Proyecto)
 admin.site.register(Indicador)
 admin.site.register(AccionEfectuadaMedio)
 admin.site.register(AccionEfectuadaRegion)

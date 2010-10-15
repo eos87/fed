@@ -1,13 +1,18 @@
 from decorators import session_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ViewDoesNotExist
-from django.db.models import Sum, Count
+from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
 from forms import *
 from models import *
+
+def proyecto(request, id):
+    proyecto = get_object_or_404(Proyecto, pk=int(id))
+    return render_to_response('proyecto.html', RequestContext(request, locals()))
 
 def _queryset_filtrado(request, resultado):
     '''metodo para obtener el queryset de encuesta

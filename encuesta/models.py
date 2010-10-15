@@ -33,20 +33,29 @@ VERBOSE_CANTIDAD = 'Número de acciones efectuadas para fomentar la existencia y
 VERBOSE_PARTICIPAN = 'Participantes en las acciones'
 
 class Organizacion(models.Model):
-    nombre = models.CharField(max_length=150, unique=True)
+    nombre = models.TextField()
+    nombre_corto = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=150)
+    correo = models.EmailField(null=True, blank=True, default='example@example.com')
+    contacto = models.CharField(max_length=200, null=True, blank=True, default='Ninguno')
+    telefono = models.CharField(max_length=200, null=True, blank=True, default='Ninguno')
+    antecedentes = models.TextField()
 
     def __unicode__(self):
-        return self.nombre
+        return self.nombre_corto
 
     class Meta:
         verbose_name_plural = 'Organizaciones'
 
 class Proyecto(models.Model):
     organizacion = models.ForeignKey(Organizacion)
-    nombre = models.CharField(max_length=150, unique=True)
-    codigo = models.CharField(max_length=150)
-    descripcion = models.TextField()
-    municipio = models.ManyToManyField(Municipio)
+    nombre = models.TextField()
+    codigo = models.CharField(max_length=150, null=True, blank=True)    
+    cobertura = models.TextField(verbose_name='Area de cobertura')
+    duracion = models.CharField(max_length=30)
+    monto = models.CharField('Monto solicitado a FED', null=True, blank=True, max_length=100)
+    monto2 = models.CharField('Monto de contrapartida', null=True, blank=True, max_length=100)
+
 
     def __unicode__(self):
         return self.nombre
