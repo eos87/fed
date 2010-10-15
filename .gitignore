@@ -1,4 +1,5 @@
 nbproject/
+fed/settings_local.py
 *.pyc
 fed/encuesta/migrations/
 fed/lugar/migrations/
