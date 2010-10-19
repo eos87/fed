@@ -33,8 +33,9 @@ def _tiene_datos(request):
     lista = []
     for r in rt:
         if r.encuesta:
-            if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
-                lista.append(r.resultado.pk)
+            if r.encuesta.organizacion in request.session['organizacion']:
+                if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
+                    lista.append(r.resultado.pk)
     return list(set(lista))
 
 @login_required
