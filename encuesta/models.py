@@ -476,6 +476,9 @@ class EstadoCapacidadAdmitiva(models.Model):
     organizaciones = models.CharField(max_length=100, choices=CHOICE3, verbose_name='Organizaciones de la diversidad sexual han obtenido la personería jurídica por el apoyo de la organización', null=True, blank=True, default=0)
     encuesta = models.ForeignKey(Encuesta)
 
+    def __unicode__(self):
+        return self.sistema
+    
     class Meta:
         verbose_name = 'Organizacion con sistema administrativo'
         verbose_name_plural = 'Organizaciones con sistema administrativo'

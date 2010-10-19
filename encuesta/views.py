@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from decorators import session_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ViewDoesNotExist
@@ -19,21 +20,21 @@ def _queryset_filtrado(request, resultado):
     segun los filtros del formulario que son pasados
     por la variable de sesion'''
     rt = ResultadoTrabajado.objects.filter(resultado=resultado, municipio__in=request.session['municipio'])    
-    list = []
+    lista = []
     #[int(i) for i in request.session['periodo']]
     for r in rt:
         if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
-            list.append(r.encuesta.id)
-    return Encuesta.objects.filter(pk__in=set(list))
+            lista.append(r.encuesta.id)
+    return Encuesta.objects.filter(pk__in=list(set(lista)))
 
 def _tiene_datos(request):
     rt = ResultadoTrabajado.objects.filter(municipio__in=request.session['municipio'])
-    list = []
+    lista = []
     for r in rt:
         if r.encuesta:
             if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
-                list.append(r.resultado.pk)
-    return set(list)
+                lista.append(r.resultado.pk)
+    return list(set(lista))
 
 @login_required
 def index(request):
@@ -838,7 +839,7 @@ VALID_VIEWS = {
     }
 
 def get_prom(total, cantidad):
-    if total == None or cantidad == None:
+    if total == None or cantidad == None or total == 0:
         x = 0
     else:
         x = (cantidad * 100) / float(total)
