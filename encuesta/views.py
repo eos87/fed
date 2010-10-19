@@ -3,8 +3,8 @@ from decorators import session_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ViewDoesNotExist
 from django.db.models import Sum
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
@@ -23,8 +23,9 @@ def _queryset_filtrado(request, resultado):
     lista = []
     #[int(i) for i in request.session['periodo']]
     for r in rt:
-        if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
-            lista.append(r.encuesta.id)
+        if r.encuesta.organizacion in request.session['organizacion']:
+            if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
+                lista.append(r.encuesta.id)
     return Encuesta.objects.filter(pk__in=list(set(lista)))
 
 def _tiene_datos(request):
