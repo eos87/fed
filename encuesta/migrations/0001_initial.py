@@ -11,9 +11,10 @@ class Migration(SchemaMigration):
         # Adding model 'Organizacion'
         db.create_table('encuesta_organizacion', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('nombre', self.gf('django.db.models.fields.TextField')()),
             ('nombre_corto', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('direccion', self.gf('django.db.models.fields.CharField')(max_length=150)),
-            ('correo', self.gf('django.db.models.fields.EmailField')(default='No tiene', max_length=75, null=True, blank=True)),
+            ('correo', self.gf('django.db.models.fields.EmailField')(default='example@example.com', max_length=75, null=True, blank=True)),
             ('contacto', self.gf('django.db.models.fields.CharField')(default='Ninguno', max_length=200, null=True, blank=True)),
             ('telefono', self.gf('django.db.models.fields.CharField')(default='Ninguno', max_length=200, null=True, blank=True)),
             ('antecedentes', self.gf('django.db.models.fields.TextField')()),
@@ -306,9 +307,9 @@ class Migration(SchemaMigration):
         # Adding model 'EstadoCapacidadAdmitiva'
         db.create_table('encuesta_estadocapacidadadmitiva', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('sistema', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
-            ('plan', self.gf('django.db.models.fields.CharField')(default=0, max_length=100, null=True, blank=True)),
-            ('organizaciones', self.gf('django.db.models.fields.CharField')(default=0, max_length=100, null=True, blank=True)),
+            ('sistema', self.gf('django.db.models.fields.CharField')(default='no-responde', max_length=100, blank=True)),
+            ('plan', self.gf('django.db.models.fields.CharField')(default='no-responde', max_length=100, blank=True)),
+            ('organizaciones', self.gf('django.db.models.fields.CharField')(default='no-responde', max_length=100, blank=True)),
             ('encuesta', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['encuesta.Encuesta'])),
         ))
         db.send_create_signal('encuesta', ['EstadoCapacidadAdmitiva'])
@@ -631,9 +632,9 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'EstadoCapacidadAdmitiva'},
             'encuesta': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['encuesta.Encuesta']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'organizaciones': ('django.db.models.fields.CharField', [], {'default': '0', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'plan': ('django.db.models.fields.CharField', [], {'default': '0', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'sistema': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
+            'organizaciones': ('django.db.models.fields.CharField', [], {'default': "'no-responde'", 'max_length': '100', 'blank': 'True'}),
+            'plan': ('django.db.models.fields.CharField', [], {'default': "'no-responde'", 'max_length': '100', 'blank': 'True'}),
+            'sistema': ('django.db.models.fields.CharField', [], {'default': "'no-responde'", 'max_length': '100', 'blank': 'True'})
         },
         'encuesta.indicador': {
             'Meta': {'object_name': 'Indicador'},
@@ -647,9 +648,10 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Organizacion'},
             'antecedentes': ('django.db.models.fields.TextField', [], {}),
             'contacto': ('django.db.models.fields.CharField', [], {'default': "'Ninguno'", 'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'correo': ('django.db.models.fields.EmailField', [], {'default': "'No tiene'", 'max_length': '75', 'null': 'True', 'blank': 'True'}),
+            'correo': ('django.db.models.fields.EmailField', [], {'default': "'example@example.com'", 'max_length': '75', 'null': 'True', 'blank': 'True'}),
             'direccion': ('django.db.models.fields.CharField', [], {'max_length': '150'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'nombre': ('django.db.models.fields.TextField', [], {}),
             'nombre_corto': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'telefono': ('django.db.models.fields.CharField', [], {'default': "'Ninguno'", 'max_length': '200', 'null': 'True', 'blank': 'True'})
         },

@@ -141,7 +141,7 @@ class EncuestaAdmin(admin.ModelAdmin):
             form = super(EncuestaAdmin, self).get_form(self, request, ** kwargs)
             form.base_fields['user'].queryset = User.objects.filter(pk=request.user.pk)
         return form
-
+        
     save_on_top = True
     actions_on_top = True
     list_filter = ['organizacion', 'proyecto']
