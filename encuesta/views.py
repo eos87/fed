@@ -66,7 +66,7 @@ def influencia(request):
                 for r in rts:
                     if r.encuesta.organizacion in form.cleaned_data['organizacion']:
                         proys.append(r.encuesta.proyecto.pk)
-                proyectos = Proyecto.objects.filter(id__in=proys).values('id', 'nombre')
+                proyectos = Proyecto.objects.filter(id__in=proys).values('id', 'nombre', 'organizacion__nombre_corto')
 
                 dicc = {
                     'punto': (float(municipio.latitud), float(municipio.longitud)),

@@ -52,7 +52,7 @@
                             infowindow.open(map, marker);
                             var text = '<div class="infowindow">'+item.municipio+'<br><ul>';
                             $.each(item.proyectos, function(i, item){
-                                text += '<li><a style="color:#7F7F7F;"href="/proyecto/' + item.id +'/">' + item.nombre + '</a></li>';
+                                text += '<li><a style="color:#7F7F7F;"href="/proyecto/' + item.id +'/">' + '['+item.organizacion__nombre_corto + '] ' + item.nombre + '</a></li>';
                             });
                             text += '</ul></div>';
                             infowindow.setContent(text);
