@@ -78,7 +78,7 @@ class Encuesta(models.Model):
     user = models.ForeignKey(User)
 
     def __unicode__(self):
-        return '%s | %s | %s | %s' % (self.organizacion, self.proyecto.nombre, CHOICE_PERIODO[int(self.periodo)][1], self.anio)
+        return '%s | %s | %s | %s' % (self.organizacion.nombre, self.proyecto.nombre, CHOICE_PERIODO[int(self.periodo)][1], self.anio)
 
     def get_periodo(self):
         return CHOICE_PERIODO[self.periodo][1]
@@ -126,7 +126,7 @@ class ResultadoTrabajado(models.Model):
         verbose_name_plural = 'Resultados trabajados'
 
 class AccionEfectuadaMedio(models.Model):
-    accion = models.CharField(max_length=100, choices=CHOICE_MEDIO, null=True, blank=True)
+    accion = models.CharField(max_length=100, choices=CHOICE_MEDIO, blank=True, default='no-responde')
     cantidad = models.IntegerField(VERBOSE_CANTIDAD, blank=True, default=0)
     participantes = models.IntegerField(VERBOSE_PARTICIPAN, blank=True, default=0)
     encuesta = models.ForeignKey(Encuesta)
