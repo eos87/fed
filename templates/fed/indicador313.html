@@ -183,9 +183,9 @@
             {%for key, value in tabla.items %}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.mejorar_sistema|floatformat}}</td>
-                <td>{{value.mejorar_plan|floatformat}}</td>
-                <td>{{value.mejorar_apoyo|floatformat}}</td>
+                <td>{% if value.mejorar_sistema %}{{value.mejorar_sistema|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.mejorar_plan %}{{value.mejorar_plan|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.mejorar_apoyo %}{{value.mejorar_apoyo|floatformat}}{% else %}0{% endif %}</td>
                 <td>{{value.prom|floatformat}}</td>
             </tr>
             {%endfor%}            

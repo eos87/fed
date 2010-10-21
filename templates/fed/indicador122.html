@@ -23,11 +23,11 @@
             {%for key, value in tabla.items reversed %}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.sexual|floatformat}}</td>
-                <td>{{value.discapacidad|floatformat}}</td>
-                <td>{{value.vih|floatformat}}</td>
-                <td>{{value.racial|floatformat}}</td>
-                <td>{{value.joven|floatformat}}</td>
+                <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if vlaue.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.racial %}{{value.racial|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.joven %}{{value.joven|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
             {%for key, value in tabla2.items %}

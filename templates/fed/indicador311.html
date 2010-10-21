@@ -22,9 +22,9 @@
             {%for key, value in tabla.items reversed %}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.acciones_org_part|floatformat}}</td>
-                <td>{{value.participantes|floatformat}}</td>
-                <td>{{value.acciones_efectivas|floatformat}}</td>
+                <td>{% if value.acciones_org_part %}{{value.acciones_org_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.participantes %}{{value.participantes|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.acciones_efectivas %}{{value.acciones_efectivas|floatformat}}{% else %}0{% endif %}</td>
                 <td>{{value.prom|floatformat}}</td>
             </tr>
             {%endfor%}            

@@ -23,11 +23,11 @@
             {%for key, value in tabla.items%}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.sexual|floatformat}}</td>
-                <td>{{value.discapacidad|floatformat}}</td>
-                <td>{{value.vih|floatformat}}</td>
-                <td>{{value.racial|floatformat}}</td>
-                <td>{{value.joven|floatformat}}</td>
+                <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if vlaue.racial %}{{value.racial|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.joven %}{{value.joven|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}            
             <thead>                
@@ -43,11 +43,11 @@
             {%for key, value in tabla2.items%}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.sexual|floatformat}}</td>
-                <td>{{value.discapacidad|floatformat}}</td>
-                <td>{{value.vih|floatformat}}</td>
-                <td>{{value.racial|floatformat}}</td>
-                <td>{{value.joven|floatformat}}</td>
+                <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if vlaue.racial %}{{value.racial|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.joven %}{{value.joven|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
             <thead>

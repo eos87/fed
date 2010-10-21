@@ -22,9 +22,9 @@
             {%for key, value in tabla.items%}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.observatorio|floatformat}}</td>
-                <td>{{value.acciones_realizadas|floatformat}}</td>
-                <td>{{value.acciones_web|floatformat}}</td>
+                <td>{% if value.observatorio %}{{value.observatorio|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.acciones_realizadas %}{{value.acciones_realizadas|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.acciones_web %}{{value.acciones_web|floatformat}}{% else %}0{% endif %}</td>
                 <td>{{value.prom|floatformat}}</td>
             </tr>
             {%endfor%}

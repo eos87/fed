@@ -20,8 +20,8 @@
             {%for key, value in tabla.items%}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.cantidad|floatformat}}</td>
-                <td>{{value.participantes|floatformat}}</td>
+                <td>{% if value.cantidad %}{{value.cantidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.participantes %}{{value.participantes|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
         </table>
@@ -40,8 +40,8 @@
             {%for key, value in tabla2.items%}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.cantidad|floatformat}}</td>
-                <td>{{value.participantes|floatformat}}</td>
+                <td>{% if value.cantidad %}{{value.cantidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.participantes %}{{value.participantes|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
         </table>
@@ -61,8 +61,8 @@
             {%for key, value in tabla3.items%}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.cantidad|floatformat}}</td>
-                <td>{{value.participantes|floatformat}}</td>
+                <td>{% if value.cantidad %}{{value.cantidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.participantes %}{{value.participantes|floatformat}}{% else %}0{% endif %}</td>
                 <td>{{value.prom|floatformat}}</td>
             </tr>
             {%endfor%}

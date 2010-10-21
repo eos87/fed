@@ -408,8 +408,7 @@ def indicador211(request):
 
 @session_required
 def indicador212(request):
-    resultado = Resultado.objects.get(pk=3)
-    tabla = {}
+    resultado = Resultado.objects.get(pk=3)    
     tabla2 = {}
     tabla3 = {}
     a = _queryset_filtrado(request, resultado)    

@@ -25,13 +25,13 @@
             {%for key, value in tabla2.items %}
             <tr>
                 <td>{{key}}</td>
-                <td>{{value.hombres|floatformat}}</td>
-                <td>{{value.mujeres|floatformat}}</td>
-                <td>{{value.jovenes|floatformat}}</td>
-                <td>{{value.div_sexual|floatformat}}</td>
-                <td>{{value.vih|floatformat}}</td>
-                <td>{{value.etnica|floatformat}}</td>
-                <td>{{value.discapacidad|floatformat}}</td>
+                <td>{% if value.hombres %}{{value.hombres|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.mujeres %}{{value.mujeres|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.jovenes %}{{value.jovenes|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.etnica %}{{value.etnica|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
             {%for key, value in tabla3.items %}
