@@ -496,3 +496,7 @@ option{
     width: 210px;
     margin-right: 10px;
 }
+#id_organizacion{
+    height: 80px;
+    overflow: auto;
+}
