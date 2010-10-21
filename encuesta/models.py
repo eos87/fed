@@ -7,7 +7,7 @@ from fed.lugar.models import Departamento
 from fed.lugar.models import Municipio
 
 
-CHOICE_MEDIO = (('estudios', 'Estudios'),
+CHOICE_MEDIO = (('estudios', 'Estudios1'),
                 ('foros', 'Foros'),
                 ('cabildos', 'Cabildeos'),
                 ('campania_tv', 'Campañas en televisión'),
