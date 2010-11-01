@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<script type='text/javascript'>
+$(document).ready(function(){
+	$('.tools .text').html('Objeto no encontrado! :(')
+});
+</script>
+{% endblock %}
+{% block contenido %}
+<center>
+<img src='/files/images/404.jpg' alt='Error 404'>
+</center>
+{% endblock %}
