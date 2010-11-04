@@ -386,7 +386,7 @@ CHOICE_DENUNCIAS = (('denuncias_interpuestas', 'No. denuncias interpuestas a ins
 
 class DenunciaViolencia(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_DENUNCIAS, blank=True, default='no-responde')
-    comisariato = models.IntegerField('Comisariato Policía', blank=True, default=0)
+    comisariato = models.IntegerField('Comisaría de la Mujer', blank=True, default=0)
     fiscalia = models.IntegerField('Fiscalía', blank=True, default=0)
     encuesta = models.ForeignKey(Encuesta)
 
