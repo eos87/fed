@@ -13,6 +13,7 @@
             <thead>
                 <tr>
                     <th>&nbsp;</th>
+                    <th>Violencia Intrafamiliar</th>
                     <th>Discriminaci&oacute;n diversidad sexual</th>
                     <th>Discriminaci&oacute;n a discapacitados</th>
                     <th>Discriminaci&oacute;n a personas con VIH</th>
@@ -23,6 +24,7 @@
             {%for key, value in tabla.items%}
             <tr>
                 <td>{{key}}</td>
+                <td>{% if value.vif %}{{value.vif|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
@@ -33,6 +35,7 @@
             <thead>                
                 <tr>
                     <th>&nbsp;</th>
+                    <th>Violencia Intrafamiliar</th>
                     <th>Discriminaci&oacute;n diversidad sexual</th>
                     <th>Discriminaci&oacute;n a discapacitados</th>
                     <th>Discriminaci&oacute;n a personas con VIH</th>
@@ -43,6 +46,7 @@
             {%for key, value in tabla2.items%}
             <tr>
                 <td>{{key}}</td>
+                <td>{% if value.vif %}{{value.vif|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
@@ -58,11 +62,13 @@
                     <th>%</th>
                     <th>%</th>
                     <th>%</th>
+                    <th>%</th>
                 </tr>
             </thead>
             {%for key, value in tabla3.items%}
             <tr>
                 <td>{{key}}</td>
+                <td>{{value.vif|floatformat}}</td>
                 <td>{{value.sexual|floatformat}}</td>
                 <td>{{value.discapacidad|floatformat}}</td>
                 <td>{{value.vih|floatformat}}</td>

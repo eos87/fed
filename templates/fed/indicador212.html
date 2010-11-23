@@ -20,6 +20,7 @@
                     <th>Personas VIH</th>
                     <th>Personas etnia</th>
                     <th>Personas discap.</th>
+                    <th>Global</th>
                 </tr>
             </thead>
             {%for key, value in tabla2.items %}
@@ -32,6 +33,7 @@
                 <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.etnica %}{{value.etnica|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.global %}{{value.global|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
             {%for key, value in tabla3.items %}
@@ -44,6 +46,7 @@
                 <td>{{value.vih|floatformat}}</td>
                 <td>{{value.etnica|floatformat}}</td>
                 <td>{{value.discapacidad|floatformat}}</td>
+                <td>{{value.global|floatformat}}</td>
             </tr>
             {%endfor%}
         </table>

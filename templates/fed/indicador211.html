@@ -20,6 +20,7 @@
                     <th>Con VIH</th>
                     <th>Con etnia</th>
                     <th>Con discap.</th>
+                    <th>Global</th>
                 </tr>
             </thead>
             {%for key, value in tabla.items %}
@@ -32,6 +33,36 @@
                 <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.etnica %}{{value.etnica|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.global %}{{value.global|floatformat}}{% else %}0{% endif %}</td>
+            </tr>
+            {%endfor%}
+        </table>
+        <table class="mostrar">
+            <caption>Atenci&oacute;n a la salud sexual y reproductiva</caption>
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Con Hombres</th>
+                    <th>Con Mujeres</th>
+                    <th>Con l@s j&oacute;venes</th>
+                    <th>Con div. sexual</th>
+                    <th>Con VIH</th>
+                    <th>Con etnia</th>
+                    <th>Con discap.</th>
+                    <th>Global</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla2.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{% if value.hombres %}{{value.hombres|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.mujeres %}{{value.mujeres|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.jovenes %}{{value.jovenes|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.etnica %}{{value.etnica|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.global %}{{value.global|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
         </table>

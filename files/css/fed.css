@@ -257,7 +257,7 @@ a:hover{
 }
 
 .mostrar th{
-    font: bold 12px/32px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font: bold 12px/25px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
     background: url(/files/images/table_container_back_th.png) repeat-x top;
     border-right: 1px solid #ded3ba;
     border-bottom: 1px solid #ded3ba;

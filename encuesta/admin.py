@@ -16,6 +16,7 @@ admin.site.register(DenunciaSocialRealizada)
 admin.site.register(DenunciaSocialEfectiva)
 admin.site.register(DenunciaJuridica)
 admin.site.register(AccionRealizadaReflexion)
+admin.site.register(AtencionSalud)
 admin.site.register(AccionRelizadaReflexionPersona)
 admin.site.register(AccionImpulsadaOrg)
 admin.site.register(AccionImpulsadaGrupo)
@@ -70,6 +71,10 @@ class DenunciaJuridicaInline(admin.TabularInline):
 
 class AccionRealizadaReflexionInline(admin.TabularInline):
     model = AccionRealizadaReflexion
+    extra = 1
+
+class AtencionSaludInline(admin.TabularInline):
+    model = AtencionSalud
     extra = 1
 
 class AccionRelizadaReflexionPersonaInline(admin.TabularInline):
@@ -158,6 +163,7 @@ class EncuestaAdmin(admin.ModelAdmin):
         DenunciaSocialEfectivaInline,
         DenunciaJuridicaInline,
         AccionRealizadaReflexionInline,
+        AtencionSaludInline,
         AccionRelizadaReflexionPersonaInline,
         AccionImpulsadaOrgInline,
         AccionImpulsadaGrupoInline,

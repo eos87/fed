@@ -13,6 +13,7 @@
             <thead>
                 <tr>
                     <th>&nbsp;</th>
+                    <th>Violencia intrafamiliar</th>
                     <th>Discriminaci&oacute;n diversidad sexual</th>
                     <th>Discriminaci&oacute;n a discapacitados</th>
                     <th>Discriminaci&oacute;n a personas con VIH</th>
@@ -20,9 +21,21 @@
                     <th>Discriminaci&oacute;n a J&oacute;venes</th>
                 </tr>
             </thead>
+            {%for key, value in tabla3.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{% if value.vif %}{{value.vif|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if vlaue.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.racial %}{{value.racial|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.joven %}{{value.joven|floatformat}}{% else %}0{% endif %}</td>
+            </tr>
+            {%endfor%}
             {%for key, value in tabla.items reversed %}
             <tr>
                 <td>{{key}}</td>
+                <td>{% if value.vif %}{{value.vif|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if vlaue.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
