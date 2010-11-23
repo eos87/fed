@@ -3,9 +3,36 @@
 from django.contrib import admin
 from models import *
 
+class OrganizacionAdmin(admin.ModelAdmin):
+    def queryset(self, request):
+        if request.user.is_superuser:
+            return Organizacion.objects.all()
+        return Organizacion.objects.filter(user=request.user)
 
-admin.site.register(Organizacion)
-admin.site.register(Proyecto)
+    def get_form(self, request, obj=None, ** kwargs):
+        if request.user.is_superuser:
+            form = super(OrganizacionAdmin, self).get_form(self, request, ** kwargs)
+        else:
+            form = super(OrganizacionAdmin, self).get_form(self, request, ** kwargs)
+            form.base_fields['user'].queryset = User.objects.filter(pk=request.user.pk)
+        return form
+
+class ProyectoAdmin(admin.ModelAdmin):
+    def queryset(self, request):
+        if request.user.is_superuser:
+            return Proyecto.objects.all()
+        return Proyecto.objects.filter(user=request.user)
+
+    def get_form(self, request, obj=None, ** kwargs):
+        if request.user.is_superuser:
+            form = super(ProyectoAdmin, self).get_form(self, request, ** kwargs)
+        else:
+            form = super(ProyectoAdmin, self).get_form(self, request, ** kwargs)
+            form.base_fields['user'].queryset = User.objects.filter(pk=request.user.pk)
+        return form
+
+admin.site.register(Organizacion, OrganizacionAdmin)
+admin.site.register(Proyecto, ProyectoAdmin)
 admin.site.register(Indicador)
 admin.site.register(AccionEfectuadaMedio)
 admin.site.register(AccionEfectuadaRegion)

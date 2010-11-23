@@ -67,10 +67,8 @@ class Proyecto(models.Model):
     class Meta:
         verbose_name_plural = 'Proyectos'
 
-CHOICE_PERIODO = ((0, 'Primer trimestre'),
-                  (1, 'Segundo trimestre'),
-                  (2, 'Tercer trimestre'),
-                  (3, 'Cuarto trimestre'))
+CHOICE_PERIODO = ((0, 'Primer semestre'),
+                  (1, 'Segundo semestre'))
                   
 CHOICE_ANIO = (('2010', '2010'), ('2011', '2011'), ('2012', '2012'))
 
