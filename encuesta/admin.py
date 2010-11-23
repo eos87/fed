@@ -17,6 +17,10 @@ class OrganizacionAdmin(admin.ModelAdmin):
             form.base_fields['user'].queryset = User.objects.filter(pk=request.user.pk)
         return form
 
+    list_filter = ['user']
+    list_display = ['nombre_corto', 'user', 'correo', 'telefono', 'contacto']
+    search_fields = ['nombre_corto', 'user__username', 'telefono', 'contacto']
+
 class ProyectoAdmin(admin.ModelAdmin):
     def queryset(self, request):
         if request.user.is_superuser:
@@ -30,6 +34,10 @@ class ProyectoAdmin(admin.ModelAdmin):
             form = super(ProyectoAdmin, self).get_form(self, request, ** kwargs)
             form.base_fields['user'].queryset = User.objects.filter(pk=request.user.pk)
         return form
+
+    list_filter = ['user']
+    list_display = ['nombre', 'user', 'organizacion']
+    search_fields = ['nombre', 'user__username', 'organizacion__nombre', 'organizacion__nombre_corto']
 
 admin.site.register(Organizacion, OrganizacionAdmin)
 admin.site.register(Proyecto, ProyectoAdmin)
@@ -178,6 +186,7 @@ class EncuestaAdmin(admin.ModelAdmin):
     actions_on_top = True
     list_filter = ['organizacion', 'proyecto']
     list_display = ['organizacion', 'proyecto', 'periodo', 'anio', 'user']
+    search_fields = ['organizacion__nombre', 'organizacion__nombre_corto', 'proyecto__nombre', 'proyecto__codigo', 'user__username']
     inlines = [
         ResultadoTrabajadoInline,
         AccionEfectuadaMedioInline,
