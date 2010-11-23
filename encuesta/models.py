@@ -42,6 +42,7 @@ class Organizacion(models.Model):
     contacto = models.CharField(max_length=200, blank=True, default='Ninguno')
     telefono = models.CharField(max_length=200, blank=True, default='Ninguno')
     antecedentes = models.TextField()
+    user = models.ForeignKey(User, verbose_name='Usuario')
 
     def __unicode__(self):
         return self.nombre_corto
@@ -57,6 +58,7 @@ class Proyecto(models.Model):
     duracion = models.CharField(max_length=30)
     monto = models.CharField('Monto solicitado a FED', null=True, blank=True, max_length=100)
     monto2 = models.CharField('Monto de contrapartida', null=True, blank=True, max_length=100)
+    user = models.ForeignKey(User, verbose_name='Usuario')
 
 
     def __unicode__(self):
