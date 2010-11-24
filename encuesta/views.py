@@ -559,31 +559,41 @@ def indicador231(request):
     opcion = CHOICE_VICTIMAS[0][0]
     query = AtencionVictima.objects.filter(encuesta__in=a, accion=opcion)
     servicio_salud_sum = query.aggregate(servicio_salud_sum=Sum('servicio_salud'))['servicio_salud_sum']
+    servicio_salud_esp_sum = query.aggregate(servicio_salud_esp_sum=Sum('servicio_salud_especial'))['servicio_salud_esp_sum']
     servicio_psicologia_sum = query.aggregate(servicio_psicologia_sum=Sum('servicio_psicologia'))['servicio_psicologia_sum']
     servicio_legal_sum = query.aggregate(servicio_legal_sum=Sum('servicio_legal'))['servicio_legal_sum']
+    atencion_social_sum = query.aggregate(atencion_social_sum=Sum('atencion_social'))['atencion_social_sum']
 
     tabla[CHOICE_VICTIMAS[0][1]] = {
         'servicio_salud':servicio_salud_sum,
+        'servicio_salud_especial':servicio_salud_esp_sum,
         'servicio_psicologia': servicio_psicologia_sum,
         'servicio_legal': servicio_legal_sum,
+        'atencion_social': atencion_social_sum
         }
 
     opcion2 = CHOICE_VICTIMAS[1][0]
     query2 = AtencionVictima.objects.filter(encuesta__in=a, accion=opcion2)
     servicio_salud_sum2 = query2.aggregate(servicio_salud_sum2=Sum('servicio_salud'))['servicio_salud_sum2']
+    servicio_salud_esp_sum2 = query2.aggregate(servicio_salud_esp_sum2=Sum('servicio_salud_especial'))['servicio_salud_esp_sum2']
     servicio_psicologia_sum2 = query2.aggregate(servicio_psicologia_sum2=Sum('servicio_psicologia'))['servicio_psicologia_sum2']
     servicio_legal_sum2 = query2.aggregate(servicio_legal_sum2=Sum('servicio_legal'))['servicio_legal_sum2']
+    atencion_social_sum2 = query2.aggregate(atencion_social_sum2=Sum('atencion_social'))['atencion_social_sum2']
 
     tabla[CHOICE_VICTIMAS[1][1]] = {
         'servicio_salud':servicio_salud_sum2,
+        'servicio_salud_especial':servicio_salud_esp_sum2,
         'servicio_psicologia': servicio_psicologia_sum2,
         'servicio_legal': servicio_legal_sum2,
+        'atencion_social': atencion_social_sum2
         }
 
     tabla2['Efectividad %'] = {
         'servicio_salud':get_prom(servicio_salud_sum, servicio_salud_sum2),
+        'servicio_salud_especial':get_prom(servicio_salud_esp_sum, servicio_salud_esp_sum2),
         'servicio_psicologia': get_prom(servicio_psicologia_sum, servicio_psicologia_sum2),
         'servicio_legal': get_prom(servicio_legal_sum, servicio_legal_sum2),
+        'atencion_social': get_prom(atencion_social_sum, atencion_social_sum2),
         }
 
     return render_to_response('fed/indicador231.html', RequestContext(request, locals()))

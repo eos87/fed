@@ -411,9 +411,11 @@ CHOICE_VICTIMAS = (('casos_atendidos', 'No. casos de victimas de violencia de g�
 
 class AtencionVictima(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_VICTIMAS, blank=True, default='no-responde')
-    servicio_salud = models.IntegerField('A través de los servicios de atención en salud', blank=True, default=0)
+    servicio_salud = models.IntegerField('A través de los servicios de salud general', blank=True, default=0)
+    servicio_salud_especial = models.IntegerField('A través de los servicios de salud especializada', blank=True, default=0)
     servicio_psicologia = models.IntegerField('A través de los servicios de atención en psicología', blank=True, default=0)
     servicio_legal = models.IntegerField('A través de los servicios de atención legal', blank=True, default=0)
+    atencion_social = models.IntegerField('Atención social', blank=True, default=0)
     encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
