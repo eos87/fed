@@ -257,7 +257,7 @@ class DenunciaSocialEfectiva(models.Model):
 
 CHOICE_JURIDICA = (('denuncia_juridica_realizada', 'Número de acciones de denuncias jurídicas realizadas'),
                    ('denuncia_juridica_atendida', 'Número de denuncias jurídicas atendidas'),
-                   ('apoya_juicio', 'Apoya Juicio'))
+                   ('apoya_juicio', 'Apoyo en juicio VIF'))
 
 class DenunciaJuridica(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_JURIDICA, blank=True, default='no-responde')
