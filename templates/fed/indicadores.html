@@ -34,6 +34,11 @@
         });
     });
 </script>
+<style type="text/css">
+    #id_organizacion{
+        height: 140px;
+    }
+</style>
 {% endblock %}
 {% block contenido %}
 <div class="bar estilo2">
@@ -44,11 +49,11 @@
         <label class="aux">{{form.organizacion.label}}</label><br>
         {{form.organizacion}}<br>
         <a href="#" class="selector-chooseall" id="select_organizacion">Selecciona todos</a>
-        <br>
+        <!--<br>
         <div class="clean">
             <label class="aux">{{form.municipio.label}}</label><br>
             {{form.municipio}}
-        </div>
+        </div>-->
         <br><br>
         <div class="clean">
             <label class="aux">{{form.periodo.label}}</label><br>
@@ -57,6 +62,8 @@
             {{form.anio}}<br><br>
         </div>
         <button type="submit">Consultar</button>
+        <br>
+        <br>
     </form>    
 </div>
 {% if bandera == 1 %}

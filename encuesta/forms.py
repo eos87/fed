@@ -14,7 +14,7 @@ class InfluenciaForm(forms.Form):
 
 class IndicadoresForm(forms.Form):
     organizacion = forms.ModelMultipleChoiceField(queryset=Organizacion.objects.all(), label='Organizaciones')#, widget=forms.CheckboxSelectMultiple)
-    municipio = forms.ModelMultipleChoiceField(queryset=Municipio.objects.all(), label='Municipios')
+    #municipio = forms.ModelMultipleChoiceField(queryset=Municipio.objects.all(), label='Municipios')
     periodo = forms.MultipleChoiceField(choices=CHOICE_PERIODO, label='Período')
     anio = forms.ChoiceField(choices=CHOICE_ANIO, label='Año')
 

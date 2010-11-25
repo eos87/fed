@@ -19,23 +19,28 @@ def _queryset_filtrado(request, resultado):
     '''metodo para obtener el queryset de encuesta
     segun los filtros del formulario que son pasados
     por la variable de sesion'''
-    rt = ResultadoTrabajado.objects.filter(resultado=resultado, municipio__in=request.session['municipio'])    
-    lista = []
-    #[int(i) for i in request.session['periodo']]
-    for r in rt:
-        if r.encuesta.organizacion in request.session['organizacion']:
-            if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
-                lista.append(r.encuesta.id)
-    return Encuesta.objects.filter(pk__in=list(set(lista)))
+    #rt = ResultadoTrabajado.objects.filter(resultado=resultado, municipio__in=request.session['municipio'])
+    #lista = []
+    #for r in rt:
+    #    if r.encuesta.organizacion in request.session['organizacion']:
+    #        if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
+    #            lista.append(r.encuesta.id)
+    return Encuesta.objects.filter(organizacion__in=request.session['organizacion'], periodo__in=request.session['periodo'], anio=request.session['anio'])
 
 def _tiene_datos(request):
-    rt = ResultadoTrabajado.objects.filter(municipio__in=request.session['municipio'])
+    #rt = ResultadoTrabajado.objects.filter(municipio__in=request.session['municipio'])
     lista = []
-    for r in rt:
-        if r.encuesta:
-            if r.encuesta.organizacion in request.session['organizacion']:
-                if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
-                    lista.append(r.resultado.pk)
+    #for r in rt:
+    #    if r.encuesta:
+    #        if r.encuesta.organizacion in request.session['organizacion']:
+    #            if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
+    #                lista.append(r.resultado.pk)
+    #return list(set(lista))
+    encuestas = Encuesta.objects.filter(organizacion__in=request.session['organizacion'], periodo__in=request.session['periodo'], anio=request.session['anio'])
+    for e in encuestas:
+        for r in e.resultadotrabajado_set.all():
+            lista.append(r.resultado.pk)
+
     return list(set(lista))
 
 @login_required
@@ -88,7 +93,7 @@ def indicadores(request):
         if form.is_valid():
             bandera = 1
             request.session['organizacion'] = form.cleaned_data['organizacion']
-            request.session['municipio'] = form.cleaned_data['municipio']
+            #request.session['municipio'] = form.cleaned_data['municipio']
             request.session['periodo'] = form.cleaned_data['periodo']
             request.session['anio'] = form.cleaned_data['anio']
             request.session['activo'] = True

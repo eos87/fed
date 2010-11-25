@@ -36,6 +36,7 @@
 
         $('#influencia_form').submit(function(){
             //var csrf = $('[name=csrfmiddlewaretoken]').val();
+            markers.length = 0;
             if(checkear()){
                 var datos = $('#influencia_form').serialize();
                 $.post('/influencia/', datos,
@@ -62,14 +63,14 @@
                 return false;
             }
         });
-        $('#guardar').click(function(){            
-            var centro = map.getCenter();
-            var zoom = map.getZoom();
-            var url = 'http://maps.google.com/maps/api/staticmap?center='+centro['b']+','+centro['c']+'&size=600x500&maptype=roadmap';
+        $('#guardar').click(function(){
+            var url = '';            
+            var centro = map.getCenter();            
+            url = 'http://maps.google.com/maps/api/staticmap?center='+centro.lat().toFixed(5)+','+centro.lng().toFixed(5)+'&size=600x500&maptype=roadmap';
             for (i=0; i < markers.length; i++){
-                url += '&markers=color:red|'+markers[i][0]+','+markers[i][1]+'';
+                url += '&markers='+markers[i][0]+','+markers[i][1]+'';
             }
-            url += '&sensor=false&zoom='+map.getZoom();
+            url += '&sensor=false&zoom='+map.getZoom();            
             window.open(url, '_blank');
         });
         
