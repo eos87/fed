@@ -68,7 +68,7 @@
             var centro = map.getCenter();            
             url = 'http://maps.google.com/maps/api/staticmap?center='+centro.lat().toFixed(2)+','+centro.lng().toFixed(2)+'&size=600x500&maptype=roadmap';
             if (markers.length>90){
-                alert('La cantidad de puntos a superado el limite.');
+                alert('La cantidad de puntos a superado el limite.\n Actual: '+markers.length+'\nMax: 90');
                 for (i=0; i < 90; i++){
                     url += '&markers='+markers[i][0].toFixed(2)+','+markers[i][1].toFixed(2)+'';
                 }
