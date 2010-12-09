@@ -1,4 +1,5 @@
 nbproject/
+files/informes/
 settings_local.py
 *.pyc
 fed/encuesta/migrations/
