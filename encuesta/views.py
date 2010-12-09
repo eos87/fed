@@ -15,6 +15,10 @@ def proyecto(request, id):
     proyecto = get_object_or_404(Proyecto, pk=int(id))
     return render_to_response('proyecto.html', RequestContext(request, locals()))
 
+def organizacion(request, id):
+    organizacion = get_object_or_404(Organizacion, pk=int(id))
+    return render_to_response('organizacion.html', RequestContext(request, locals()))
+
 def _queryset_filtrado(request, resultado):
     '''metodo para obtener el queryset de encuesta
     segun los filtros del formulario que son pasados

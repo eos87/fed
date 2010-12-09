@@ -273,8 +273,11 @@ a:hover{
     color: #696969;
     background: #FFFFFF;
 }
-.mostrar td a:visited{
+.mostrar td a{
     color: #069;
+}
+.mostrar td a:visited{
+    color: #003956;
 }
 .bar{
     float: left;
@@ -335,6 +338,7 @@ a:hover{
 a.actual{
     color: #fe9c46;
 }
+
 .bar label.aux{
     display: block;
     width: 158px;

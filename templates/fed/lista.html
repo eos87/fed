@@ -27,7 +27,7 @@
             </thead>
             {% for key, values in dicc.items %}
             <tr>
-                <td>{{key}}</td>
+                <td><a href="/organizacion/{{key.pk}}/">{{key}}</a></td>
                 <td>{% for v in values %}{{v}}{% if forloop.last %}{% else %},{% endif %} {% endfor %}</td>
             </tr>
             {%endfor%}

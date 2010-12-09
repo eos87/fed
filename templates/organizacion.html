@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block extratitle %}{{organizacion.nombre_corto}}{% endblock %}
+{% block contenido %}
+<div class="acerca">
+    <div class="title_project org">
+        <div class="proyecto_nombre">Organizaci&oacute;n</div>
+        {{organizacion.nombre}}
+    </div>
+    <div class="proyecto_info">
+        <div class="direccion">
+            <span class="blue bold">Direcci&oacute;n</span><br>
+            {{organizacion.direccion}}
+        </div>
+        <div class="monto">
+            <span class="blue bold">Correo</span><br>
+            {{organizacion.correo}}
+        </div>
+        <img src="/files/images/pointed_line.png" alt="line" class="pointed_line">
+        <div class="monto2">
+            <span class="blue bold">Persona de contacto</span><br>
+            {{organizacion.contacto}}
+        </div>
+        <div class="monto">
+            <span class="blue bold">Tel&eacute;fono</span><br>
+            {{organizacion.telefono}}
+        </div>
+        <img src="/files/images/pointed_line.png" alt="line" class="pointed_line">
+        <div class="monto2">
+            <span class="blue bold">Antecedentes de la organización</span><br>
+            {{organizacion.antecedentes}}
+        </div>        
+        <div class="clean"></div>
+        <br><br>
+    </div>
+</div>
+<div class="ultimas">    
+    <table class="mostrar">        
+        <thead>
+            <tr>
+                <th>Proyectos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proyecto in organizacion.proyecto_set.all %}
+            <tr><td><a href="/proyecto/{{proyecto.pk}}/">{{proyecto.nombre}}</a> | Informes:
+                    {% for e in proyecto.encuesta_set.all %}
+                    {% if e.informe %}
+                    <a href="{{e.informe.url}}">{{e.periodo}} / {{e.anio}}</a>
+                    {% endif %}
+                    {% endfor %}                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="clean"></div>
+{% endblock %}
