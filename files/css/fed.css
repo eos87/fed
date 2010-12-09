@@ -191,7 +191,7 @@ a:hover{
     margin-right: 20px;
     margin-top: 30px;
  }
-.ultimas .title{
+.title{
     font-size: 22px;
     color: #646464;
 }
@@ -280,7 +280,7 @@ a:hover{
     float: left;
     width: 249px;
     background: #555753 url(/files/images/bar_back.png) repeat-x;
-    text-align: center;
+    text-align: center;    
 }
 .bar .title{
     font-size: 21px;
@@ -288,6 +288,52 @@ a:hover{
     text-shadow: 0 2px 3px #483916;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.title_map{
+    font-size: 21px;
+    color: #d5d5d5;
+    text-shadow: 0 2px 3px #483916;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    padding-right: 10px;
+    text-align: right;
+    background: #555753 url(/files/images/bar_back.png) repeat-x;
+}
+.title_map a{
+    color: #d5d5d5;
+    text-shadow: 0 2px 3px #483916;
+}
+.title_map2{
+    font-size: 14px;
+    color: #d5d5d5;
+    text-shadow: 0 2px 3px #483916;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    padding-right: 3px;
+    padding-left: 10px;
+    text-align: center;
+    background: #555753 url(/files/images/title_back.png) repeat-x bottom;
+}
+.title_map2 a{
+    color: #d5d5d5;
+    
+    text-shadow: 0 2px 3px #483916;
+}
+.list_elems{
+    float: left;
+    margin-left: 3px;
+    width: 138px;    
+}
+.lista{
+    margin-left: 15px;
+}
+.separador{
+    font-size: 30px;
+    float: left;    
+    margin-left: 3px;
+}
+a.actual{
+    color: #fe9c46;
 }
 .bar label.aux{
     display: block;
@@ -319,12 +365,12 @@ a:hover{
     width: 709px;
 }
 .estilo2{
-    width: 420px;
+    width: 320px;
     padding-left: 10px;
 }
 .resultados{
     float: left;
-    margin-left: 20px;
+    margin-left: 80px;
     margin-top: 15px;
 }
 .tiene{    

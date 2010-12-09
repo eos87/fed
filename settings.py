@@ -1,3 +1,4 @@
+import os.path
 # Django settings for achuapa project.
 from settings_local import *
 

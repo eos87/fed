@@ -48,6 +48,40 @@ def index(request):
     informes = Encuesta.objects.all().order_by('-id')[:5]
     return render_to_response('index.html', RequestContext(request, locals()))
 
+@login_required
+def lista(request, id=None):
+    resultados = Resultado.objects.all()
+    dicc = {}
+    dicc2 = {}
+    org_list = []    
+    depas = []
+    flag = False
+    if id != None:
+        selecto = int(id)
+        try:
+            r = resultados.get(pk=id)
+            flag = True
+            for rt in r.resultadotrabajado_set.all():
+                org_list.append(rt.encuesta.organizacion)
+
+            for org in org_list:
+                rts = ResultadoTrabajado.objects.filter(encuesta__organizacion=org, resultado=r)
+                for resultado in rts:
+                    for m in resultado.municipio.all():
+                        depas.append(m.departamento)
+                dicc[org] = list(set(depas))
+
+            departamentos = Departamento.objects.all()
+            for depa in departamentos:
+                orgs = []
+                rts = ResultadoTrabajado.objects.filter(municipio__in=depa.municipio_set.all(), resultado=r)
+                for rt in rts:
+                    orgs.append(rt.encuesta.organizacion)
+                dicc2[depa] = list(set(orgs))
+        except:
+            pass
+    return render_to_response('fed/lista.html', RequestContext(request, locals()))
+
 @login_required(redirect_field_name='next')
 def influencia(request):
     if request.is_ajax():

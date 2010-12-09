@@ -20,9 +20,9 @@
             return false;
         });
         
-        var altura = $('.bar').height();
-        $('.mapa').height(altura);
-        $('#map_canvas').height(altura);
+        var altura = $('.bar').height();                
+        /*$('.mapa').height(altura);*/
+        $('#map_canvas').height(altura-43);
         var infowindow = new google.maps.InfoWindow();
 
         var myLatlng = new google.maps.LatLng(13,-85);
@@ -137,6 +137,7 @@
     </form>
 </div>
 <div class="mapa">
+    <div class="title_map"><a href="/lista/">Ver lista</a></div>
     <div id="map_canvas">
 
     </div>

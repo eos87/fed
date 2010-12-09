@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block extratitle %} Ver lista {% endblock %}
+{% block contenido %}
+<div class="title_map2">
+    {% for r in resultados %}
+    <div class="list_elems">
+        <a href="/lista/{{r.pk}}" {% if selecto == r.pk %}class="actual"{% endif %}>{{r.nombre}}</a>
+    </div>
+    {% if forloop.last %}
+    {% else %}
+    <div class="separador">|</div>
+    {% endif %}
+    {% endfor %} 
+    <div class="clean"></div>
+</div>
+<div>
+    {% if flag %}
+    <div>
+        <br>
+        <table class="mostrar">
+            <caption>POR ORGANIZACI&Oacute;N</caption>
+            <thead>
+                <tr>
+                    <th>Organizaci&oacute;n</th>
+                    <th>Departamentos</th>
+                </tr>
+            </thead>
+            {% for key, values in dicc.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{% for v in values %}{{v}}{% if forloop.last %}{% else %},{% endif %} {% endfor %}</td>
+            </tr>
+            {%endfor%}
+        </table>
+        <br>
+        <table class="mostrar">
+            <caption>POR DEPARTAMENTO</caption>
+            <thead>
+                <tr>
+                    <th>Departamento</th>
+                    <th>Organizaciones</th>
+                </tr>
+            </thead>
+            {% for key, values in dicc2.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{% for v in values %}{{v}}{% if forloop.last %}{% else %},{% endif %} {% endfor %}</td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+    {% else %}
+    <div style="margin-left: 20px;">
+        <h2>Debes seleccionar un resultado</h2>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
