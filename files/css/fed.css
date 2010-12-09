@@ -279,6 +279,9 @@ a:hover{
 .mostrar td a:visited{
     color: #003956;
 }
+a:visited{
+    color: #003956;
+}
 .bar{
     float: left;
     width: 249px;
