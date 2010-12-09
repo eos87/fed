@@ -45,7 +45,7 @@
             <tr><td><a href="/proyecto/{{proyecto.pk}}/">{{proyecto.nombre}}</a> | Informes:
                     {% for e in proyecto.encuesta_set.all %}
                     {% if e.informe %}
-                    <a href="{{e.informe.url}}">{{e.get_periodo}} / {{e.anio}}</a>
+                    <a href="{{e.informe.url}}">{{e.get_periodo}} / {{e.anio}}</a>{% if forloop.last %}{% else %}, {% endif %}
                     {% endif %}
                     {% endfor %}                    
                 </td>
