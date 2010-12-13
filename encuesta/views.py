@@ -69,6 +69,7 @@ def lista(request, id=None):
                 org_list.append(rt.encuesta.organizacion)
 
             for org in org_list:
+                depas = []
                 rts = ResultadoTrabajado.objects.filter(encuesta__organizacion=org, resultado=r)
                 for resultado in rts:
                     for m in resultado.municipio.all():
