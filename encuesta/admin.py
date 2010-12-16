@@ -51,6 +51,7 @@ admin.site.register(DenunciaSocialRealizada)
 admin.site.register(DenunciaSocialEfectiva)
 admin.site.register(DenunciaJuridica)
 admin.site.register(AccionRealizadaReflexion)
+admin.site.register(InvolucramientoPobMeta)
 admin.site.register(AtencionSalud)
 admin.site.register(AccionRelizadaReflexionPersona)
 admin.site.register(AccionImpulsadaOrg)
@@ -106,6 +107,10 @@ class DenunciaJuridicaInline(admin.TabularInline):
 
 class AccionRealizadaReflexionInline(admin.TabularInline):
     model = AccionRealizadaReflexion
+    extra = 1
+
+class InvolucramientoPobMetaInline(admin.TabularInline):
+    model = InvolucramientoPobMeta
     extra = 1
 
 class AtencionSaludInline(admin.TabularInline):
@@ -199,6 +204,7 @@ class EncuestaAdmin(admin.ModelAdmin):
         DenunciaSocialEfectivaInline,
         DenunciaJuridicaInline,
         AccionRealizadaReflexionInline,
+        InvolucramientoPobMetaInline,
         AtencionSaludInline,
         AccionRelizadaReflexionPersonaInline,
         AccionImpulsadaOrgInline,

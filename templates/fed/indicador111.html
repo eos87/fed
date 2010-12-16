@@ -9,18 +9,38 @@
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Tipo de acciones</caption>
+            <caption>Tipo de acciones por <span class="temas">temas</span> y sus<span class="parti">participantes</span></caption>
             <thead>
                 <tr>
                     <th>Acciones</th>
-                    <th>Numero de acciones</th>
-                    <th>Participantes</th>
+                    <th><span class="temas">Prev. viol.</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">SSyR.</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">VIH</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">Masc.</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">Div. S</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">Equidad</span></th>
+                    <th><span class="parti">Part.</span></th>
                 </tr>
             </thead>
             {%for key, value in tabla.items%}
             <tr>
                 <td>{{key}}</td>
                 <td>{% if value.cantidad %}{{value.cantidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.viol_part %}{{value.viol_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.ssr %}{{value.ssr|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.ssr_part %}{{value.ssr_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih_sida %}{{value.vih_sida|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih_part %}{{value.vih_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.masculinidad %}{{value.masculinidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.masc_part %}{{value.masc_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual_part %}{{value.div_sexual_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.equidad %}{{value.equidad|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.participantes %}{{value.participantes|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
@@ -29,18 +49,38 @@
     <br>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Ambiente de acciones</caption>
+            <caption>Ambiente de acciones <span class="temas">temas</span> y sus <span class="parti">participantes</span></caption>
             <thead>
                 <tr>
                     <th>Acciones</th>
-                    <th>Numero de acciones</th>
-                    <th>Participantes</th>
+                    <th><span class="temas">Prev. viol.</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">SSyR.</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">VIH</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">Masc.</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">Div. S</span></th>
+                    <th><span class="parti">Part.</span></th>
+                    <th><span class="temas">Equidad</span></th>
+                    <th><span class="parti">Part.</span></th>
                 </tr>
             </thead>
             {%for key, value in tabla2.items%}
             <tr>
                 <td>{{key}}</td>
                 <td>{% if value.cantidad %}{{value.cantidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.viol_part %}{{value.viol_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.ssr %}{{value.ssr|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.ssr_part %}{{value.ssr_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih_sida %}{{value.vih_sida|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih_part %}{{value.vih_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.masculinidad %}{{value.masculinidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.masc_part %}{{value.masc_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual_part %}{{value.div_sexual_part|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.equidad %}{{value.equidad|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.participantes %}{{value.participantes|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
@@ -49,21 +89,39 @@
     <br>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Efectividad de acciones</caption>
+            <caption>Efectividad de acciones <span class="temas">promovidas</span> y <span class="parti">aprobadas</span> por <span class="temas">temas</span></caption>
             <thead>
                 <tr>
                     <th>Acciones</th>
-                    <th>Iniciativas promovidas</th>
-                    <th>Iniciativas aprobadas</th>
-                    <th> % </th>
+                    <th><span class="temas">Prev. viol.</span></th>
+                    <th><span class="parti">Aprob.</span></th>
+                    <th><span class="temas">SSyR</span></th>
+                    <th><span class="parti">Aprob.</span></th>
+                    <th><span class="temas">VIH</span></th>
+                    <th><span class="parti">Aprob.</span></th>
+                    <th><span class="temas">Mascul.</span></th>
+                    <th><span class="parti">Aprob.</span></th>
+                    <th><span class="temas">Div. S</span></th>
+                    <th><span class="parti">Aprob.</span></th>
+                    <th><span class="temas">Equidad</span></th>
+                    <th><span class="parti">Aprob.</span></th>
                 </tr>
             </thead>
             {%for key, value in tabla3.items%}
             <tr>
                 <td>{{key}}</td>
                 <td>{% if value.cantidad %}{{value.cantidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.viol_aprob %}{{value.viol_aprob|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.ssr %}{{value.ssr|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.ssr_aprob %}{{value.ssr_aprob|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih_sida %}{{value.vih_sida|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih_aprob %}{{value.vih_aprob|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.masculinidad %}{{value.masculinidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.masc_aprob %}{{value.masc_aprob|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_aprob %}{{value.div_aprob|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.equidad %}{{value.equidad|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.participantes %}{{value.participantes|floatformat}}{% else %}0{% endif %}</td>
-                <td>{{value.prom|floatformat}}</td>
             </tr>
             {%endfor%}
         </table>

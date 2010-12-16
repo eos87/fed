@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('fed.encuesta.views',
     (r'^influencia/$', 'influencia'),
+    (r'^ajax/orgs/$', 'get_orgs'),
     (r'^indicadores/$', 'indicadores'),
     (r'^lista/$', 'lista'),
     (r'^lista/(?P<id>\d+)/$', 'lista'),

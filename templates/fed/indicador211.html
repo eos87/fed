@@ -38,6 +38,33 @@
             {%endfor%}
         </table>
         <table class="mostrar">
+            <caption>Involucramiento de las poblaciones meta por temas</caption>
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Prev. violencia</th>
+                    <th>Salud sexual y repro.</th>
+                    <th>VIH-SIDA</th>
+                    <th>Masculinidad</th>
+                    <th>Div. sexual</th>
+                    <th>Equidad de g&eacute;nero</th>
+                    <th>Global</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla3.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{% if value.prev_vio %}{{value.prev_vio|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.ssr %}{{value.ssr|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih_sida %}{{value.vih_sida|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.masculinidad %}{{value.masculinidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.equidad %}{{value.equidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.global %}{{value.global|floatformat}}{% else %}0{% endif %}</td>
+            </tr>
+            {%endfor%}
+        </table>
+        <table class="mostrar">
             <caption>Atenci&oacute;n a la salud sexual y reproductiva</caption>
             <thead>
                 <tr>

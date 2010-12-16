@@ -11,6 +11,15 @@ from django.utils import simplejson
 from forms import *
 from models import *
 
+def get_orgs(request):
+    ids = request.GET.get('ids', '')
+    if ids:
+        lista = ids.split(',')
+    results = []
+    orgs = Organizacion.objects.filter(tipo__in=lista).values('id', 'nombre_corto')    
+
+    return HttpResponse(simplejson.dumps(list(orgs)), mimetype='application/json')
+
 def proyecto(request, id):
     proyecto = get_object_or_404(Proyecto, pk=int(id))
     return render_to_response('proyecto.html', RequestContext(request, locals()))
@@ -169,24 +178,92 @@ def indicador111(request):
     for opcion in CHOICE_MEDIO:
         query = AccionEfectuadaMedio.objects.filter(encuesta__in=a, accion=opcion[0])
         cantidad_sum = query.aggregate(cantidad_sum=Sum('cantidad'))['cantidad_sum']
+        viol_part_sum = query.aggregate(viol_part_sum=Sum('viol_part'))['viol_part_sum']
+        ssr_sum = query.aggregate(ssr_sum=Sum('ssr'))['ssr_sum']
+        ssr_part_sum = query.aggregate(ssr_part_sum=Sum('ssr_part'))['ssr_part_sum']
+        vih_sida_sum = query.aggregate(vih_sida_sum=Sum('vih_sida'))['vih_sida_sum']
+        vih_part_sum = query.aggregate(vih_part_sum=Sum('vih_sida_part'))['vih_part_sum']
+        masculinidad_sum = query.aggregate(masculinidad_sum=Sum('masculinidad'))['masculinidad_sum']
+        masc_part_sum = query.aggregate(masc_part_sum=Sum('masc_part'))['masc_part_sum']
+        div_sexual_sum = query.aggregate(div_sexual_sum=Sum('div_sexual'))['div_sexual_sum']
+        div_sexual_part_sum = query.aggregate(div_sexual_part_sum=Sum('div_sexual_part'))['div_sexual_part_sum']
+        equidad_sum = query.aggregate(equidad_sum=Sum('equidad'))['equidad_sum']
         participantes_sum = query.aggregate(participantes_sum=Sum('participantes'))['participantes_sum']
-        tabla[opcion[1]] = {'cantidad':cantidad_sum, 'participantes': participantes_sum}
+        tabla[opcion[1]] = {
+            'cantidad':cantidad_sum,
+            'viol_part': viol_part_sum,
+            'ssr': ssr_sum,
+            'ssr_part': ssr_part_sum,
+            'vih_sida': vih_sida_sum,
+            'vih_part': vih_part_sum,
+            'masculinidad': masculinidad_sum,
+            'masc_part': masc_part_sum,
+            'div_sexual': div_sexual_sum,
+            'div_sexual_part': div_sexual_part_sum,
+            'equidad': equidad_sum,
+            'participantes': participantes_sum
+            }
 
 
     for opcion in CHOICE_REGION:
         query = AccionEfectuadaRegion.objects.filter(encuesta__in=a, accion=opcion[0])
         cantidad_sum = query.aggregate(cantidad_sum=Sum('cantidad'))['cantidad_sum']
+        viol_part_sum = query.aggregate(viol_part_sum=Sum('viol_part'))['viol_part_sum']
+        ssr_sum = query.aggregate(ssr_sum=Sum('ssr'))['ssr_sum']
+        ssr_part_sum = query.aggregate(ssr_part_sum=Sum('ssr_part'))['ssr_part_sum']
+        vih_sida_sum = query.aggregate(vih_sida_sum=Sum('vih_sida'))['vih_sida_sum']
+        vih_part_sum = query.aggregate(vih_part_sum=Sum('vih_sida_part'))['vih_part_sum']
+        masculinidad_sum = query.aggregate(masculinidad_sum=Sum('masculinidad'))['masculinidad_sum']
+        masc_part_sum = query.aggregate(masc_part_sum=Sum('masc_part'))['masc_part_sum']
+        div_sexual_sum = query.aggregate(div_sexual_sum=Sum('div_sexual'))['div_sexual_sum']
+        div_sexual_part_sum = query.aggregate(div_sexual_part_sum=Sum('div_sexual_part'))['div_sexual_part_sum']
+        equidad_sum = query.aggregate(equidad_sum=Sum('equidad'))['equidad_sum']
         participantes_sum = query.aggregate(participantes_sum=Sum('participantes'))['participantes_sum']
 
-        tabla2[opcion[1]] = {'cantidad':cantidad_sum, 'participantes': participantes_sum}
+        tabla2[opcion[1]] = {
+            'cantidad':cantidad_sum,
+            'viol_part': viol_part_sum,
+            'ssr': ssr_sum,
+            'ssr_part': ssr_part_sum,
+            'vih_sida': vih_sida_sum,
+            'vih_part': vih_part_sum,
+            'masculinidad': masculinidad_sum,
+            'masc_part': masc_part_sum,
+            'div_sexual': div_sexual_sum,
+            'div_sexual_part': div_sexual_part_sum,
+            'equidad': equidad_sum,
+            'participantes': participantes_sum
+            }
 
     for opcion in CHOICE_DOCS:
         query = AccionEfectuadaDocumento.objects.filter(encuesta__in=a, accion=opcion[0])
         cantidad_sum = query.aggregate(cantidad_sum=Sum('cantidad'))['cantidad_sum']
-        participantes_sum = query.aggregate(participantes_sum=Sum('participantes'))['participantes_sum']
-        prom = get_prom(cantidad_sum, participantes_sum)
+        viol_aprob_sum = query.aggregate(viol_aprob_sum=Sum('viol_aprob'))['viol_aprob_sum']
+        ssr_sum = query.aggregate(ssr_sum=Sum('ssr'))['ssr_sum']
+        ssr_aprob_sum = query.aggregate(ssr_aprob_sum=Sum('ssr_aprob'))['ssr_aprob_sum']
+        vih_sida_sum = query.aggregate(vih_sida_sum=Sum('vih_sida'))['vih_sida_sum']
+        vih_aprob_sum = query.aggregate(vih_aprob_sum=Sum('viol_aprob'))['vih_aprob_sum']
+        masculinidad_sum = query.aggregate(masculinidad_sum=Sum('masculinidad'))['masculinidad_sum']
+        masc_aprob_sum = query.aggregate(masc_aprob_sum=Sum('masc_aprob'))['masc_aprob_sum']
+        div_sexual_sum = query.aggregate(div_sexual_sum=Sum('div_sexual'))['div_sexual_sum']
+        div_aprob_sum = query.aggregate(div_aprob_sum=Sum('div_aprob'))['div_aprob_sum']
+        equidad_sum = query.aggregate(equidad_sum=Sum('equidad'))['equidad_sum']
+        participantes_sum = query.aggregate(participantes_sum=Sum('participantes'))['participantes_sum']        
 
-        tabla3[opcion[1]] = {'cantidad':cantidad_sum, 'participantes': participantes_sum, 'prom':prom}
+        tabla3[opcion[1]] = {
+            'cantidad':cantidad_sum,
+            'viol_aprob': viol_aprob_sum,
+            'ssr': ssr_sum,
+            'ssr_aprob': ssr_aprob_sum,
+            'vih_sida': vih_sida_sum,
+            'vih_aprob': vih_aprob_sum,
+            'masculinidad': masculinidad_sum,
+            'masc_aprob': masc_aprob_sum,
+            'div_sexual': div_sexual_sum,
+            'div_sexual_aprob': div_aprob_sum,
+            'equidad': equidad_sum,
+            'participantes': participantes_sum
+            }
 
     return render_to_response('fed/indicador111.html', RequestContext(request, locals()))
 
@@ -403,7 +480,8 @@ def indicador122(request):
 def indicador211(request):
     resultado = Resultado.objects.get(pk=3)
     tabla = {}
-    tabla2 = {}    
+    tabla2 = {}
+    tabla3 = {}
     a = _queryset_filtrado(request, resultado)
 
     for opcion in MEDIOS_REFLEXION:
@@ -427,6 +505,26 @@ def indicador211(request):
             'discapacidad': discapacidad_sum,
             'global': global_sum
             }
+
+    for opcion in MEDIOS_REFLEXION:
+        query = InvolucramientoPobMeta.objects.filter(encuesta__in=a, accion=opcion[0])
+        prev_vio_sum = query.aggregate(prev_vio_sum=Sum('prev_vio'))['prev_vio_sum']
+        ssr_sum = query.aggregate(ssr_sum=Sum('ssr'))['ssr_sum']
+        vih_sida_sum = query.aggregate(vih_sida_sum=Sum('vih_sida'))['vih_sida_sum']
+        masculinidad_sum = query.aggregate(masculinidad_sum=Sum('masculinidad'))['masculinidad_sum']
+        div_sexual_sum = query.aggregate(div_sexual_sum=Sum('div_sexual'))['div_sexual_sum']
+        equidad_sum = query.aggregate(equidad_sum=Sum('equidad'))['equidad_sum']
+        global_sum = query.aggregate(global_sum=Sum('total'))['global_sum']
+        tabla3[opcion[1]] = {
+            'prev_vio':prev_vio_sum,
+            'ssr': ssr_sum,
+            'vih_sida': vih_sida_sum,
+            'masculinidad': masculinidad_sum,
+            'div_sexual': div_sexual_sum,
+            'equidad': equidad_sum,
+            'global': global_sum
+            }
+
             
     for opcion in ATENCION_SALUD:
         query2 = AtencionSalud.objects.filter(encuesta__in=a, accion=opcion[0])

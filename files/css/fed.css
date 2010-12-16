@@ -255,7 +255,12 @@ a:hover{
     height: 20px;
     line-height: 20px;
 }
-
+span.temas{
+    color: #816647;
+}
+span.parti{
+    color: #099;
+}
 .mostrar th{
     font: bold 12px/25px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
     background: url(/files/images/table_container_back_th.png) repeat-x top;

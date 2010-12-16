@@ -8,7 +8,7 @@ import os
 PROJECT_DIR = os.path.dirname(__file__)
 
 urlpatterns = patterns('',
-    (r'^files/(?P<path>.*)$', 'django.views.static.serve', {'document_root': PROJECT_DIR + '/files'}),
+    (r'^files/(?P<path>.*)$', 'django.views.static.serve', {'document_root': PROJECT_DIR + '/files'}),    
     (r'^$','fed.encuesta.views.index'),
     (r'^', include('fed.encuesta.urls')),
     

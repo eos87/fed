@@ -7,6 +7,35 @@
     var map;
     var markers = new Array();
     $(document).ready(function(){
+        /*$('#id_organizacion').each(function(){
+            $(this).remove();
+        });*/
+        verificar();
+        $("#id_tipo").change(function() {
+            verificar();
+            var str = '';
+            var lista = $('#id_tipo').val();
+            if(lista!=null){
+                for(var i=0;i<lista.length;i++){
+                    if(i==lista.length-1){
+                        str += lista[i];
+                    }else{
+                        str += lista[i]+',';
+                    }
+                }
+                $.getJSON('/ajax/orgs/?ids='+str, function(data){
+                    $('#id_organizacion').html('');
+                    if(data){                                                
+                        $.each(data, function(i, item){
+                            $('#id_organizacion').append($('<option></option>').val(item.id).html(item.nombre_corto));
+                        });
+                    }
+                });
+            }else{
+                verificar();
+            }
+        });
+
         $('#select_organizacion').click(function(){
             $('#id_organizacion option').each(function(){
                 $(this).attr('selected', 'selected');
@@ -61,6 +90,8 @@
                     });
                 }, "json");
                 return false;
+            }else{
+                return false;
             }
         });
         $('#guardar').click(function(){
@@ -110,6 +141,17 @@
         }
 
     }
+
+    function verificar(){
+        var lista = $('#id_tipo').val();
+        if(lista==null){
+            //$('#id_organizacion').attr('disabled', 'disabled');//each(function(){
+            $('#id_organizacion').html('');
+            //$(this).attr('disabled', 'disabled');
+            //alert('tumadre');
+            //});
+        }
+    }
 </script>
 {% endblock %}
 {% block contenido %}
@@ -118,6 +160,10 @@
         Formulario
     </div>
     <form action="." method="POST" id="influencia_form">{% csrf_token %}
+        <label class="aux">{{form.tipo.label}}</label><br>
+        {{form.tipo}}
+        <br>
+        <br>
         <label class="aux">{{form.organizacion.label}}</label><br>
         {{form.organizacion}}
         <a href="#" class="selector-chooseall" id="select_organizacion">Selecciona todos</a>
