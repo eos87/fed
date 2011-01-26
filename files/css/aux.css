@@ -3,4 +3,15 @@
     background-color: #fff;
 }
 
-
+.inline-group h2, .module h2{
+    font-size: 12px !important;
+    font-family: 'Trebuchet MS', sans-serif !important;
+    padding: 4px 5px !important;
+    color: #000;
+}
+.selector-chosen h2{
+    color: #fff;
+}
+.aligned label{
+    width: 9em !important;
+}

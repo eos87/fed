@@ -32,13 +32,16 @@ CHOICE_DOCS = (('leyes', 'Leyes'),
                ('acuerdos', 'Acuerdos'), )
 
 TIPO_CHOICE = ((0, 'Apoyo programático'),
-               (1, 'Por convocatoria'),
-               (2, 'Pequeños proyectos'))
+               (1, 'Convocatoria pública'),
+               (2, 'Pequeños proyectos'),
+               (3, 'Actividades puntuales'),
+               (4, 'Acciones de emergencia'),
+               (5, 'Estrategias con grupos priorizados'))
 
 class Organizacion(models.Model):
     nombre = models.TextField()
     nombre_corto = models.CharField(max_length=100)
-    tipo = models.IntegerField(choices=TIPO_CHOICE, verbose_name='Tipo de organización')
+    tipo = models.IntegerField(choices=TIPO_CHOICE, verbose_name='Modalidad de apoyo')
     direccion = models.CharField(max_length=150)
     correo = models.EmailField(blank=True, default='example@example.com')
     contacto = models.CharField(max_length=200, blank=True, default='Ninguno')
@@ -64,13 +67,17 @@ class Proyecto(models.Model):
 
 
     def __unicode__(self):
-        return self.nombre
+        return '%s' % (self.nombre)
 
     class Meta:
         verbose_name_plural = 'Proyectos'
 
-CHOICE_PERIODO = ((0, 'Primer semestre'),
-                  (1, 'Segundo semestre'))
+CHOICE_PERIODO = ((0, 'Enero - Febrero'),
+                  (1, 'Marzo - Abril'),
+                  (3, 'Mayo - Junio'),
+                  (4, 'Julio - Agosto'),
+                  (5, 'Septiembre - Octubre'),
+                  (6, 'Noviembre - Diciembre'))
                   
 CHOICE_ANIO = (('2010', '2010'), ('2011', '2011'), ('2012', '2012'))
 
@@ -93,6 +100,60 @@ class Encuesta(models.Model):
     class Meta:
         verbose_name = 'Informe'
         verbose_name_plural = 'Informes'
+
+class InformeObjetivo3(models.Model):
+    periodo = models.IntegerField(choices=CHOICE_PERIODO, verbose_name='Período de informe')
+    anio = models.CharField(choices=CHOICE_ANIO, verbose_name='Año', max_length=100)
+
+    def __unicode__(self):
+        return '%s | %s ' % (CHOICE_PERIODO[int(self.periodo)][1], self.anio)
+
+    class Meta:
+        verbose_name = 'Informe objetivo 3'
+        verbose_name_plural = 'Informes objetivo 3'
+
+class TipoAccion(models.Model):
+    nombre = models.CharField(max_length=100, verbose_name='Nombre acción')
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = 'Tipo Acciones'
+
+class Meta(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = 'Metas'
+
+class Tema(models.Model):
+    nombre = models.CharField(max_length=100, verbose_name='Nombre tema')
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = 'Temas'
+
+class DatoInformeOb3(models.Model):
+    tipo_accion = models.ForeignKey(TipoAccion)
+    meta = models.ForeignKey(Meta)
+    tema = models.ForeignKey(Tema)
+    organizacion = models.ManyToManyField(Organizacion, verbose_name=u'Organizaciónes')
+    hombres = models.IntegerField(default=0)
+    mujeres = models.IntegerField(default=0)
+    informe = models.ForeignKey(InformeObjetivo3)
+
+    def __unicode__(self):
+        return 'Dato %s' % self.id
+
+    class Meta:
+        verbose_name = 'Dato informe objetivo 3'
+        verbose_name_plural = 'Datos informe objetivo 3'
 
 class Resultado(models.Model):
     nombre = models.CharField(max_length=100)
@@ -122,7 +183,7 @@ class Indicador(models.Model):
 
 class ResultadoTrabajado(models.Model):
     resultado = models.ForeignKey(Resultado)    
-    municipio = models.ManyToManyField(Municipio)
+    municipio = models.ManyToManyField(Municipio, verbose_name='Municipios')
     encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
@@ -134,20 +195,20 @@ class ResultadoTrabajado(models.Model):
 
 
 #VERBOSE_CANTIDAD = 'Número de acciones efectuadas para fomentar la existencia y aplicación efectiva de políticas públicas para posicionar el tema de la equidad e igualdad'
-VERBOSE_CANTIDAD = 'Prev. de violencia'
+VERBOSE_CANTIDAD = 'Prevención de violencia'
 VERBOSE_PARTICIPAN = 'Participantes'
 
 class AccionEfectuadaMedio(models.Model):
-    accion = models.CharField(max_length=100, choices=CHOICE_MEDIO, blank=True, default='no-responde')
+    accion = models.CharField(max_length=100, choices=CHOICE_MEDIO, blank=True, default='no-responde', verbose_name='Tipo')
     cantidad = models.IntegerField(VERBOSE_CANTIDAD, blank=True, default=0)
     viol_part = models.IntegerField(VERBOSE_PARTICIPAN, blank=True, default=0)
-    ssr = models.IntegerField('Salud sexual y repro.', blank=True, default=0)
+    ssr = models.IntegerField('Salud sexual y reproductiva', blank=True, default=0)
     ssr_part = models.IntegerField(VERBOSE_PARTICIPAN, blank=True, default=0)
     vih_sida = models.IntegerField('VIH-SIDA', blank=True, default=0)
     vih_sida_part = models.IntegerField(VERBOSE_PARTICIPAN, blank=True, default=0)
     masculinidad = models.IntegerField('Masculinidad', blank=True, default=0)
     masc_part = models.IntegerField(VERBOSE_PARTICIPAN, blank=True, default=0)
-    div_sexual = models.IntegerField('Div. sexual', blank=True, default=0)
+    div_sexual = models.IntegerField('Diversidad sexual', blank=True, default=0)
     div_sexual_part = models.IntegerField(VERBOSE_PARTICIPAN, blank=True, default=0)
     equidad = models.IntegerField('Equidad de género', blank=True, default=0)
     participantes = models.IntegerField(VERBOSE_PARTICIPAN, blank=True, default=0)
@@ -161,7 +222,7 @@ class AccionEfectuadaMedio(models.Model):
         verbose_name_plural = 'Acciones impulsadas: Tipo de acciones'
 
 class AccionEfectuadaRegion(models.Model):
-    accion = models.CharField(max_length=100, choices=CHOICE_REGION, blank=True, default='no-responde')
+    accion = models.CharField(max_length=100, choices=CHOICE_REGION, blank=True, default='no-responde', verbose_name='Ambiente')
     cantidad = models.IntegerField(VERBOSE_CANTIDAD, blank=True, default=0)
     viol_part = models.IntegerField(VERBOSE_PARTICIPAN, blank=True, default=0)
     ssr = models.IntegerField('Salud sexual y repro.', blank=True, default=0)
@@ -220,7 +281,8 @@ class ParticipacionComisionDecision(models.Model):
         verbose_name = 'Participacion en instancias: Participacion y Efectividad'
         verbose_name_plural = 'Participacion en instancias: Participacion y Efectividad'
 
-class ParticipacionComisionAgenda(models.Model):
+#TABLA MARCADA PARA SER HECHA MIERDA
+""""class ParticipacionComisionAgenda(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_REGION, blank=True, default='no-responde')
     cantidad_instancias = models.IntegerField('Número de instancias donde ' \
                                               'participan para mantener en la agenda pública la defensa DDSSRR', db_column='cat_instancias', blank=True, default=0)
@@ -235,7 +297,7 @@ class ParticipacionComisionAgenda(models.Model):
 
     class Meta:
         verbose_name = 'Defensa de los DDSSRR: Participación y efectividad'
-        verbose_name_plural = 'Defensa de los DDSSRR: Participación y efectividad'
+        verbose_name_plural = 'Defensa de los DDSSRR: Participación y efectividad'"""
 
 class AccionObservatorio(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_REGION, blank=True, default='no-responde')
@@ -256,11 +318,18 @@ ver_sexual = 'En contra de la discriminación a personas de la diversidad sexual
 ver_discapacidad = 'En contra de la discriminación a personas con discapacidad'
 ver_vih_sida = 'En contra de la discriminación a personas que viven con VIH y SIDA'
 ver_racial = 'En contra de la discriminación a personas de población étnica e indigena'
-ver_joven = 'En contra de la discriminación a personas de juventud'
+ver_joven = 'En contra de la discriminación de jóvenes'
+
+CHOICE_MEDIO_1 = (('foros', 'Foros'),
+                ('campania_tv', 'Campañas en televisión'),
+                ('campania_radio', 'Campañas en radio'),
+                ('marchas', 'Marchas'))
+
 
 class DenunciaSocialRealizada(models.Model):
-    accion = models.CharField(max_length=100, choices=CHOICE_MEDIO, blank=True, default='no-responde')
-    persona_violencia_if = models.IntegerField(ver_vif, blank=True, default=0)
+    accion = models.CharField(max_length=100, choices=CHOICE_MEDIO_1, blank=True, default='no-responde', verbose_name='Número de acciones públicas realizadas')
+    #campo eliminado a peticion de FED
+    #persona_violencia_if = models.IntegerField(ver_vif, blank=True, default=0)
     persona_div_sexual = models.IntegerField(ver_sexual, blank=True, default=0)
     persona_discapacidad = models.IntegerField(ver_discapacidad, blank=True, default=0)
     persona_vih = models.IntegerField(ver_vih_sida, blank=True, default=0)
@@ -275,7 +344,7 @@ class DenunciaSocialRealizada(models.Model):
         verbose_name = 'Denuncia pública realizada'
         verbose_name_plural = 'Denuncias públicas realizadas'
 
-class DenunciaSocialEfectiva(models.Model):
+"""class DenunciaSocialEfectiva(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_MEDIO, blank=True, default='no-responde')
     persona_violencia_if = models.IntegerField(ver_vif, blank=True, default=0)
     persona_div_sexual = models.IntegerField(ver_sexual, blank=True, default=0)
@@ -290,15 +359,15 @@ class DenunciaSocialEfectiva(models.Model):
 
     class Meta:
         verbose_name = 'Denuncia pública efectiva'
-        verbose_name_plural = 'Denuncias públicas efectivas'
+        verbose_name_plural = 'Denuncias públicas efectivas'"""
 
-CHOICE_JURIDICA = (('denuncia_juridica_realizada', 'Número de acciones de denuncias jurídicas realizadas'),
-                   ('denuncia_juridica_atendida', 'Número de denuncias jurídicas atendidas'),
-                   ('apoya_juicio', 'Apoyo en juicio VIF'))
+CHOICE_JURIDICA = (('denuncia_juridica_realizada', 'Denuncias jurídicas realizadas ante instancias'),
+                   ('denuncia_juridica_atendida', 'Denuncias jurídicas atendidas'),)
 
 class DenunciaJuridica(models.Model):
-    accion = models.CharField(max_length=100, choices=CHOICE_JURIDICA, blank=True, default='no-responde')
-    violencia_if = models.IntegerField(ver_vif, blank=True, default=0)
+    accion = models.CharField(max_length=100, choices=CHOICE_JURIDICA, blank=True, default='no-responde', verbose_name='Número de acciones de denuncias efectivas impulsadas por las organizaciones')
+    #eliminar por disposición de fe
+    #violencia_if = models.IntegerField(ver_vif, blank=True, default=0)
     persona_div_sexual = models.IntegerField(ver_sexual, blank=True, default=0)
     persona_discapacidad = models.IntegerField(ver_discapacidad, blank=True, default=0)
     persona_vih = models.IntegerField(ver_vih_sida, blank=True, default=0)
@@ -331,32 +400,13 @@ MEDIOS_REFLEXION = (('taller_formacion', 'Talleres de formación'),
                     ('cabildeo', 'Cabildeo'),
                     ('boletines', 'Boletines'))
 
-class AccionRealizadaReflexion(models.Model):
-    accion = models.CharField(max_length=100, choices=MEDIOS_REFLEXION, blank=True, default='no-responde')
-    mujeres = models.IntegerField('Con las mujeres', blank=True, default=0)
-    hombres = models.IntegerField('Con los hombres', blank=True, default=0)
-    jovenes = models.IntegerField('Con los y las jóvenes', blank=True, default=0)
-    div_sexual = models.IntegerField('Con las personas de la diversidad sexual', blank=True, default=0)
-    vih = models.IntegerField('Con las personas con VIH y SIDA', blank=True, default=0)
-    etnica = models.IntegerField('Con las personas de población étnica e indigena', blank=True, default=0)
-    discapacidad = models.IntegerField('Con las personas con discapacidad', blank=True, default=0)
-    total = models.IntegerField('Global', blank=True, default=0)
-    encuesta = models.ForeignKey(Encuesta)
-
-    def __unicode__(self):
-        return self.accion
-
-    class Meta:
-        verbose_name = 'Acción realizada para reflexión de poblabión meta'
-        verbose_name_plural = 'Acciones realizadas para reflexión de poblabiones meta'
-
 class InvolucramientoPobMeta(models.Model):
-    accion = models.CharField(max_length=100, choices=MEDIOS_REFLEXION, blank=True, default='no-responde')
+    accion = models.CharField(max_length=100, choices=MEDIOS_REFLEXION, blank=True, default='no-responde', verbose_name='Acciones realizadas para que las poblaciones meta reflexionen sobre los derechos sexuales y reproductivos')
     prev_vio = models.IntegerField('Prevención de violencia', blank=True, default=0)
-    ssr = models.IntegerField('Salud sexual y repro.', blank=True, default=0)
+    ssr = models.IntegerField('Salud sexual y salud reproductiva', blank=True, default=0)
     vih_sida = models.IntegerField('VIH-SIDA', blank=True, default=0)
     masculinidad = models.IntegerField('Masculinidad', blank=True, default=0)
-    div_sexual = models.IntegerField('Div. sexual', blank=True, default=0)
+    div_sexual = models.IntegerField('Diversidad sexual', blank=True, default=0)
     equidad = models.IntegerField('Equidad de género', blank=True, default=0)
     total = models.IntegerField('Global', blank=True, default=0)
     encuesta = models.ForeignKey(Encuesta)
@@ -368,12 +418,8 @@ class InvolucramientoPobMeta(models.Model):
         verbose_name = 'Involucramiento de pob. meta'
         verbose_name_plural = 'Involucramiento de pob. metas'
 
-ATENCION_SALUD = (('general', 'Atención general'),
-                  ('especializada', 'Atención especializada'),
-                  ('psicologica', 'Atención psicológica'),
-                  ('legal', 'Atención Legal'))
-class AtencionSalud(models.Model):
-    accion = models.CharField(max_length=100, choices=ATENCION_SALUD, blank=True, default='no-responde')
+class AccionRealizadaReflexion(models.Model):
+    accion = models.CharField(max_length=100, choices=MEDIOS_REFLEXION, blank=True, default='no-responde')
     mujeres = models.IntegerField('Mujeres', blank=True, default=0)
     hombres = models.IntegerField('Hombres', blank=True, default=0)
     jovenes = models.IntegerField('Los y las jóvenes', blank=True, default=0)
@@ -388,12 +434,14 @@ class AtencionSalud(models.Model):
         return self.accion
 
     class Meta:
-        verbose_name = 'Atención a la salud sexual y reprod'
-        verbose_name_plural = 'Atenciones a la salud sexual y reprod'
-        
+        verbose_name = 'Acción realizada para reflexión de poblabión meta'
+        verbose_name_plural = 'Acciones realizadas para reflexión de poblabiones meta'
+
+
 PERSONAS_REFLEXION = (('personas_participaron', 'No. de participantes acciones derechos sexuales'),
                       ('personas_participaron_toman_decision', 'No. participantes toman decisiones sex.'),)
 
+"""
 class AccionRelizadaReflexionPersona(models.Model):
     accion = models.CharField(max_length=100, choices=PERSONAS_REFLEXION, blank=True, default='no-responde')
     mujeres = models.IntegerField('Las mujeres', blank=True, default=0)
@@ -411,7 +459,7 @@ class AccionRelizadaReflexionPersona(models.Model):
 
     class Meta:
         verbose_name = 'Cambio en la población meta'
-        verbose_name_plural = 'Cambios en las poblaciones metas'
+        verbose_name_plural = 'Cambios en las poblaciones metas'"""
 
 MEDIOS2 = (('tv', 'Campañas por Televisión'),
            ('radio', 'Campañas radiales'),
@@ -428,11 +476,13 @@ MEDIOS2 = (('tv', 'Campañas por Televisión'),
            ('consejeria', 'Consejería y promotoría social'),)
 
 class AccionImpulsadaOrg(models.Model):
-    accion = models.CharField(max_length=100, choices=MEDIOS2, blank=True, default='no-responde')
-    acciones_emprendidas = models.IntegerField('Número de acciones emprendidas por las Org. para la prevención de la violencia basada en género', blank=True, default=0)
-    acciones_cambios_actitud = models.IntegerField('Número de acciones que lograron cambios de actitud de los grupos metas para la prevención de violencia basada en género', blank=True, default=0)
+    accion = models.CharField(max_length=100, choices=MEDIOS2, blank=True, default='no-responde', verbose_name='Tipo de acciones')
+    acciones_emprendidas = models.IntegerField('Número de acciones emprendidas por las organizaciones para la prevención de la violencia basada en género', blank=True, default=0)
+    #eliminada a solicitud de FED
+    #acciones_cambios_actitud = models.IntegerField('Número de acciones que lograron cambios de actitud de los grupos metas para la prevención de violencia basada en género', blank=True, default=0)
     acciones_impulsadas_masculinidad = models.IntegerField('Numero y tipo de acciones impulsadas por las Org. para promover masculinidad libre de prejuicios y violencia', blank=True, default=0)
-    acciones_cambios_masculinidad = models.IntegerField('Numero de acciones que lograron cambio de actitud de los grupos metas hacia la masculinidad libre de prejuicios y violencia', blank=True, default=0)
+    #eliminada a solicitud de FED
+    #acciones_cambios_masculinidad = models.IntegerField('Numero de acciones que lograron cambio de actitud de los grupos metas hacia la masculinidad libre de prejuicios y violencia', blank=True, default=0)
     encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
@@ -443,15 +493,15 @@ class AccionImpulsadaOrg(models.Model):
         verbose_name_plural = 'Acciones impulsadas por organizaciones para prev. de violencia'
 
 class AccionImpulsadaGrupo(models.Model):
-    accion = models.CharField(max_length=100, choices=MEDIOS2, blank=True, default='no-responde')
-    acciones_emprendidas_sex = models.IntegerField('Número y tipo de acciones emprendidas por los grupos de diversidad sexual, para prev de violencia basada en género', blank=True, default=0)
-    acciones_cambio_sex = models.IntegerField('Numero de acciones que lograron cambio de actitud en grupo de diversidad sexual', blank=True, default=0)
-    acciones_emprendidas_discapa = models.IntegerField('Número y tipo de acciones emprendidas por los grupos de personas con discapacidad para prev de violencia basada en género', blank=True, default=0)
-    acciones_cambio_discapa = models.IntegerField('Número de acciones que lograron cambio de actitud en grupo de personas con discapacidad', blank=True, default=0)
+    accion = models.CharField(max_length=100, choices=MEDIOS2, blank=True, default='no-responde', verbose_name='Tipo de acciones')
+    acciones_emprendidas_sex = models.IntegerField('Número y tipo de acciones emprendidas por los grupos de diversidad sexual, para prevención de violencia basada en género', blank=True, default=0)
+    #acciones_cambio_sex = models.IntegerField('Numero de acciones que lograron cambio de actitud en grupo de diversidad sexual', blank=True, default=0)
+    acciones_emprendidas_discapa = models.IntegerField('Número y tipo de acciones emprendidas por los grupos de personas con discapacidad para prevención de violencia basada en género', blank=True, default=0)
+    #acciones_cambio_discapa = models.IntegerField('Número de acciones que lograron cambio de actitud en grupo de personas con discapacidad', blank=True, default=0)
     acciones_emprendidas_etnia = models.IntegerField('Número de acciones emprendidas por los grupos étnicos y pueblos indígenas para la prevención de la violencia basada en género', blank=True, default=0)
-    acciones_cambio_etnia = models.IntegerField('Número de acciones que lograron cambio de actitud en grupos étnicos y pueblos indígenas', blank=True, default=0)
+    #acciones_cambio_etnia = models.IntegerField('Número de acciones que lograron cambio de actitud en grupos étnicos y pueblos indígenas', blank=True, default=0)
     acciones_emprendidas_jovenes = models.IntegerField('Número de acciones emprendidas por los y las jóvenes para la prevención de la violencia basada en género', blank=True, default=0)
-    acciones_cambio_jovenes = models.IntegerField('Número de acciones que lograron cambio de actitud en los y las jóvenes ', blank=True, default=0)
+    #acciones_cambio_jovenes = models.IntegerField('Número de acciones que lograron cambio de actitud en los y las jóvenes ', blank=True, default=0)
     encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
@@ -461,11 +511,35 @@ class AccionImpulsadaGrupo(models.Model):
         verbose_name = 'Acción impulsada por grupos para prev. de violencia'
         verbose_name_plural = 'Acciones impulsadas por grupos para prev. de violencia'
 
+ATENCION_SALUD = (('general', 'Atención general'),
+                  ('especializada', 'Atención especializada'),
+                  ('psicologica', 'Atención psicológica'),
+                  ('legal', 'Atención Legal'))
+
+class AtencionSalud(models.Model):
+    accion = models.CharField(max_length=100, choices=ATENCION_SALUD, blank=True, default='no-responde', verbose_name='Atención a la Salud Sexual y Reproductiva')
+    mujeres = models.IntegerField('Mujeres', blank=True, default=0)
+    hombres = models.IntegerField('Hombres', blank=True, default=0)
+    jovenes = models.IntegerField('Los y las jóvenes', blank=True, default=0)
+    div_sexual = models.IntegerField('Personas de la diversidad sexual', blank=True, default=0)
+    vih = models.IntegerField('Personas con VIH y SIDA', blank=True, default=0)
+    etnica = models.IntegerField('Personas de población étnica e indigena', blank=True, default=0)
+    discapacidad = models.IntegerField('Personas con discapacidad', blank=True, default=0)
+    total = models.IntegerField('Global', blank=True, default=0)
+    encuesta = models.ForeignKey(Encuesta)
+
+    def __unicode__(self):
+        return self.accion
+
+    class Meta:
+        verbose_name = 'Atención a la salud sexual y reprod'
+        verbose_name_plural = 'Atenciones a la salud sexual y reprod'
+
 CHOICE_VICTIMAS = (('casos_atendidos', 'No. casos de victimas de violencia de género atendidos'),
                    ('casos_resueltos', 'No. casos resueltos con resultados y diagnósticos favorables'), )
 
 class AtencionVictima(models.Model):
-    accion = models.CharField(max_length=100, choices=CHOICE_VICTIMAS, blank=True, default='no-responde')
+    accion = models.CharField(max_length=100, choices=CHOICE_VICTIMAS, blank=True, default='no-responde', verbose_name='Acciones')
     servicio_salud = models.IntegerField('A través de los servicios de salud general', blank=True, default=0)
     servicio_salud_especial = models.IntegerField('A través de los servicios de salud especializada', blank=True, default=0)
     servicio_psicologia = models.IntegerField('A través de los servicios de atención en psicología', blank=True, default=0)
@@ -480,8 +554,8 @@ class AtencionVictima(models.Model):
         verbose_name = 'Atención victimas de violencia'
         verbose_name_plural = 'Atenciones a victimas de violencia'
 
-CHOICE_DENUNCIAS = (('denuncias_interpuestas', 'No. denuncias interpuestas a instancias de justicia '),
-                    ('denuncias_recibidas', 'No. denuncias que han sido recibidas y atendidas'),
+CHOICE_DENUNCIAS = (('denuncias_interpuestas', 'No. denuncias interpuestas por las víctimas a instancias de justicia'),
+                    ('denuncias_recibidas', 'No. denuncias interpuestas por las victimas que han sido recibidas y atendidas'),
                     ('denuncias_sancion', 'No. de casos que concluyen con sanción penal'), )
 
 class DenunciaViolencia(models.Model):
@@ -530,6 +604,8 @@ class ReferenciaContraRef(models.Model):
     class Meta:
         verbose_name = 'Referencia y contra-referencia'
         verbose_name_plural = 'Referencias y contra-referencias'
+
+#AQUI EMPIEZA EL NUEVO OBJETIVO
 
 MEDIOS3 = (('talleres', 'Talleres'),
            ('foros', 'Foros'),
