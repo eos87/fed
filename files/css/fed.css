@@ -190,7 +190,7 @@ a:hover{
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 30px;
- }
+}
 .title{
     font-size: 22px;
     color: #646464;
@@ -214,7 +214,7 @@ a:hover{
     color: #000;
     margin-top: 15px;
     padding-bottom: 20px;
-    
+
 }
 .registro{
     margin-top: 15px;
@@ -242,13 +242,21 @@ a:hover{
 }
 
 /* Estilo para las tablas */
+.result_tables{
+    float: left;
+    width: 732px;
+}
 .mostrar{
     width: 100%;
+    padding-bottom: 5px;
+}
+.table_container{
+    width: 732px;
+    overflow: auto;
 }
 .mostrar caption{
     font-size: 14px;
-    background-color: #e1e1e1;
-    width: 100%;
+    background-color: #e1e1e1;    
     text-align: left;
     padding-left: 15px;
     color: #069;
@@ -262,12 +270,14 @@ span.parti{
     color: #099;
 }
 .mostrar th{
-    font: bold 12px/25px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-    background: url(/files/images/table_container_back_th.png) repeat-x top;
+    font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    /*font: bold 12px/25px ;*/    
+    font-size: 12px;
+    background: url(/files/images/table_container_back_th.png) repeat;
     border-right: 1px solid #ded3ba;
     border-bottom: 1px solid #ded3ba;
     vertical-align:middle;    
-    padding: 0px 5px 0px 5px;
+    padding: 3px 5px;
 }
 
 .mostrar td {
@@ -327,7 +337,7 @@ a:visited{
 }
 .title_map2 a{
     color: #d5d5d5;
-    
+
     text-shadow: 0 2px 3px #483916;
 }
 .list_elems{
@@ -444,10 +454,7 @@ a.actual{
     background: #555753 url(/files/images/bar3_back.png) repeat-x;    
     float: left;
 }
-.result_tables{
-    float: left;
-    width: 732px;
-}
+
 .nav2{
     font-size: 17px;    
     text-shadow: 0 2px 1px #483916;
@@ -486,9 +493,7 @@ a.actual{
     margin-left: 15px;
     line-height: 40px;
 }
-.table_container{
-    
-}
+
 .result_title{
     font-size: 13px;
     margin-right: 5px;

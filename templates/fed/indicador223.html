@@ -9,16 +9,12 @@
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Acciones efectuadas y efectivas</caption>
+            <caption>Acciones impulsadas por las para la prevenci&oacute;n de violencia BG con los grupos prioritarios</caption>
             <thead>
                 <tr>
                     <th>&nbsp;</th>
-                    <th>Acciones de grupo etnia e ind&iacute;genas</th>
-                    <th>Lograron cambios</th>
-                    <th>Efectividad</th>
-                    <th>Acciones de l@s j&oacute;venes</th>
-                    <th>Lograron cambios</th>
-                    <th>Efectividad</th>
+                    <th>Acciones emprendidas por los grupos &eacute;tnicos y pueblos ind&iacute;genas</th>
+                    <th>Acciones emprendidas por los y las j&oacute;venes</th>
                 </tr>
             </thead>
             {%for key, value in tabla.items %}
@@ -29,27 +25,13 @@
                     {{value.acciones_emprendidas_etnia|floatformat}}
                     {% else %}
                     0{% endif %}
-                </td>
-                <td>
-                    {% if value.acciones_cambios_etnia %}
-                    {{value.acciones_cambios_etnia|floatformat}}
-                    {% else %}
-                    0{% endif %}
-                </td>
-                <td>{{value.prom1|floatformat}}</td>
+                </td>                
                 <td>
                     {% if value.acciones_impulsadas_jovenes %}
                     {{value.acciones_impulsadas_jovenes|floatformat}}
                     {% else %}
                     0{% endif %}
-                </td>
-                <td>
-                    {% if value.acciones_cambios_jovenes %}
-                    {{value.acciones_cambios_jovenes|floatformat}}
-                    {% else %}
-                    0{% endif %}
-                </td>
-                <td>{{value.prom2|floatformat}}</td>
+                </td>                
             </tr>
             {%endfor%}
         </table>

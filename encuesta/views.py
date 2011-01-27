@@ -289,27 +289,7 @@ def indicador112(request):
 
     return render_to_response('fed/indicador112.html', RequestContext(request, locals()))
 
-@session_required
-def indicador113(request):
-    resultado = Resultado.objects.get(pk=1)
-    tabla = {}
-    a = _queryset_filtrado(request, resultado)
-    
-    for opcion in CHOICE_REGION:
-        query = ParticipacionComisionAgenda.objects.filter(encuesta__in=a, accion=opcion[0])
-        instancias_sum = query.aggregate(instancias_sum=Sum('cantidad_instancias'))['instancias_sum']
-        acciones_promovidas_sum = query.aggregate(acciones_promovidas_sum=Sum('cantidad_acciones_prom'))['acciones_promovidas_sum']
-        acciones_efectivas_sum = query.aggregate(acciones_efectivas_sum=Sum('cantidad_acciones_efec'))['acciones_efectivas_sum']
-        prom = get_prom(acciones_promovidas_sum, acciones_efectivas_sum)
-
-        tabla[opcion[1]] = {
-            'instancias':instancias_sum,
-            'acciones_promovidas': acciones_promovidas_sum,
-            'acciones_efectivas': acciones_efectivas_sum,
-            'prom':prom
-            }
-
-    return render_to_response('fed/indicador113.html', RequestContext(request, locals()))
+#ELIMINADO A SOLICITUD DE FED INDICADOR 113
 
 @session_required
 def indicador114(request):
@@ -351,16 +331,14 @@ def indicador121(request):
 
     for opcion in CHOICE_MEDIO:
         #calculando denuncias realizadas
-        query = DenunciaSocialRealizada.objects.filter(encuesta__in=a, accion=opcion[0])
-        vif_sum = query.aggregate(vif_sum=Sum('persona_violencia_if'))['vif_sum']
+        query = DenunciaSocialRealizada.objects.filter(encuesta__in=a, accion=opcion[0])        
         div_sexual_sum = query.aggregate(div_sexual_sum=Sum('persona_div_sexual'))['div_sexual_sum']
         discapacidad_sum = query.aggregate(discapacidad_sum=Sum('persona_discapacidad'))['discapacidad_sum']
         vih_sum = query.aggregate(vih_sum=Sum('persona_vih'))['vih_sum']
         racial_sum = query.aggregate(racial_sum=Sum('persona_racial'))['racial_sum']
         joven_sum = query.aggregate(joven_sum=Sum('persona_joven'))['joven_sum']
 
-        tabla[opcion[1]] = {
-            'vif': vif_sum,
+        tabla[opcion[1]] = {            
             'sexual':div_sexual_sum,
             'discapacidad': discapacidad_sum,
             'vih': vih_sum,
@@ -368,41 +346,7 @@ def indicador121(request):
             'joven':joven_sum
             }
 
-        #calculando denuncias efectivas
-        query2 = DenunciaSocialEfectiva.objects.filter(encuesta__in=a, accion=opcion[0])
-        vif_sum2 = query2.aggregate(vif_sum2=Sum('persona_violencia_if'))['vif_sum2']
-        div_sexual_sum2 = query2.aggregate(div_sexual_sum2=Sum('persona_div_sexual'))['div_sexual_sum2']
-        discapacidad_sum2 = query2.aggregate(discapacidad_sum2=Sum('persona_discapacidad'))['discapacidad_sum2']
-        vih_sum2 = query2.aggregate(vih_sum2=Sum('persona_vih'))['vih_sum2']
-        racial_sum2 = query2.aggregate(racial_sum2=Sum('persona_racial'))['racial_sum2']
-        joven_sum2 = query2.aggregate(joven_sum2=Sum('persona_joven'))['joven_sum2']
-
-        tabla2[opcion[1]] = {
-            'vif': vif_sum2,
-            'sexual':div_sexual_sum2,
-            'discapacidad': discapacidad_sum2,
-            'vih': vih_sum2,
-            'racial': racial_sum2,
-            'joven':joven_sum2
-            }
-
-        #calculando promedios
-        vif_prom = get_prom(vif_sum, vif_sum2)
-        div_sexual_prom = get_prom(div_sexual_sum, div_sexual_sum2)
-        discapacidad_prom = get_prom(discapacidad_sum, discapacidad_sum2)
-        vih_prom = get_prom(vih_sum, vih_sum2)
-        racial_prom = get_prom(racial_sum, racial_sum2)
-        joven_prom = get_prom(joven_sum, joven_sum2)
-
-        tabla3[opcion[1]] = {
-            'vif': vif_prom,
-            'sexual':div_sexual_prom,
-            'discapacidad': discapacidad_prom,
-            'vih': vih_prom,
-            'racial': racial_prom,
-            'joven':joven_prom
-            }
-
+        #TODO ELIMINADO A PETICION DE FED
     return render_to_response('fed/indicador121.html', RequestContext(request, locals()))
 
 @session_required
@@ -413,34 +357,16 @@ def indicador122(request):
     tabla3 = {}
     a = _queryset_filtrado(request, resultado)
 
-    #agregando opcion apoya juicio
-    opcion = CHOICE_JURIDICA[2][0]
-    query = DenunciaJuridica.objects.filter(encuesta__in=a, accion=opcion)
-    vif_sum = query.aggregate(vif_sum=Sum('violencia_if'))['vif_sum']
-    div_sexual_sum = query.aggregate(div_sexual_sum=Sum('persona_div_sexual'))['div_sexual_sum']
-    discapacidad_sum = query.aggregate(discapacidad_sum=Sum('persona_discapacidad'))['discapacidad_sum']
-    vih_sum = query.aggregate(vih_sum=Sum('persona_vih'))['vih_sum']
-    racial_sum = query.aggregate(racial_sum=Sum('persona_racial'))['racial_sum']
-    joven_sum = query.aggregate(joven_sum=Sum('persona_joven'))['joven_sum']
-    tabla[CHOICE_JURIDICA[2][1]] = {
-        'vif': vif_sum,
-        'sexual':div_sexual_sum,
-        'discapacidad': discapacidad_sum,
-        'vih': vih_sum,
-        'racial': racial_sum,
-        'joven':joven_sum
-    }
+    #ELIMINANDO A PETICION DE FED
 
     opcion = CHOICE_JURIDICA[0][0]
-    query = DenunciaJuridica.objects.filter(encuesta__in=a, accion=opcion)
-    vif_sum = query.aggregate(vif_sum=Sum('violencia_if'))['vif_sum']
+    query = DenunciaJuridica.objects.filter(encuesta__in=a, accion=opcion)    
     div_sexual_sum = query.aggregate(div_sexual_sum=Sum('persona_div_sexual'))['div_sexual_sum']
     discapacidad_sum = query.aggregate(discapacidad_sum=Sum('persona_discapacidad'))['discapacidad_sum']
     vih_sum = query.aggregate(vih_sum=Sum('persona_vih'))['vih_sum']
     racial_sum = query.aggregate(racial_sum=Sum('persona_racial'))['racial_sum']
     joven_sum = query.aggregate(joven_sum=Sum('persona_joven'))['joven_sum']
-    tabla[CHOICE_JURIDICA[0][1]] = {
-        'vif': vif_sum,
+    tabla[CHOICE_JURIDICA[0][1]] = {        
         'sexual':div_sexual_sum,
         'discapacidad': discapacidad_sum,
         'vih': vih_sum,
@@ -448,16 +374,14 @@ def indicador122(request):
         'joven':joven_sum
     }
     opcion2 = CHOICE_JURIDICA[1][0]
-    query2 = DenunciaJuridica.objects.filter(encuesta__in=a, accion=opcion2)
-    vif_sum2 = query2.aggregate(vif_sum2=Sum('violencia_if'))['vif_sum2']
+    query2 = DenunciaJuridica.objects.filter(encuesta__in=a, accion=opcion2)    
     div_sexual_sum2 = query2.aggregate(div_sexual_sum2=Sum('persona_div_sexual'))['div_sexual_sum2']
     discapacidad_sum2 = query2.aggregate(discapacidad_sum2=Sum('persona_discapacidad'))['discapacidad_sum2']
     vih_sum2 = query2.aggregate(vih_sum2=Sum('persona_vih'))['vih_sum2']
     racial_sum2 = query2.aggregate(racial_sum2=Sum('persona_racial'))['racial_sum2']
     joven_sum2 = query2.aggregate(joven_sum2=Sum('persona_joven'))['joven_sum2']
 
-    tabla[CHOICE_JURIDICA[1][1]] = {
-        'vif': vif_sum2,
+    tabla[CHOICE_JURIDICA[1][1]] = {        
         'sexual':div_sexual_sum2,
         'discapacidad': discapacidad_sum2,
         'vih': vih_sum2,
@@ -465,8 +389,7 @@ def indicador122(request):
         'joven':joven_sum2
     }
 
-    tabla2['Efectividad %'] = {
-        'vif':get_prom(vif_sum, vif_sum2),
+    tabla2['Efectividad %'] = {        
         'sexual':get_prom(div_sexual_sum, div_sexual_sum2),
         'discapacidad': get_prom(discapacidad_sum, discapacidad_sum2),
         'vih': get_prom(vih_sum, vih_sum2),
@@ -525,7 +448,7 @@ def indicador211(request):
             'global': global_sum
             }
 
-            
+    #TODO OJO A ESTO PORQUE SE MUEVE HACIA OTRA TABLA
     for opcion in ATENCION_SALUD:
         query2 = AtencionSalud.objects.filter(encuesta__in=a, accion=opcion[0])
         hombres_sum2 = query2.aggregate(hombres_sum2=Sum('hombres'))['hombres_sum2']
@@ -622,19 +545,19 @@ def indicador221(request):
     for opcion in MEDIOS2:
         query = AccionImpulsadaOrg.objects.filter(encuesta__in=a, accion=opcion[0])
         acciones_emprendidas_sum = query.aggregate(acciones_emprendidas_sum=Sum('acciones_emprendidas'))['acciones_emprendidas_sum']
-        acciones_cambios_actitud_sum = query.aggregate(acciones_cambios_actitud_sum=Sum('acciones_cambios_actitud'))['acciones_cambios_actitud_sum']
-        prom1 = get_prom(acciones_emprendidas_sum, acciones_cambios_actitud_sum)
+        #acciones_cambios_actitud_sum = query.aggregate(acciones_cambios_actitud_sum=Sum('acciones_cambios_actitud'))['acciones_cambios_actitud_sum']
+        #prom1 = get_prom(acciones_emprendidas_sum, acciones_cambios_actitud_sum)
         acciones_impulsadas_masculinidad_sum = query.aggregate(acciones_impulsadas_masculinidad_sum=Sum('acciones_impulsadas_masculinidad'))['acciones_impulsadas_masculinidad_sum']
-        acciones_cambios_masculinidad_sum = query.aggregate(acciones_cambios_masculinidad_sum=Sum('acciones_cambios_masculinidad'))['acciones_cambios_masculinidad_sum']
-        prom2 = get_prom(acciones_impulsadas_masculinidad_sum, acciones_cambios_masculinidad_sum)
+        #acciones_cambios_masculinidad_sum = query.aggregate(acciones_cambios_masculinidad_sum=Sum('acciones_cambios_masculinidad'))['acciones_cambios_masculinidad_sum']
+        #prom2 = get_prom(acciones_impulsadas_masculinidad_sum, acciones_cambios_masculinidad_sum)
 
         tabla[opcion[1]] = {
             'acciones_emprendidas':acciones_emprendidas_sum,
-            'acciones_cambios_actitud': acciones_cambios_actitud_sum,
-            'prom1':prom1,
+            #'acciones_cambios_actitud': acciones_cambios_actitud_sum,
+            #'prom1':prom1,
             'acciones_impulsadas_masculinidad':acciones_impulsadas_masculinidad_sum,
-            'acciones_cambios_masculinidad': acciones_cambios_masculinidad_sum,
-            'prom2':prom2
+            #'acciones_cambios_masculinidad': acciones_cambios_masculinidad_sum,
+            #'prom2':prom2
             }
 
     return render_to_response('fed/indicador221.html', RequestContext(request, locals()))
@@ -647,20 +570,12 @@ def indicador222(request):
 
     for opcion in MEDIOS2:
         query = AccionImpulsadaGrupo.objects.filter(encuesta__in=a, accion=opcion[0])
-        acciones_emprendidas_sex_sum = query.aggregate(acciones_emprendidas_sex_sum=Sum('acciones_emprendidas_sex'))['acciones_emprendidas_sex_sum']
-        acciones_cambio_sex_sum = query.aggregate(acciones_cambio_sex_sum=Sum('acciones_cambio_sex'))['acciones_cambio_sex_sum']
-        prom1 = get_prom(acciones_emprendidas_sex_sum, acciones_cambio_sex_sum)
-        acciones_emprendidas_discapa_sum = query.aggregate(acciones_emprendidas_discapa_sum=Sum('acciones_emprendidas_discapa'))['acciones_emprendidas_discapa_sum']
-        acciones_cambio_discapa_sum = query.aggregate(acciones_cambio_discapa_sum=Sum('acciones_cambio_discapa'))['acciones_cambio_discapa_sum']
-        prom2 = get_prom(acciones_emprendidas_discapa_sum, acciones_cambio_discapa_sum)
+        acciones_emprendidas_sex_sum = query.aggregate(acciones_emprendidas_sex_sum=Sum('acciones_emprendidas_sex'))['acciones_emprendidas_sex_sum']        
+        acciones_emprendidas_discapa_sum = query.aggregate(acciones_emprendidas_discapa_sum=Sum('acciones_emprendidas_discapa'))['acciones_emprendidas_discapa_sum']        
 
         tabla[opcion[1]] = {
-            'acciones_emprendidas':acciones_emprendidas_sex_sum,
-            'acciones_cambios_actitud': acciones_cambio_sex_sum,
-            'prom1':prom1,
-            'acciones_impulsadas_masculinidad':acciones_emprendidas_discapa_sum,
-            'acciones_cambios_masculinidad': acciones_cambio_discapa_sum,
-            'prom2':prom2
+            'acciones_emprendidas':acciones_emprendidas_sex_sum,            
+            'acciones_impulsadas_masculinidad':acciones_emprendidas_discapa_sum,            
             }
 
     return render_to_response('fed/indicador222.html', RequestContext(request, locals()))
@@ -673,20 +588,12 @@ def indicador223(request):
 
     for opcion in MEDIOS2:
         query = AccionImpulsadaGrupo.objects.filter(encuesta__in=a, accion=opcion[0])
-        acciones_emprendidas_etnia_sum = query.aggregate(acciones_emprendidas_etnia_sum=Sum('acciones_emprendidas_etnia'))['acciones_emprendidas_etnia_sum']
-        acciones_cambio_etnia_sum = query.aggregate(acciones_cambio_etnia_sum=Sum('acciones_cambio_etnia'))['acciones_cambio_etnia_sum']
-        prom1 = get_prom(acciones_emprendidas_etnia_sum, acciones_cambio_etnia_sum)
+        acciones_emprendidas_etnia_sum = query.aggregate(acciones_emprendidas_etnia_sum=Sum('acciones_emprendidas_etnia'))['acciones_emprendidas_etnia_sum']        
         acciones_emprendidas_jovenes_sum = query.aggregate(acciones_emprendidas_jovenes_sum=Sum('acciones_emprendidas_jovenes'))['acciones_emprendidas_jovenes_sum']
-        acciones_cambio_jovenes_sum = query.aggregate(acciones_cambio_jovenes_sum=Sum('acciones_cambio_jovenes'))['acciones_cambio_jovenes_sum']
-        prom2 = get_prom(acciones_emprendidas_jovenes_sum, acciones_cambio_jovenes_sum)
-
+        
         tabla[opcion[1]] = {
-            'acciones_emprendidas_etnia':acciones_emprendidas_etnia_sum,
-            'acciones_cambios_etnia': acciones_cambio_etnia_sum,
-            'prom1':prom1,
-            'acciones_impulsadas_jovenes':acciones_emprendidas_jovenes_sum,
-            'acciones_cambios_jovenes': acciones_cambio_jovenes_sum,
-            'prom2':prom2
+            'acciones_emprendidas_etnia':acciones_emprendidas_etnia_sum,            
+            'acciones_impulsadas_jovenes':acciones_emprendidas_jovenes_sum,            
             }
 
     return render_to_response('fed/indicador223.html', RequestContext(request, locals()))
@@ -974,7 +881,7 @@ VALID_VIEWS = {
     #inicia vistas de indicadores
     'acciones-impulsadas': indicador111,
     'participacion-en-instancias': indicador112,
-    'defensa-de-los-derechos': indicador113,
+    #INDICADOR ELIMINADO POR FED
     'observatorios-para-vigilancia': indicador114,
     #indicadores para resultado 1.2
     'acciones-publicas': indicador121,

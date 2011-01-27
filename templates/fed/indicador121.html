@@ -9,73 +9,27 @@
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Acciones efectuadas y efectivas contra:</caption>
+            <caption>Acciones p&uacute;blicas y ante instancias del Estado de denuncia en contra de la discriminaci&oacute;n</caption>
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>Violencia Intrafamiliar</th>
-                    <th>Discriminaci&oacute;n diversidad sexual</th>
-                    <th>Discriminaci&oacute;n a discapacitados</th>
-                    <th>Discriminaci&oacute;n a personas con VIH</th>
-                    <th>Discriminaci&oacute;n por Etnia</th>
-                    <th>Discriminaci&oacute;n a J&oacute;venes</th>
+                    <th>&nbsp;</th>                    
+                    <th>En contra de la discriminaci&oacute;n a diversidad sexual</th>
+                    <th>En contra de la discriminaci&oacute;n a discapacitados</th>
+                    <th>En contra de la discriminaci&oacute;n a personas con VIH</th>
+                    <th>En contra de la discriminaci&oacute;n por Etnia</th>
+                    <th>En contra de la discriminaci&oacute;n a J&oacute;venes</th>
                 </tr>
             </thead>
             {%for key, value in tabla.items%}
             <tr>
-                <td>{{key}}</td>
-                <td>{% if value.vif %}{{value.vif|floatformat}}{% else %}0{% endif %}</td>
+                <td>{{key}}</td>                
                 <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if vlaue.racial %}{{value.racial|floatformat}}{% else %}0{% endif %}</td>
                 <td>{% if value.joven %}{{value.joven|floatformat}}{% else %}0{% endif %}</td>
             </tr>
-            {%endfor%}            
-            <thead>                
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>Violencia Intrafamiliar</th>
-                    <th>Discriminaci&oacute;n diversidad sexual</th>
-                    <th>Discriminaci&oacute;n a discapacitados</th>
-                    <th>Discriminaci&oacute;n a personas con VIH</th>
-                    <th>Discriminaci&oacute;n por Etnia</th>
-                    <th>Discriminaci&oacute;n a J&oacute;venes</th>
-                </tr>
-            </thead>
-            {%for key, value in tabla2.items%}
-            <tr>
-                <td>{{key}}</td>
-                <td>{% if value.vif %}{{value.vif|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.sexual %}{{value.sexual|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if vlaue.racial %}{{value.racial|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.joven %}{{value.joven|floatformat}}{% else %}0{% endif %}</td>
-            </tr>
-            {%endfor%}
-            <thead>
-                <tr>
-                    <th>Efectividad</th>
-                    <th>%</th>
-                    <th>%</th>
-                    <th>%</th>
-                    <th>%</th>
-                    <th>%</th>
-                    <th>%</th>
-                </tr>
-            </thead>
-            {%for key, value in tabla3.items%}
-            <tr>
-                <td>{{key}}</td>
-                <td>{{value.vif|floatformat}}</td>
-                <td>{{value.sexual|floatformat}}</td>
-                <td>{{value.discapacidad|floatformat}}</td>
-                <td>{{value.vih|floatformat}}</td>
-                <td>{{value.racial|floatformat}}</td>
-                <td>{{value.joven|floatformat}}</td>
-            </tr>
-            {%endfor%}
+            {%endfor%}  
         </table>
     </div>
 </div>

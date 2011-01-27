@@ -9,44 +9,15 @@
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Acciones realizadas para que la poblaci&oacute;n reflexione</caption>
+            <caption>Poblaci&oacute;n meta que recibe informaci&oacute;n que les permite tomar decisiones de manera aut&oacute;noma...</caption>
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>Con Hombres</th>
-                    <th>Con Mujeres</th>
-                    <th>Con l@s j&oacute;venes</th>
-                    <th>Con div. sexual</th>
-                    <th>Con VIH</th>
-                    <th>Con etnia</th>
-                    <th>Con discap.</th>
-                    <th>Global</th>
-                </tr>
-            </thead>
-            {%for key, value in tabla.items %}
-            <tr>
-                <td>{{key}}</td>
-                <td>{% if value.hombres %}{{value.hombres|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.mujeres %}{{value.mujeres|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.jovenes %}{{value.jovenes|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.etnica %}{{value.etnica|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.global %}{{value.global|floatformat}}{% else %}0{% endif %}</td>
-            </tr>
-            {%endfor%}
-        </table>
-        <table class="mostrar">
-            <caption>Involucramiento de las poblaciones meta por temas</caption>
-            <thead>
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>Prev. violencia</th>
-                    <th>Salud sexual y repro.</th>
+                    <th>Acciones realizadas</th>
+                    <th>Prevenci&oacute;n de violencia</th>
+                    <th>Salud sexual y reproductiva</th>
                     <th>VIH-SIDA</th>
                     <th>Masculinidad</th>
-                    <th>Div. sexual</th>
+                    <th>Diversidad sexual</th>
                     <th>Equidad de g&eacute;nero</th>
                     <th>Global</th>
                 </tr>
@@ -64,6 +35,36 @@
             </tr>
             {%endfor%}
         </table>
+        <table class="mostrar">
+            <caption>Personas que participaron en las acciones realizadas pare reflexionar sobre los DDSSRR</caption>
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Hombres</th>
+                    <th>Mujeres</th>
+                    <th>Los y las j&oacute;venes</th>
+                    <th>Diversidad sexual</th>
+                    <th>Personas con VIH-SIDA</th>
+                    <th>Personas de la poblaci&oacute;n &eacute;tnica e ind&iacute;gena</th>
+                    <th>Personas con discapacidad</th>
+                    <th>Global</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{% if value.hombres %}{{value.hombres|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.mujeres %}{{value.mujeres|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.jovenes %}{{value.jovenes|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.etnica %}{{value.etnica|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.global %}{{value.global|floatformat}}{% else %}0{% endif %}</td>
+            </tr>
+            {%endfor%}
+        </table>
+        <!--ESTO SE MUEVE HACIA OTRO LADO
         <table class="mostrar">
             <caption>Atenci&oacute;n a la salud sexual y reproductiva</caption>
             <thead>
@@ -92,7 +93,7 @@
                 <td>{% if value.global %}{{value.global|floatformat}}{% else %}0{% endif %}</td>
             </tr>
             {%endfor%}
-        </table>
+        </table>-->
     </div>
 </div>
 <div class="clean"></div>
