@@ -9,6 +9,7 @@ urlpatterns = patterns('fed.encuesta.views',
     (r'^proyecto/(?P<id>\d+)/$', 'proyecto'),
     (r'^organizacion/(?P<id>\d+)/$', 'organizacion'),
     (r'^indicadores/(?P<vista>[-\w]+)/$', '_get_view'),
+    (r'^indicadores/meta/(?P<slug>[-\w]+)/$', 'meta'),
 )
 
 

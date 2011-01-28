@@ -136,6 +136,7 @@ def influencia(request):
     return render_to_response('fed/influencia.html', RequestContext(request, locals()))
 
 def indicadores(request):
+    metas = Meta.objects.all()
     if request.method == 'POST':
         form = IndicadoresForm(request.POST)
         if form.is_valid():
@@ -166,6 +167,71 @@ def resultado1(request):
     bandera = 11;
     resultado = Resultado.objects.get(pk=1)
     return render_to_response('fed/res/resultado1.html', RequestContext(request, locals()))
+
+
+def meta(request, slug):    
+    meta = get_object_or_404(Meta, slug=slug)
+    metas = Meta.objects.all()
+    acciones = []
+    tabla = {}
+    informe = InformeObjetivo3.objects.filter(anio=request.session['anio'], periodo__in=request.session['periodo'])
+    datos = DatoInformeOb3.objects.filter(informe__in=informe, meta=meta)
+    for d in datos:
+        acciones.append(d.tipo_accion)
+    axns = list(set(acciones))
+    for a in axns:
+        orgs = []
+        tabla[a] = {}
+        dato = datos.filter(tipo_accion=a)
+        cantidad = dato.count()
+        tabla[a]['cantidad'] = cantidad
+        sumas = dato.aggregate(hombres_sum=Sum('hombres'), mujeres_sum=Sum('mujeres'))
+        tabla[a]['hombres'] = sumas['hombres_sum']
+        tabla[a]['mujeres'] = sumas['mujeres_sum']
+        for d in dato:
+            for o in d.organizacion.all():
+                orgs.append(o)
+        organizaciones = list(set(orgs))
+        tabla[a]['orgs'] = organizaciones
+
+    #para graficos
+    try:
+        objeto = Meta.objects.get(pk=3)
+        if meta == objeto:
+            centinel = True
+            ORGS = request.session['organizacion']
+            si_hay = ORGS.filter(sistema=CHOICE1[0][0]).count()
+            hay_pero_no = ORGS.filter(sistema=CHOICE1[1][0]).count()
+            no_hay = ORGS.filter(sistema=CHOICE1[2][0]).count()
+
+            total = si_hay + hay_pero_no + no_hay
+            val1 = get_prom(total, si_hay)
+            val2 = get_prom(total, hay_pero_no)
+            val3 = get_prom(total, no_hay)
+        
+            si_hay_plan = ORGS.filter(plan=CHOICE2[0][0]).count()
+            no_utiliza = ORGS.filter(plan=CHOICE2[1][0]).count()
+            no_hay_plan = ORGS.filter(plan=CHOICE2[2][0]).count()
+
+            total2 = si_hay_plan + no_utiliza + no_hay_plan
+            val4 = get_prom(total2, si_hay_plan)
+            val5 = get_prom(total2, no_utiliza)
+            val6 = get_prom(total2, no_hay_plan)
+
+            ninguna = ORGS.filter(organizaciones=CHOICE3[0][0]).count()
+            en_proceso = ORGS.filter(organizaciones=CHOICE3[1][0]).count()
+            logrado = ORGS.filter(organizaciones=CHOICE3[2][0]).count()
+
+            total3 = ninguna + en_proceso + logrado
+            val7 = get_prom(total3, ninguna)
+            val8 = get_prom(total3, en_proceso)
+            val9 = get_prom(total3, logrado)
+        else:
+            centinel = False
+    except:
+        pass
+
+    return render_to_response('fed/meta.html', RequestContext(request, locals()))
 
 #vistas para indicadores, no hay forma de volverlos dinamicos
 @session_required
@@ -619,7 +685,7 @@ def indicador231(request):
     servicio_psicologia_sum = query.aggregate(servicio_psicologia_sum=Sum('servicio_psicologia'))['servicio_psicologia_sum']
     servicio_legal_sum = query.aggregate(servicio_legal_sum=Sum('servicio_legal'))['servicio_legal_sum']    
 
-    tabla[CHOICE_VICTIMAS[0][1]] = {        
+    tabla[CHOICE_VICTIMAS[0][1]] = {
         'servicio_psicologia': servicio_psicologia_sum,
         'servicio_legal': servicio_legal_sum        
         }
@@ -629,9 +695,9 @@ def indicador231(request):
     servicio_psicologia_sum2 = query2.aggregate(servicio_psicologia_sum2=Sum('servicio_psicologia'))['servicio_psicologia_sum2']
     servicio_legal_sum2 = query2.aggregate(servicio_legal_sum2=Sum('servicio_legal'))['servicio_legal_sum2']    
 
-    tabla[CHOICE_VICTIMAS[1][1]] = {        
+    tabla[CHOICE_VICTIMAS[1][1]] = {
         'servicio_psicologia': servicio_psicologia_sum2,
-        'servicio_legal': servicio_legal_sum2,        
+        'servicio_legal': servicio_legal_sum2, 
         }    
 
     return render_to_response('fed/indicador231.html', RequestContext(request, locals()))

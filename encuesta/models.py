@@ -106,8 +106,8 @@ class Encuesta(models.Model):
         return CHOICE_PERIODO[self.periodo][1]
 
     class Meta:
-        verbose_name = 'Informe'
-        verbose_name_plural = 'Informes'
+        verbose_name = 'Informe Contraparte'
+        verbose_name_plural = 'Informes Contraparte'
 
 class InformeObjetivo3(models.Model):
     periodo = models.IntegerField(choices=CHOICE_PERIODO, verbose_name='Período de informe')
@@ -117,8 +117,8 @@ class InformeObjetivo3(models.Model):
         return '%s | %s ' % (CHOICE_PERIODO[int(self.periodo)][1], self.anio)
 
     class Meta:
-        verbose_name = 'Informe objetivo 3'
-        verbose_name_plural = 'Informes objetivo 3'
+        verbose_name = 'Informe Equipo Técnico'
+        verbose_name_plural = 'Informes Equipo Técnico'
 
 class TipoAccion(models.Model):
     nombre = models.CharField(max_length=100, verbose_name='Nombre acción')
@@ -131,6 +131,7 @@ class TipoAccion(models.Model):
 
 class Meta(models.Model):
     nombre = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, null=True, editable=False)
 
     def __unicode__(self):
         return self.nombre
@@ -138,19 +139,14 @@ class Meta(models.Model):
     class Meta:
         verbose_name_plural = 'Metas'
 
-class Tema(models.Model):
-    nombre = models.CharField(max_length=100, verbose_name='Nombre tema')
-
-    def __unicode__(self):
-        return self.nombre
-
-    class Meta:
-        verbose_name_plural = 'Temas'
+    def save(self, force_insert=False, force_update=False):
+        self.slug = slugify(self.nombre)
+        super(Meta, self).save(force_insert, force_update)
 
 class DatoInformeOb3(models.Model):
     tipo_accion = models.ForeignKey(TipoAccion)
     meta = models.ForeignKey(Meta)
-    tema = models.ForeignKey(Tema)
+    fecha = models.DateField(help_text='Fecha de actividad')
     organizacion = models.ManyToManyField(Organizacion, verbose_name=u'Organizaciónes')
     hombres = models.IntegerField(default=0)
     mujeres = models.IntegerField(default=0)
@@ -160,8 +156,8 @@ class DatoInformeOb3(models.Model):
         return 'Dato %s' % self.id
 
     class Meta:
-        verbose_name = 'Dato informe objetivo 3'
-        verbose_name_plural = 'Datos informe objetivo 3'
+        verbose_name = 'Actividad'
+        verbose_name_plural = 'Actividades'
 
 class Resultado(models.Model):
     nombre = models.CharField(max_length=100)

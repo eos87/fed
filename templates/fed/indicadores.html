@@ -117,6 +117,7 @@
         <div class="notiene">{{r.nombre}}</div>
         {% endif %}
         {% endfor %}
+        <div class="tiene"><a id="ind6" href="6/">Capacidad técnica de las OSC</a></div>
     </div>
     {% for r in resultados %}
     {% if r.pk in datos %}
@@ -129,6 +130,13 @@
     </div>
     {% endif %}
     {% endfor %}
+    <div class="ind6 indicators">
+        <button class="volver">Volver a Resultados</button><br><br>Resultado: Capacidad técnica de las OSC<br><br>
+        Indicadores<br><br>
+        {% for meta in metas %}
+        <div class="indicador"><a href="meta/{{meta.slug}}/">{{meta.nombre}}</a></div>
+        {% endfor %}                
+    </div>
 </div>
 {% endif %}
 <div class="clean"></div>

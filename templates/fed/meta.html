@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block extratitle %}{{meta.nombre}}{% endblock %}
+
+{% block extrahead %}
+{% if centinel %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+<script type="text/javascript">
+    var chart;
+    var chart2;
+    var chart3;
+    var pie = {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+            enabled: true,
+            formatter: function() {
+                return this.y + '%'
+            },
+            color: 'white',
+            style: {
+                font: '12px Trebuchet MS, Verdana, sans-serif'
+
+            }
+        }
+    }
+    var plotArea = {
+        shadow: null,
+        borderWidth: null,
+        backgroundColor: null
+    }
+    var legend = {
+        layout: 'vertical',
+        style: {
+            left: 'auto',
+            bottom: 'auto',
+            right: '50px',
+            top: '100px'
+        }
+    }
+
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                margin: [50, 200, 60, 170]
+            },
+            colors: [
+                '#4572A7',
+                '#AA4643',
+                '#89A54E'
+            ],
+            title: {
+                text: 'Cuenta con un sistema admitivo contable'
+            },
+            plotArea: plotArea,
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+            },
+            plotOptions: {
+                pie: pie
+            },
+            legend: legend,
+            series: [{
+                    type: 'pie',
+                    name: 'Sistema administravico contable',
+                    data: [
+                        ['Si hay', {{val1|floatformat}}],
+                        ['No es eficiente', {{val2|floatformat}}],
+                        /*{
+                            name: 'Chrome',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },*/
+                        ['No hay', {{val3|floatformat}}]
+                    ]
+                }]
+        });
+        chart2 = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container2',
+                margin: [50, 200, 60, 170]
+            },
+            colors: [
+                '#80699B',
+                '#3D96AE',
+                '#DB843D'
+            ],
+            title: {
+                text: 'Utilizan plan estrategico para mejorar su capacidad de gestion'
+            },
+            plotArea: plotArea,
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+            },
+            plotOptions: {
+                pie: pie
+            },
+            legend: legend,
+            series: [{
+                    type: 'pie',
+                    name: 'Utilizan plan estrategico',
+                    data: [
+                        ['Si hay', {{val4|floatformat}}],
+                        ['No se utiliza', {{val5|floatformat}}],
+                        /*{
+                            name: 'Chrome',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },*/
+                        ['No hay', {{val6|floatformat}}]
+                    ]
+                }]
+        });
+        chart3 = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container3',
+                margin: [50, 200, 60, 170]
+            },
+            colors: [
+                '#92A8CD',
+                '#A47D7C',
+                '#B5CA92'
+            ],
+            title: {
+                text: 'Organizaciones de la div. sexual que han obtenido personeria juridica'
+            },
+            plotArea: plotArea,
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+            },
+            plotOptions: {
+                pie: pie
+            },
+            legend: legend,
+            series: [{
+                    type: 'pie',
+                    name: 'Organizaciones que han obtenido personeria juridica',
+                    data: [
+                        ['Ninguna', {{val7|floatformat}}],
+                        ['En proceso', {{val8|floatformat}}],
+                        /*{
+                            name: 'Chrome',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },*/
+                        ['Logrado', {{val9|floatformat}}]
+                    ]
+                }]
+        });
+    });
+</script>
+{% endif %}
+{% endblock %}
+
+{% block contenido %}
+{% include "bar4.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        Capacidad t&eacute;cnica de las OSC: {{meta.nombre}}        
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Acciones para {{meta.nombre}}</caption>
+            <thead>
+                <tr>
+                    <th rowspan="2">Acciones</th>
+                    <th rowspan="2">Cantidad</th>
+                    <th colspan="2">
+                        Participantes
+                    </th>
+                    <th rowspan="2">Organizaciones participantes</th>
+                </tr>
+                <tr>
+                    <th>Hombres</th>
+                    <th>Mujeres</th>
+                </tr>
+            </thead>
+            {% for key, value in tabla.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value.cantidad}}</td>
+                <td>{{value.hombres}}</td>
+                <td>{{value.mujeres}}</td>
+                <td>
+                    {% for org in value.orgs %}
+                    {{org.nombre_corto}}{% if forloop.last %}{% else %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>        
+    </div><br>
+    {% if centinel %}
+    <div class="graph_title">Gr&aacute;ficos adicionales</div>
+    <div id="container" style="width: 700px; height: 400px;"></div>
+    <div id="container2" style="width:700px; height: 400px;"></div>
+    <div id="container3" style="width:700px; height: 400px;"></div>
+    {% endif %}
+</div>
+<div class="clean"></div>
+{% endblock %}

@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from models import *
 
 class OrganizacionAdmin(admin.ModelAdmin):
@@ -209,10 +210,10 @@ class DatoInformeOb3Inline(admin.StackedInline):
         
     model = DatoInformeOb3    
     filter_horizontal = ('organizacion', )
-    verbose_name_plural = 'Datos informe'
-    verbose_name = 'Dato informe'
+    verbose_name_plural = 'Actividades'
+    verbose_name = 'Actividad'
     fieldsets = [
-        (None, {'fields': ['tipo_accion', ('meta', 'tema'), 'organizacion']}),
+        (None, {'fields': ['tipo_accion', ('meta', 'fecha'), 'organizacion']}),
         ('Número de participantes', {'fields': [('hombres', 'mujeres')]}),
     ]
     extra = 1
@@ -226,7 +227,9 @@ class EncuestaAdmin(admin.ModelAdmin):
         #      '/files/js/filter.js')
 
     def queryset(self, request):
-        if request.user.is_superuser:
+        grupos = request.user.groups.all()
+        fed = Group.objects.get(name='FED')
+        if request.user.is_superuser or fed in grupos:
             return Encuesta.objects.all()
         return Encuesta.objects.filter(user=request.user)
 
@@ -278,7 +281,6 @@ class InformeAdmin(admin.ModelAdmin):
 
 admin.site.register(TipoAccion)
 admin.site.register(Meta)
-admin.site.register(Tema)
 
 admin.site.register(Encuesta, EncuestaAdmin)
 admin.site.register(InformeObjetivo3, InformeAdmin)
