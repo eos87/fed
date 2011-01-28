@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block extratitle %}Servicios de atenci&oacute;n{% endblock %}
+{% block contenido %}
+
+{% include "bar3.html" %}
+<div class="result_tables">
+    <div class="titulo_indicadores">
+        {{resultado.nombre}}: Atenci&oacute;n a la salud
+    </div>
+    <div class="table_container">
+        <table class="mostrar">
+            <caption>Casos atendidos por las organizaciones contrapartes de FED a trav&eacute;s de servicios de salud</caption>
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Hombres</th>
+                    <th>Mujeres</th>
+                    <th>Los y las j&oacute;venes</th>
+                    <th>Personas de la diversidad sexual</th>
+                    <th>Personas con VIH-SIDA</th>
+                    <th>Personas de la poblaci&oacute;n &eacute;tnica e indigena</th>
+                    <th>Personas con discapacidad</th>
+                    <th>Global</th>
+                </tr>
+            </thead>
+            {%for key, value in tabla.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{% if value.hombres %}{{value.hombres|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.mujeres %}{{value.mujeres|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.jovenes %}{{value.jovenes|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.div_sexual %}{{value.div_sexual|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.vih %}{{value.vih|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.etnica %}{{value.etnica|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.discapacidad %}{{value.discapacidad|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.global %}{{value.global|floatformat}}{% else %}0{% endif %}</td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+<div class="clean"></div>
+{% endblock %}

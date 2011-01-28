@@ -9,35 +9,26 @@
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Casos atendidos y resueltos</caption>
+            <caption>Atenci&oacute;n a casos de v&iacute;ctimas de violencia de g&eacute;nero</caption>
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>Servicio de salud general</th>
-                    <th>Servicio de salud especializada</th>
-                    <th>Servicio de psicolog&iacute;a</th>
-                    <th>Servicio legal</th>
-                    <th>Atenci&oacute;n social</th>
+                    <th>&nbsp;</th>                    
+                    <th>Servicios de atenci&oacute;n psicol&oacute;gica</th>
+                    <th>Servicios de atenci&oacute;n legal</th>
                 </tr>
             </thead>
             {%for key, value in tabla.items reversed %}
             <tr>
-                <td>{{key}}</td>
-                <td>{% if value.servicio_salud %}{{value.servicio_salud|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.servicio_salud_especial %}{{value.servicio_salud_especial|floatformat}}{% else %}0{% endif %}</td>
+                <td>{{key}}</td>                
                 <td>{% if value.servicio_psicologia %}{{value.servicio_psicologia|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.servicio_legal %}{{value.servicio_legal|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.atencion_social %}{{value.atencion_social|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.servicio_legal %}{{value.servicio_legal|floatformat}}{% else %}0{% endif %}</td>                
             </tr>
             {%endfor%}
             {%for key, value in tabla2.items %}
             <tr>
-                <td>{{key}}</td>
-                <td>{% if value.servicio_salud %}{{value.servicio_salud|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.servicio_salud_especial %}{{value.servicio_salud_especial|floatformat}}{% else %}0{% endif %}</td>
+                <td>{{key}}</td>                
                 <td>{% if value.servicio_psicologia %}{{value.servicio_psicologia|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.servicio_legal %}{{value.servicio_legal|floatformat}}{% else %}0{% endif %}</td>
-                <td>{% if value.atencion_social %}{{value.atencion_social|floatformat}}{% else %}0{% endif %}</td>
+                <td>{% if value.servicio_legal %}{{value.servicio_legal|floatformat}}{% else %}0{% endif %}</td>                
             </tr>
             {%endfor%}
         </table>

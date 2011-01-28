@@ -9,7 +9,7 @@
     </div>
     <div class="table_container">
         <table class="mostrar">
-            <caption>Mujeres, j&oacute;venes, ni&ntilde;os y ni&ntilde;as atendidos en albergues</caption>
+            <caption>Atenci&oacute;n de casos de v&iacute;ctimas de violencia de g&eacute;nero en los albergues</caption>
             <thead>
                 <tr>
                     <th>Accion</th>
@@ -40,30 +40,7 @@
                     0{% endif %}
                 </td>
             </tr>
-            {%endfor%}
-            {%for key, value in tabla2.items %}
-            <tr>
-                <td>{{key}}</td>
-                <td>
-                    {% if value.mujeres %}
-                    {{value.mujeres|floatformat}}
-                    {% else %}
-                    0{% endif %}
-                </td>
-                <td>
-                    {% if value.jovenes %}
-                    {{value.jovenes|floatformat}}
-                    {% else %}
-                    0{% endif %}
-                </td>
-                <td>
-                    {% if value.ninos_ninas %}
-                    {{value.ninos_ninas|floatformat}}
-                    {% else %}
-                    0{% endif %}
-                </td>
-            </tr>
-            {%endfor%}
+            {%endfor%}            
         </table>
     </div>
 </div>

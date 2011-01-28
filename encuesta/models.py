@@ -38,6 +38,10 @@ TIPO_CHOICE = ((0, 'Apoyo programático'),
                (4, 'Acciones de emergencia'),
                (5, 'Estrategias con grupos priorizados'))
 
+CHOICE1 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un sistema pero no es eficiente'), ('no_hay', 'No hay'), )
+CHOICE2 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un plan estratégico, pero no se utiliza'), ('no_hay', 'No hay'),)
+CHOICE3 = (('ninguna', 'Ninguna'), ('proceso', 'En proceso'), ('logrado', 'Logrado'), )
+
 class Organizacion(models.Model):
     nombre = models.TextField()
     nombre_corto = models.CharField(max_length=100)
@@ -48,6 +52,10 @@ class Organizacion(models.Model):
     telefono = models.CharField(max_length=200, blank=True, default='Ninguno')
     antecedentes = models.TextField()
     user = models.ForeignKey(User, verbose_name='Usuario')
+    #campos agregados a organizacion
+    sistema = models.CharField(max_length=100, choices=CHOICE1, verbose_name='Cuenta con un sistema admitivo contable', blank=True, default='no-responde')
+    plan = models.CharField(max_length=100, choices=CHOICE2, verbose_name='Utilizan su plan estratégico para mejorar sus capacidades de gestión en desarrollo de proyectos, consecusión y ejecución de recursos, comunicación', blank=True, default='no-responde')
+    organizaciones = models.CharField(max_length=100, choices=CHOICE3, verbose_name='Apoyan a alguna org. de la diversidad sexual a tener personería', blank=True, default='no-responde')
 
     def __unicode__(self):
         return self.nombre_corto
@@ -176,6 +184,7 @@ class Indicador(models.Model):
 
     class Meta:
         verbose_name_plural = 'Indicadores'
+        ordering = ['id']
 
     def save(self, force_insert=False, force_update=False):
         self.slug = slugify(self.nombre)
@@ -512,9 +521,8 @@ class AccionImpulsadaGrupo(models.Model):
         verbose_name_plural = 'Acciones impulsadas por grupos para prev. de violencia'
 
 ATENCION_SALUD = (('general', 'Atención general'),
-                  ('especializada', 'Atención especializada'),
-                  ('psicologica', 'Atención psicológica'),
-                  ('legal', 'Atención Legal'))
+                  ('especializada', 'Atención especializada'))
+                  
 
 class AtencionSalud(models.Model):
     accion = models.CharField(max_length=100, choices=ATENCION_SALUD, blank=True, default='no-responde', verbose_name='Atención a la Salud Sexual y Reproductiva')
@@ -540,11 +548,11 @@ CHOICE_VICTIMAS = (('casos_atendidos', 'No. casos de victimas de violencia de g�
 
 class AtencionVictima(models.Model):
     accion = models.CharField(max_length=100, choices=CHOICE_VICTIMAS, blank=True, default='no-responde', verbose_name='Acciones')
-    servicio_salud = models.IntegerField('A través de los servicios de salud general', blank=True, default=0)
-    servicio_salud_especial = models.IntegerField('A través de los servicios de salud especializada', blank=True, default=0)
+    #servicio_salud = models.IntegerField('A través de los servicios de salud general', blank=True, default=0)
+    #servicio_salud_especial = models.IntegerField('A través de los servicios de salud especializada', blank=True, default=0)
     servicio_psicologia = models.IntegerField('A través de los servicios de atención en psicología', blank=True, default=0)
     servicio_legal = models.IntegerField('A través de los servicios de atención legal', blank=True, default=0)
-    atencion_social = models.IntegerField('Atención social', blank=True, default=0)
+    #atencion_social = models.IntegerField('Atención social', blank=True, default=0)
     encuesta = models.ForeignKey(Encuesta)
 
     def __unicode__(self):
@@ -641,10 +649,6 @@ class AccionFortaleceCapacidad(models.Model):
     class Meta:
         verbose_name = 'Medir y reportar indicador'
         verbose_name_plural = 'Medir y reportar indicadores'
-
-CHOICE1 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un sistema pero no es eficiente'), ('no_hay', 'No hay'), )
-CHOICE2 = (('si_hay', 'Si hay'), ('hay_pero', 'Hay un plan estratégico, pero no se utiliza'), ('no_hay', 'No hay'),)
-CHOICE3 = (('ninguna', 'Ninguna'), ('proceso', 'En proceso'), ('logrado', 'Logrado'), )
 
 class EstadoCapacidadAdmitiva(models.Model):
     sistema = models.CharField(max_length=100, choices=CHOICE1, verbose_name='Cuenta con un sistema admitivo contable', blank=True, default='no-responde')
