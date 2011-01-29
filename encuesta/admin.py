@@ -237,7 +237,7 @@ class EncuestaAdmin(admin.ModelAdmin):
             return Encuesta.objects.all()
         return Encuesta.objects.filter(user=request.user)
 
-    def get_form(self, request, obj=None, ** kwargs):
+    def get_form(self, request, obj=None, ** kwargs):        
         if request.user.is_superuser:
             form = super(EncuestaAdmin, self).get_form(self, request, ** kwargs)
         else:
