@@ -6,7 +6,9 @@ from models import *
 
 class OrganizacionAdmin(admin.ModelAdmin):
     def queryset(self, request):
-        if request.user.is_superuser:
+        grupos = request.user.groups.all()
+        fed = Group.objects.get(name='FED')
+        if request.user.is_superuser or fed in grupos:
             return Organizacion.objects.all()
         return Organizacion.objects.filter(user=request.user)
 
@@ -24,7 +26,9 @@ class OrganizacionAdmin(admin.ModelAdmin):
 
 class ProyectoAdmin(admin.ModelAdmin):
     def queryset(self, request):
-        if request.user.is_superuser:
+        grupos = request.user.groups.all()
+        fed = Group.objects.get(name='FED')
+        if request.user.is_superuser or fed in grupos:
             return Proyecto.objects.all()
         return Proyecto.objects.filter(user=request.user)
 
