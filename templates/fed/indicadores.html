@@ -10,7 +10,7 @@
         verificar();
         $("#id_tipo").change(function() {
             verificar();            
-        });
+        });        
         
         $('#select_organizacion').click(function(){
             $('#id_organizacion option').each(function(){
@@ -64,6 +64,9 @@
                             $('#id_organizacion').append($('<option></option>').val(item.id).html(item.nombre_corto));
                         });
                     }
+                    {% for o in orgs_aux %}
+                    $('#id_organizacion option[value={{o.id}}]').attr('selected', true);
+                    {% endfor %}
                 });
             }else{
                 verificar();
