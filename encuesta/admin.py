@@ -13,13 +13,18 @@ class OrganizacionAdmin(admin.ModelAdmin):
         return Organizacion.objects.filter(user=request.user)
 
     def get_form(self, request, obj=None, ** kwargs):
-        if request.user.is_superuser:
+        grupos = request.user.groups.all()
+        fed = Group.objects.get(name='FED')
+        if request.user.is_superuser or fed in grupos:
             form = super(OrganizacionAdmin, self).get_form(self, request, ** kwargs)
+            form.base_fields['user'].queryset = User.objects.order_by('username')
         else:
             form = super(OrganizacionAdmin, self).get_form(self, request, ** kwargs)
             form.base_fields['user'].queryset = User.objects.filter(pk=request.user.pk)
         return form
 
+    save_on_top = True
+    actions_on_top = True
     list_filter = ['user']
     list_display = ['nombre_corto', 'user', 'correo', 'telefono', 'contacto']
     search_fields = ['nombre_corto', 'user__username', 'telefono', 'contacto']
@@ -33,15 +38,20 @@ class ProyectoAdmin(admin.ModelAdmin):
         return Proyecto.objects.filter(user=request.user)
 
     def get_form(self, request, obj=None, ** kwargs):
-        if request.user.is_superuser:
+        grupos = request.user.groups.all()
+        fed = Group.objects.get(name='FED')
+        if request.user.is_superuser or fed in grupos:
             form = super(ProyectoAdmin, self).get_form(self, request, ** kwargs)
+            form.base_fields['user'].queryset = User.objects.order_by('username')
         else:
             form = super(ProyectoAdmin, self).get_form(self, request, ** kwargs)
             form.base_fields['user'].queryset = User.objects.filter(pk=request.user.pk)
         return form
 
-    list_filter = ['user']
-    list_display = ['nombre', 'user', 'organizacion']
+    save_on_top = True
+    actions_on_top = True
+    list_filter = ['organizacion']
+    list_display = ['nombre',  'organizacion', 'tipo', 'user']
     search_fields = ['nombre', 'user__username', 'organizacion__nombre', 'organizacion__nombre_corto']
 
 admin.site.register(Organizacion, OrganizacionAdmin)

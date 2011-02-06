@@ -45,7 +45,7 @@ CHOICE3 = (('ninguna', 'Ninguna'), ('proceso', 'En proceso'), ('logrado', 'Logra
 class Organizacion(models.Model):
     nombre = models.TextField()
     nombre_corto = models.CharField(max_length=100)
-    tipo = models.IntegerField(choices=TIPO_CHOICE, verbose_name='Modalidad de apoyo')
+    #tipo = models.IntegerField(choices=TIPO_CHOICE, verbose_name='Modalidad de apoyo')
     direccion = models.CharField(max_length=150)
     correo = models.EmailField(blank=True, default='example@example.com')
     contacto = models.CharField(max_length=200, blank=True, default='Ninguno')
@@ -62,30 +62,32 @@ class Organizacion(models.Model):
 
     class Meta:
         verbose_name_plural = 'Organizaciones'
+        ordering = ['nombre_corto']    
 
 class Proyecto(models.Model):
     organizacion = models.ForeignKey(Organizacion)
     nombre = models.TextField()
-    codigo = models.CharField(max_length=150, null=True, blank=True)    
+    codigo = models.CharField(max_length=150, null=True, blank=True)
+    tipo = models.IntegerField(choices=TIPO_CHOICE, verbose_name='Modalidad de apoyo')
     cobertura = models.TextField(verbose_name='Area de cobertura')
     duracion = models.CharField(max_length=30)
     monto = models.CharField('Monto solicitado a FED', null=True, blank=True, max_length=100)
     monto2 = models.CharField('Monto de contrapartida', null=True, blank=True, max_length=100)
     user = models.ForeignKey(User, verbose_name='Usuario')
 
-
     def __unicode__(self):
         return '%s' % (self.nombre)
 
     class Meta:
         verbose_name_plural = 'Proyectos'
+        ordering = ['organizacion']
 
 CHOICE_PERIODO = ((0, 'Enero - Febrero'),
                   (1, 'Marzo - Abril'),
-                  (3, 'Mayo - Junio'),
-                  (4, 'Julio - Agosto'),
-                  (5, 'Septiembre - Octubre'),
-                  (6, 'Noviembre - Diciembre'))
+                  (2, 'Mayo - Junio'),
+                  (3, 'Julio - Agosto'),
+                  (4, 'Septiembre - Octubre'),
+                  (5, 'Noviembre - Diciembre'))
                   
 CHOICE_ANIO = (('2010', '2010'), ('2011', '2011'), ('2012', '2012'))
 
@@ -108,6 +110,7 @@ class Encuesta(models.Model):
     class Meta:
         verbose_name = 'Informe Contraparte'
         verbose_name_plural = 'Informes Contraparte'
+        ordering = ['organizacion']
 
 class InformeObjetivo3(models.Model):
     periodo = models.IntegerField(choices=CHOICE_PERIODO, verbose_name='Período de informe')

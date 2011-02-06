@@ -16,7 +16,10 @@ def get_orgs(request):
     if ids:
         lista = ids.split(',')
     results = []
-    orgs = Organizacion.objects.filter(tipo__in=lista).values('id', 'nombre_corto')    
+    proyects = Proyecto.objects.filter(tipo__in=lista)
+    for p in proyects:
+        results.append(p.organizacion.id)
+    orgs = Organizacion.objects.filter(id__in=list(set(results))).order_by('nombre_corto').values('id', 'nombre_corto')
 
     return HttpResponse(simplejson.dumps(list(orgs)), mimetype='application/json')
 
@@ -31,25 +34,12 @@ def organizacion(request, id):
 def _queryset_filtrado(request, resultado):
     '''metodo para obtener el queryset de encuesta
     segun los filtros del formulario que son pasados
-    por la variable de sesion'''
-    #rt = ResultadoTrabajado.objects.filter(resultado=resultado, municipio__in=request.session['municipio'])
-    #lista = []
-    #for r in rt:
-    #    if r.encuesta.organizacion in request.session['organizacion']:
-    #        if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
-    #            lista.append(r.encuesta.id)
-    return Encuesta.objects.filter(organizacion__in=request.session['organizacion'], periodo__in=request.session['periodo'], anio=request.session['anio'])
+    por la variable de sesion'''    
+    return Encuesta.objects.filter(organizacion__in=request.session['organizacion'], proyecto__tipo__in=request.session['tipo'], periodo__in=request.session['periodo'], anio=request.session['anio'])
 
-def _tiene_datos(request):
-    #rt = ResultadoTrabajado.objects.filter(municipio__in=request.session['municipio'])
-    lista = []
-    #for r in rt:
-    #    if r.encuesta:
-    #        if r.encuesta.organizacion in request.session['organizacion']:
-    #            if r.encuesta.periodo in map(int, request.session['periodo']) and r.encuesta.anio == request.session['anio']:
-    #                lista.append(r.resultado.pk)
-    #return list(set(lista))
-    encuestas = Encuesta.objects.filter(organizacion__in=request.session['organizacion'], periodo__in=request.session['periodo'], anio=request.session['anio'])
+def _tiene_datos(request):    
+    lista = []    
+    encuestas = Encuesta.objects.filter(organizacion__in=request.session['organizacion'], proyecto__tipo__in=request.session['tipo'], periodo__in=request.session['periodo'], anio=request.session['anio'])
     for e in encuestas:
         for r in e.resultadotrabajado_set.all():
             lista.append(r.resultado.pk)
@@ -105,7 +95,7 @@ def influencia(request):
             dicc = {}
             resultados = []
             bandera = 1            
-            encuestas = Encuesta.objects.filter(organizacion__in=form.cleaned_data['organizacion'], periodo__in=form.cleaned_data['periodo'], anio=form.cleaned_data['anio'])
+            encuestas = Encuesta.objects.filter(organizacion__in=form.cleaned_data['organizacion'], proyecto__tipo__in=form.cleaned_data['tipo'], periodo__in=form.cleaned_data['periodo'], anio=form.cleaned_data['anio'])
             for encuesta in encuestas:
                 for resultado in encuesta.resultadotrabajado_set.filter(resultado__in=form.cleaned_data['resultado']):
                     for muni in resultado.municipio.all():
@@ -119,7 +109,7 @@ def influencia(request):
                 for r in rts:
                     if r.encuesta.organizacion in form.cleaned_data['organizacion']:
                         proys.append(r.encuesta.proyecto.pk)
-                proyectos = Proyecto.objects.filter(id__in=proys).values('id', 'nombre', 'organizacion__nombre_corto')
+                proyectos = Proyecto.objects.filter(id__in=proys, tipo__in=form.cleaned_data['tipo']).values('id', 'nombre', 'organizacion__nombre_corto')
 
                 dicc = {
                     'punto': (float(municipio.latitud), float(municipio.longitud)),
@@ -141,6 +131,7 @@ def indicadores(request):
         form = IndicadoresForm(request.POST)
         if form.is_valid():
             bandera = 1
+            request.session['tipo'] = form.cleaned_data['tipo']
             request.session['organizacion'] = form.cleaned_data['organizacion']
             #request.session['municipio'] = form.cleaned_data['municipio']
             request.session['periodo'] = form.cleaned_data['periodo']
