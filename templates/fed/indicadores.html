@@ -9,28 +9,7 @@
     $(document).ready(function(){
         verificar();
         $("#id_tipo").change(function() {
-            verificar();
-            var str = '';
-            var lista = $('#id_tipo').val();
-            if(lista!=null){
-                for(var i=0;i<lista.length;i++){
-                    if(i==lista.length-1){
-                        str += lista[i];
-                    }else{
-                        str += lista[i]+',';
-                    }
-                }
-                $.getJSON('/ajax/orgs/?ids='+str, function(data){
-                    $('#id_organizacion').html('');
-                    if(data){                                                
-                        $.each(data, function(i, item){
-                            $('#id_organizacion').append($('<option></option>').val(item.id).html(item.nombre_corto));
-                        });
-                    }
-                });
-            }else{
-                verificar();
-            }
+            verificar();            
         });
         
         $('#select_organizacion').click(function(){
@@ -67,6 +46,28 @@
             //$(this).attr('disabled', 'disabled');
             //alert('tumadre');
             //});
+        }else{
+            var str = '';
+            var lista = $('#id_tipo').val();
+            if(lista!=null){
+                for(var i=0;i<lista.length;i++){
+                    if(i==lista.length-1){
+                        str += lista[i];
+                    }else{
+                        str += lista[i]+',';
+                    }
+                }
+                $.getJSON('/ajax/orgs/?ids='+str, function(data){
+                    $('#id_organizacion').html('');
+                    if(data){
+                        $.each(data, function(i, item){
+                            $('#id_organizacion').append($('<option></option>').val(item.id).html(item.nombre_corto));
+                        });
+                    }
+                });
+            }else{
+                verificar();
+            }
         }
     }
 </script>

@@ -133,6 +133,7 @@ def indicadores(request):
             bandera = 1
             request.session['tipo'] = form.cleaned_data['tipo']
             request.session['organizacion'] = form.cleaned_data['organizacion']
+            orgs_aux = form.cleaned_data['organizacion']
             #request.session['municipio'] = form.cleaned_data['municipio']
             request.session['periodo'] = form.cleaned_data['periodo']
             request.session['anio'] = form.cleaned_data['anio']
